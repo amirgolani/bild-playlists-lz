@@ -224,7 +224,23 @@ app.get('/layout-isr', (req, res) => {
 
 app.listen(port, () => {
     var d = new Date(Date.now());
-    console.log(chalk.yellowBright(d.toString().split('GMT')[0], `Lagezentrum running on ${localIpAddress()}:${port}`));
-    console.log(chalk.greenBright(`Go to "http://${localIpAddress()}:${port}/create" to create`));
-    console.log(chalk.greenBright(`Go to "http://${localIpAddress()}:${port}/present" to present`));
+    console.log(d.toString().split('GMT')[0].trim(), `Lagezentrum running on ${localIpAddress()}:${port}`);
+    console.log(chalk.yellowBright(`
+    ██    ██ ██   ██ ██████  
+    ██    ██ ██  ██  ██   ██ 
+    ██    ██ █████   ██████  
+    ██    ██ ██  ██  ██   ██ 
+     ██████  ██   ██ ██   ██ 
+                             `));
+    console.log(chalk.yellowBright(`- "http://${localIpAddress()}:${port}/create-ukr"`));
+    console.log(chalk.yellowBright(`- "http://${localIpAddress()}:${port}/present-ukr"`));
+    console.log(chalk.blueBright(`
+    ██ ███████ ██████  
+    ██ ██      ██   ██ 
+    ██ ███████ ██████  
+    ██      ██ ██   ██ 
+    ██ ███████ ██   ██ 
+                       `));
+    console.log(chalk.blueBright(`- "http://${localIpAddress()}:${port}/create-isr"`));
+    console.log(chalk.blueBright(`- "http://${localIpAddress()}:${port}/present-isr"`));
 });
