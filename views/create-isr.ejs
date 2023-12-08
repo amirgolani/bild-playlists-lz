@@ -14,14 +14,16 @@
 <body>
 
 
-    <form action="/create-isr" method="POST" enctype="multipart/form-data" id="myForm">
+    <form id="uploadForm" enctype="multipart/form-data">
 
         <div class="container my-4">
 
             <div class="block has-background-white-bis p-6">
-                <span class="title is-2 m-0">Lagezentrum</span><span class="title is-2 m-0 has-text-grey"> Israel</span><br>
+                <span class="title is-2">Lagezentrum</span><span class="title is-2 m-0 has-text-grey">
+                    Israel</span><br>
+                <span id="lastUpdateSpan" class="title is-5 m-0">Date</span>
                 <a class="title has-text-link is-5 mb-4" href="/present-isr">View current live page</a><br><br>
-                
+
                 <div id="boxes-container" class="my-4">
                     <!-- Existing box -->
                     <div class="box my-2" id="box_1">
@@ -70,7 +72,7 @@
                         </div>
                     </div>
 
-                    
+
 
                 </div>
                 <button type="submit" class="button is-dark has-background-info-dark is-vcentered">
@@ -141,63 +143,55 @@
     }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script>
-    function submitForm() {
-        var form = document.getElementById('myForm');
-        var formData = new FormData();
-
-        // Loop through all form elements
-        for (var i = 0; i < form.elements.length; i++) {
-            var element = form.elements[i];
-
-            // Check if the element is an input, select, textarea, etc.
-            if (element.tagName.toLowerCase() !== 'button' && element.type !== 'submit') {
-                // Handle checkboxes separately
-                if (element.type === 'checkbox') {
-                    formData.append(element.name, element.checked ? "on" : "off");
-                } else {
-                    // Add the element's name and value to the FormData object
-                    formData.append(element.name, element.value);
-                }
-            }
-        }
-
-        // You can add additional data to the FormData object if needed
-        // formData.append('key', 'value');
-
-        // fetch('/create', {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        //     .then(response => window.location.replace("/present"))
-        //     // .then(data => {
-        //     //     // Handle the response from the server
-        //     //     console.log('Success:', data);
-        //     // })
-        //     .catch(error => {
-        //         // Handle errors
-        //         console.error('Error:', error);
-        //     });
-
-
-        axios.post('/create-isr', formData, {
-            timeout: 1000000,
-            headers: {
-                'Content-Type': 'multipart/form-data',
+    fetch('/layout-isr', {
+        method: 'GET',
+    })
+        .then(async response => {
+            if (response.ok) {
+                // Success: Show an alert or perform any other success action
+                var lastUpdate = await response.json()
+                var d = new Date(lastUpdate[0].lastUpdate)
+                // alert(d.toString().split('GMT')[0]);
+                document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+            } else {
+                // Error: Log the error to the console
+                console.error('Form submission failed:', response.statusText);
             }
         })
-            .then(response => {
-                window.location.replace("/present-isr")
-                // Handle success, e.g., show a success message to the user
+        .catch(error => {
+            // Error: Log the error to the console
+            console.error('Error during form submission:', error);
+        });
+</script>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        fetch('/create-isr', {
+            method: 'POST',
+            body: formData
+        })
+            .then(async response => {
+                if (response.ok) {
+                    // Success: Show an alert or perform any other success action
+                    var lastUpdate = await response.json()
+                    var d = new Date(lastUpdate[0].lastUpdate)
+                    // alert(d.toString().split('GMT')[0]);
+                    document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+                } else {
+                    // Error: Log the error to the console
+                    console.error('Form submission failed:', response.statusText);
+                }
             })
             .catch(error => {
-                console.error('Error uploading files', error);
-                // Handle error, e.g., show an error message to the user
+                // Error: Log the error to the console
+                console.error('Error during form submission:', error);
             });
-
-    }
+    });
 </script>
 
 </html>

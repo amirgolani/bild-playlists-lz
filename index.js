@@ -93,7 +93,7 @@ app.post('/create-ukr', (req, res) => {
         // console.log('Files:', files);
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `UKR Page created`));
-        res.redirect('/present-ukr');
+        res.json(jsonData);
     });
 });
 
@@ -194,7 +194,7 @@ app.post('/create-isr', (req, res) => {
         // console.log('Files:', files);
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `ISR Page created`));
-        res.redirect('/present-isr');
+        res.json(jsonData);
     });
 });
 

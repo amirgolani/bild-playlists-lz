@@ -12,6 +12,9 @@
 <body>
     <!-- <img src="images/bg_map.jpg" id="bg" alt=""> -->
 
+
+
+
     <video id="video" playsinline autoplay muted loop>
         <source src="/assets/gp/loop-isr.webm" type="video/webm">
     </video>
@@ -21,7 +24,7 @@
             onclick="playVideo('/assets/gp/loop-isr.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();">
             <i class="material-icons">home</i>
         </a>
-        
+
 
     </div>
 
@@ -38,6 +41,39 @@
 
         <input id="seekslider" type="range" min="0" max="1500" value="0" step="1">
 
+    </div>
+
+    <div style="visibility: hidden;
+    position: absolute; 
+    top: 50px; 
+    right: 50px;
+    height: 44px;
+    justify-content: flex-start; 
+    align-items: flex-start; 
+    display: inline-flex">
+        <div style="width: 4px; 
+        align-self: stretch; 
+        background: linear-gradient(180deg, white 0%, #363636 100%)"></div>
+        <div style="
+        height: 44px;
+        padding-left: 16px; 
+        padding-right: 16px;
+        background: linear-gradient(180deg, #4c4c4c 5%, black 50%); 
+        justify-content: center; 
+        align-items: center; 
+        gap: 4px; 
+        display: flex;">
+            <div style="color: white; 
+            font-size: 16px; 
+            font-family: Gotham; 
+            font-weight: 300; 
+            ">X</div>
+            <div style="color: white; 
+            font-size: 24px; 
+            font-family: Gotham; 
+            font-weight: 800; 
+            ">@TOMHANKS</div>
+        </div>
     </div>
 
     <!--

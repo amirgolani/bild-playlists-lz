@@ -12,15 +12,15 @@
 </head>
 
 <body>
-
-
-    <form action="/create-ukr" method="POST" enctype="multipart/form-data" id="myForm">
+    <form id="uploadForm" enctype="multipart/form-data">
 
         <div class="container my-4">
 
             <div class="block has-background-white-bis p-6">
-                <span class="title is-2 m-0">Lagezentrum</span><span class="title is-2 m-0 has-text-grey">
+                <span class="title is-2">Lagezentrum</span><span class="title is-2 m-0 has-text-grey">
                     Ukraine</span><br>
+                <span id="lastUpdateSpan" class="title is-5 m-0">Date</span>
+
                 <a class="title has-text-link is-5 mb-4" href="/present-ukr">View current live page</a><br><br>
 
                 <div id="boxes-container" class="my-4">
@@ -253,19 +253,19 @@
 
                 </div>
                 <div class="mt-6">
-                    <button type="submit" class="button is-dark has-background-info-dark is-vcentered">
+                    <button type="submit"
+                        class="button is-dark has-background-info-dark is-vcentered">
                         <span class="title is-5 has-text-white">Submit</span></button>
-                        <button type="button" class="button is-info is-vcentered" style="width: 40px;"
-                    onclick="handleList(false)"><i class="fa-solid fa-plus"></i></button>
-                <button type="button" class="button is-info is-vcentered" style="width: 40px;"
-                    onclick="handleList(true)"><i class="fa-solid fa-minus"></i></button>
-
+                    <button type="button" class="button is-info is-vcentered" style="width: 40px;"
+                        onclick="handleList(false)"><i class="fa-solid fa-plus"></i></button>
+                    <button type="button" class="button is-info is-vcentered" style="width: 40px;"
+                        onclick="handleList(true)"><i class="fa-solid fa-minus"></i></button>
                 </div>
             </div>
         </div>
     </form>
-
 </body>
+
 <script name="hanldeFilesNames">
     function updateFileName(input) {
         var fileNameContainer = input.closest('.file-label').querySelector('.file-name');
@@ -323,63 +323,55 @@
     }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script>
-    function submitForm() {
-        var form = document.getElementById('myForm');
-        var formData = new FormData();
-
-        // Loop through all form elements
-        for (var i = 0; i < form.elements.length; i++) {
-            var element = form.elements[i];
-
-            // Check if the element is an input, select, textarea, etc.
-            if (element.tagName.toLowerCase() !== 'button' && element.type !== 'submit') {
-                // Handle checkboxes separately
-                if (element.type === 'checkbox') {
-                    formData.append(element.name, element.checked ? "on" : "off");
-                } else {
-                    // Add the element's name and value to the FormData object
-                    formData.append(element.name, element.value);
-                }
-            }
-        }
-
-        // You can add additional data to the FormData object if needed
-        // formData.append('key', 'value');
-
-        // fetch('/create', {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        //     .then(response => window.location.replace("/present"))
-        //     // .then(data => {
-        //     //     // Handle the response from the server
-        //     //     console.log('Success:', data);
-        //     // })
-        //     .catch(error => {
-        //         // Handle errors
-        //         console.error('Error:', error);
-        //     });
-
-
-        axios.post('/create-ukr', formData, {
-            timeout: 1000000,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
+    fetch('/layout-ukr', {
+            method: 'GET',
         })
-            .then(response => {
-                window.location.replace("/present-ukr")
-                // Handle success, e.g., show a success message to the user
+            .then(async response => {
+                if (response.ok) {
+                    // Success: Show an alert or perform any other success action
+                    var lastUpdate = await response.json()
+                    var d = new Date(lastUpdate[0].lastUpdate)
+                    // alert(d.toString().split('GMT')[0]);
+                    document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+                } else {
+                    // Error: Log the error to the console
+                    console.error('Form submission failed:', response.statusText);
+                }
             })
             .catch(error => {
-                console.error('Error uploading files', error);
-                // Handle error, e.g., show an error message to the user
+                // Error: Log the error to the console
+                console.error('Error during form submission:', error);
             });
+</script>
 
-    }
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        fetch('/create-ukr', {
+            method: 'POST',
+            body: formData
+        })
+            .then(async response => {
+                if (response.ok) {
+                    // Success: Show an alert or perform any other success action
+                    var lastUpdate = await response.json()
+                    var d = new Date(lastUpdate[0].lastUpdate)
+                    // alert(d.toString().split('GMT')[0]);
+                    document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+                } else {
+                    // Error: Log the error to the console
+                    console.error('Form submission failed:', response.statusText);
+                }
+            })
+            .catch(error => {
+                // Error: Log the error to the console
+                console.error('Error during form submission:', error);
+            });
+    });
 </script>
 
 </html>
