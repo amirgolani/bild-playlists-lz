@@ -5,6 +5,8 @@ const formidable = require('formidable');
 const fse = require('fs-extra');
 const chalk = require('chalk');
 const localIpAddress = require("local-ip-address")
+const ffmpeg = require('fluent-ffmpeg');
+
 
 const app = express();
 const port = 4000;
@@ -85,6 +87,9 @@ app.post('/create-ukr', (req, res) => {
                     ctrl,
                     file: newFilePath,
                 });
+
+                await createThumbnail(newFilePath, storagePath, `${file[0].originalFilename.split('.')[0]}.jpg`);
+
             }
         }
 
@@ -101,6 +106,20 @@ app.post('/create-ukr', (req, res) => {
         res.json(jsonData);
     });
 });
+
+// Function to create a thumbnail using ffmpeg
+async function createThumbnail(inputPath, outputPath, filename) {
+    return new Promise((resolve, reject) => {
+        ffmpeg(inputPath)
+            .on('end', () => resolve())
+            .on('error', (err) => reject(err))
+            .screenshots({
+                timestamps: ['50%'],
+                filename: filename,
+                folder: outputPath,
+            });
+    });
+}
 
 app.get('/layout-ukr', (req, res) => {
     const filePath = path.join(__dirname, 'db-ukr', 'layout.json');
@@ -186,6 +205,7 @@ app.post('/create-isr', (req, res) => {
                     ctrl,
                     file: newFilePath,
                 });
+
             }
         }
 
@@ -249,3 +269,9 @@ app.listen(port, () => {
     console.log(chalk.blueBright(`- "http://${localIpAddress()}:${port}/create-isr"`));
     console.log(chalk.blueBright(`- "http://${localIpAddress()}:${port}/present-isr"`));
 });
+
+
+// Additional Functions
+
+
+

@@ -1,11 +1,56 @@
 [
   {
-    "lastUpdate": 1702034545219
+    "lastUpdate": 1702332730094
   },
   {
     "name": [
-      "MAP Ukraine"
+      "UKRAINE"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\1.webm"
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/1.webm"
+  },
+  {
+    "name": [
+      "OSTEN"
+    ],
+    "mute": [
+      "on"
+    ],
+    "ctrl": [
+      "on"
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/2.webm"
+  },
+  {
+    "name": [
+      "AK-47"
+    ],
+    "mute": [
+      ""
+    ],
+    "loop": [
+      ""
+    ],
+    "ctrl": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/8.webm"
+  },
+  {
+    "name": [
+      "LEOPARD"
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/3.webm"
+  },
+  {
+    "name": [
+      "KYEW"
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/4.webm"
+  },
+  {
+    "name": [
+      "RPG"
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/5.webm"
   }
 ]

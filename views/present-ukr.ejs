@@ -165,9 +165,10 @@
             fetch('/layout-ukr').then((response) => response.json()).then((json) => {
 
                 for (l = 1; l < json.length; l++) {
-                    console.log(json[l].mute)
+                    var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
+                    console.log(`${filenameArr}`)
 
-                    layout += `<a class="video pos${l}" onclick="playVideo('/assets/storage-ukr/${json[l].file.split(`\\`)[5]}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();">
+                    layout += `<a class="video pos${l}" onclick="playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();">
                     ${json[l].name}
                     </a>
                     `
