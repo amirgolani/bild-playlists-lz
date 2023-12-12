@@ -19,6 +19,9 @@
             <div class="block has-background-white-bis p-6">
                 <span class="title is-2">Lagezentrum</span><span class="title is-2 m-0 has-text-grey">
                     Ukraine</span><br>
+                <span id="commsIconS" class=""><i class="fa-solid fa-table-list"></i></span>
+                <span id="commsIconM" class="is-hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
+
                 <span id="lastUpdateSpan" class="title is-5 m-0">Date</span>
 
                 <a class="title has-text-link is-5 mb-4" href="/present-ukr">View current live page</a><br><br>
@@ -30,7 +33,7 @@
 
                             <div class="column is-3">
                                 <input class="input" type="text" placeholder="Button Text" name="name_1"
-                                    value="MAP Ukraine" required>
+                                    value="Ukraine" required>
                             </div>
                             <div class="column is-narrow">
                                 <label class="checkbox">
@@ -75,7 +78,7 @@
                         <div class="columns is-vcentered">
                             <div class="column is-3">
                                 <input class="input" type="text" placeholder="Button Text" name="name_2"
-                                    value="MAP Osten" required>
+                                    value="Osten" required>
                             </div>
                             <div class="column is-narrow">
                                 <label class="checkbox">
@@ -120,7 +123,7 @@
                         <div class="columns is-vcentered">
                             <div class="column is-3">
                                 <input class="input" type="text" placeholder="Button Text" name="name_3"
-                                    value="MAP Süden" required>
+                                    value="Süden" required>
                             </div>
                             <div class="column is-narrow">
                                 <label class="checkbox">
@@ -165,7 +168,7 @@
                         <div class="columns is-vcentered">
                             <div class="column is-3">
                                 <input class="input" type="text" placeholder="Button Text" name="name_4"
-                                    value="MAP Awdijiwka" required>
+                                    value="Awdijiwka" required>
                             </div>
                             <div class="column is-narrow">
                                 <label class="checkbox">
@@ -210,7 +213,7 @@
                         <div class="columns is-vcentered">
                             <div class="column is-3">
                                 <input class="input" type="text" placeholder="Button Text" name="name_5"
-                                    value="MAP Gegenoff." required>
+                                    value="Gegenoff." required>
                             </div>
                             <div class="column is-narrow">
                                 <label class="checkbox">
@@ -253,8 +256,7 @@
 
                 </div>
                 <div class="mt-6">
-                    <button type="submit"
-                        class="button is-dark has-background-info-dark is-vcentered">
+                    <button type="submit" class="button is-dark has-background-info-dark is-vcentered">
                         <span class="title is-5 has-text-white">Submit</span></button>
                     <button type="button" class="button is-info is-vcentered" style="width: 40px;"
                         onclick="handleList(false)"><i class="fa-solid fa-plus"></i></button>
@@ -325,24 +327,24 @@
 
 <script>
     fetch('/layout-ukr', {
-            method: 'GET',
-        })
-            .then(async response => {
-                if (response.ok) {
-                    // Success: Show an alert or perform any other success action
-                    var lastUpdate = await response.json()
-                    var d = new Date(lastUpdate[0].lastUpdate)
-                    // alert(d.toString().split('GMT')[0]);
-                    document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
-                } else {
-                    // Error: Log the error to the console
-                    console.error('Form submission failed:', response.statusText);
-                }
-            })
-            .catch(error => {
+        method: 'GET',
+    })
+        .then(async response => {
+            if (response.ok) {
+                // Success: Show an alert or perform any other success action
+                var lastUpdate = await response.json()
+                var d = new Date(lastUpdate[0].lastUpdate)
+                // alert(d.toString().split('GMT')[0]);
+                document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+            } else {
                 // Error: Log the error to the console
-                console.error('Error during form submission:', error);
-            });
+                console.error('Form submission failed:', response.statusText);
+            }
+        })
+        .catch(error => {
+            // Error: Log the error to the console
+            console.error('Error during form submission:', error);
+        });
 </script>
 
 <script>
@@ -350,6 +352,9 @@
         event.preventDefault();
 
         var formData = new FormData(this);
+
+        document.getElementById("commsIconM").classList.remove("is-hidden")
+document.getElementById("commsIconS").classList.add("is-hidden")
 
         fetch('/create-ukr', {
             method: 'POST',
@@ -362,6 +367,9 @@
                     var d = new Date(lastUpdate[0].lastUpdate)
                     // alert(d.toString().split('GMT')[0]);
                     document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+document.getElementById("commsIconM").classList.add("is-hidden")
+document.getElementById("commsIconS").classList.remove("is-hidden")
+
                 } else {
                     // Error: Log the error to the console
                     console.error('Form submission failed:', response.statusText);

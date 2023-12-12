@@ -1,56 +1,41 @@
 [
   {
-    "lastUpdate": 1702332730094
+    "lastUpdate": 1702387303377
   },
   {
     "name": [
-      "UKRAINE"
+      "Ukraine"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/1.webm"
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\1.webm"
   },
   {
     "name": [
-      "OSTEN"
+      "Osten"
     ],
-    "mute": [
-      "on"
-    ],
-    "ctrl": [
-      "on"
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/2.webm"
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\2.webm"
   },
   {
     "name": [
-      "AK-47"
+      "Süden"
     ],
-    "mute": [
-      ""
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\3.webm"
+  },
+  {
+    "name": [
+      "Awdijiwka"
     ],
-    "loop": [
-      ""
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\4.webm"
+  },
+  {
+    "name": [
+      "Gegenoff."
     ],
-    "ctrl": [
-      ""
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/8.webm"
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\5.webm"
   },
   {
     "name": [
       "LEOPARD"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/3.webm"
-  },
-  {
-    "name": [
-      "KYEW"
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/4.webm"
-  },
-  {
-    "name": [
-      "RPG"
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/5.webm"
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\6.webm"
   }
 ]

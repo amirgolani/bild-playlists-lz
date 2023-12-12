@@ -99,27 +99,13 @@ app.post('/create-ukr', (req, res) => {
         const jsonFilePath = path.join(dbPath, `layout.json`);
         fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
 
-        // console.log('Fields:', fields);
-        // console.log('Files:', files);
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `UKR Page created`));
         res.json(jsonData);
     });
 });
 
-// Function to create a thumbnail using ffmpeg
-async function createThumbnail(inputPath, outputPath, filename) {
-    return new Promise((resolve, reject) => {
-        ffmpeg(inputPath)
-            .on('end', () => resolve())
-            .on('error', (err) => reject(err))
-            .screenshots({
-                timestamps: ['50%'],
-                filename: filename,
-                folder: outputPath,
-            });
-    });
-}
+
 
 app.get('/layout-ukr', (req, res) => {
     const filePath = path.join(__dirname, 'db-ukr', 'layout.json');
@@ -273,5 +259,17 @@ app.listen(port, () => {
 
 // Additional Functions
 
-
+// Function to create a thumbnail using ffmpeg
+async function createThumbnail(inputPath, outputPath, filename) {
+    return new Promise((resolve, reject) => {
+        ffmpeg(inputPath)
+            .on('end', () => resolve())
+            .on('error', (err) => reject(err))
+            .screenshots({
+                timestamps: ['90%'],
+                filename: filename,
+                folder: outputPath,
+            });
+    });
+}
 
