@@ -1,0 +1,67 @@
+.main-title {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    opacity: 0;
+    background-image: url(/assets/gp/titles.png);
+    background-size: cover;
+    mix-blend-mode: overlay;
+}
+
+.left-dark-blur {
+    background-color: rgb(37, 37, 37);
+    filter: blur(200px);
+    position: absolute;
+    left: -300px;
+    width: 600px;
+    height: 1080px;
+    mix-blend-mode: overlay;
+}
+
+.full-hd-container {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    overflow: clip;
+}
+
+.timecode {
+    font-size: 26px;
+    padding-left: 20px;
+    font-family: Gotham;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.timeline {
+    position: absolute;
+    bottom: 125px;
+    left: 200px;
+    width: 400px;
+    /* Set the width of the range input */
+    height: 10px;
+    /* Set the height of the range input */
+    background-color: white;
+    /* Set the background color of the track */
+    border: none;
+    /* Remove the default border */
+    appearance: none;
+    /* Remove default styles on Firefox */
+    outline: none;
+    /* Remove the default focus outline */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    /* Set the width of the thumb */
+    height: 20px;
+    /* Set the height of the thumb */
+    background-color: blue;
+    /* Set the background color of the thumb */
+    border: none;
+    /* Remove the default border */
+    border-radius: 0;
+    /* Ensure square shape by removing border-radius */
+    appearance: none;
+    /* Remove default styles on Chrome and Safari */
+}
