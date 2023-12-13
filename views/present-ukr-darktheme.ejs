@@ -14,17 +14,7 @@
 </head>
 
 <body style="background-color: black; width: 1920px; height: 1080px;">
-    <div style="width: 1920px; 
-            height: 1080px; 
-            position: absolute;
-            overflow: clip;">
-        <div id="backgroundImage" style="width: 1920px; 
-            height: 1080px; 
-            position: absolute; 
-            background-image: url(/assets/gp/home6.jpg); 
-            background-size: cover;">
-        </div>
-    </div>
+
 
     <style>
         /* Style the handle (thumb) of the range input */
@@ -44,9 +34,43 @@
         }
     </style>
 
-    <video style="opacity: 0;" id="video" playsinline autoplay muted loop>
-        <source src="/assets/gp/loop-ukr.webm" type="video/webm">
+    <video style="opacity: 1;" id="video" playsinline autoplay muted loop>
+        <source src="/assets/gp/BGUKR.webm" type="video/webm">
     </video>
+
+    <div style="
+    width: 1920px; 
+    height: 1080px; 
+    position: absolute;
+    overflow: clip;">
+        <div id="mainTitle" style="
+    width: 1920px; 
+    height: 1080px; 
+    position: absolute;
+    background-image: url(/assets/gp/titles.png); 
+    background-size: cover;
+    mix-blend-mode: overlay;">
+        </div>
+        <div id="mainTitle" style="
+    width: 1920px; 
+    height: 1080px; 
+    position: absolute;
+    background-image: url(/assets/gp/titles.png); 
+    background-size: cover;
+    mix-blend-mode: overlay;">
+        </div>
+    </div>
+
+    <div style="background-color: rgb(37, 37, 37); 
+    filter: blur(200px); 
+    position: absolute; 
+    left: -300px; 
+    width: 600px; 
+    height: 1080px;
+    mix-blend-mode: overlay;">
+    </div>
+
+
 
     <div id="layoutBuildUp" style="width: 1920px; 
         height: 1080px; 
@@ -56,24 +80,8 @@
         ">
     </div>
 
-    <div id="mainTitle" style="left: 320px; 
-        top: -500px; 
-        position: absolute">
-        <span style="color: white; 
-            font-style: italic; 
-            font-size: 138px; 
-            font-family: Gotham Condensed; 
-            font-weight: 600; 
-            line-height: 96px; 
-            word-wrap: break-word;">RUSSLANDS<br /></span>
-        <span style="color: white; 
-            font-style: italic; 
-            font-size: 228px; 
-            font-family: Gotham Condensed; 
-            font-weight: 900; 
-            line-height: 206px; 
-            word-wrap: break-word">KRIEG</span>
-    </div>
+
+
 
     <div id="seek" hidden>
 
@@ -220,18 +228,17 @@
                     left: -500px; 
                     top: 0px; 
                     position: absolute; 
-                    background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%); 
                     flex-direction: column; 
                     justify-content: flex; 
                     align-items: center; 
                     gap: 12px; 
                     display: inline-flex">
-                    <div onclick="handleSelect(this.id); pauseVideo(); unhighlight();" id="b_0" 
+                    <div onclick="handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" id="b_0" 
                     style="align-self: stretch; 
                         height: 100px; 
                         padding: 10px; 
                         margin-top: 50px; 
-                        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/home6.jpg);
+                        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/HOMEUKR.jpg);
                         background-size: cover;
                         background-position: center;
                         border-radius: 10px; 
@@ -253,8 +260,6 @@
                             </div>
                     </div>
                     `;
-
-
 
             fetch('/layout-ukr').then((response) => response.json()).then((json) => {
 
@@ -280,7 +285,7 @@
                         display: inline-flex">
                         <div style="text-align: center; 
                             color: white; 
-                            font-size: 20px; 
+                            font-size: 18px; 
                             font-family: Gotham; 
                             font-weight: 500; 
                             line-height: 20px; 
@@ -306,76 +311,65 @@
         var selectedElement = "b_0"
 
         function handleSelect(newID) {
-            var seek = document.getElementById("seek");
 
-            if (newID === "b_0") {
-                seek.hidden = true
-                gsap.to("#mainTitle",
-                    {
-                        duration: 1, // animation duration in seconds
-                        top: 60, // target height
-                        ease: "power2.inOut", // easing function
-                    });
-                gsap.to("#video",
-                    {
-                        duration: 1, // animation duration in seconds
-                        opacity: 0, // target height
-                        ease: "power2.inOut", // easing function
-                    });
-                gsap.fromTo("#backgroundImage",
-                    { scale: 1.5 },
-                    {
-                        duration: 1, // animation duration in seconds
-                        scale: 1, // target height
-                        ease: "power2.inOut", // easing function
-                    });
-            } else {
-                gsap.to("#mainTitle",
-                    {
-                        duration: 1, // animation duration in seconds
-                        top: -500, // target height
-                        ease: "power2.inOut", // easing function
-                    });
-                gsap.to("#video",
-                    {
-                        duration: 1, // animation duration in seconds
-                        opacity: 1, // target height
-                        ease: "power2.inOut", // easing function
-                    });
-                gsap.fromTo("#backgroundImage",
-                    { scale: 1 },
-                    {
-                        duration: 0, // animation duration in seconds
-                        scale: 0, // target height
-                        ease: "power2.inOut", // easing function
-                    });
+            if (newID !== selectedElement) {
+
+                // TO HOME
+                if (newID === "b_0") {
+                    gsap.fromTo("#mainTitle",
+                        { scale: 1.5, opacity: 0 },
+                        {
+                            duration: 2,
+                            scale: 1,
+                            opacity: 1,
+                            ease: "power2.out"
+                        });
+
+                    gsap.fromTo("#video",
+                        { scale: 1.25 },
+                        {
+                            duration: 2,
+                            scale: 1,
+                            ease: "power2.inOut"
+                        });
+
+                    // TO VIDEO
+
+                } else {
+                    gsap.fromTo("#mainTitle",
+                        { opacity: 1 },
+                        {
+                            duration: 0,
+                            opacity: 0,
+                            ease: "power2.inOut"
+                        });
+                }
+
                 gsap.fromTo("#video",
                     { opacity: 0 },
                     {
-                        duration: 1, // animation duration in seconds
-                        opacity: 1, // target height
-                        ease: "power2.inOut", // easing function
+                        duration: 1,
+                        opacity: 1,
+                        ease: "power2.inOut"
                     });
+
+                gsap.to(`#${newID}`,
+                    {
+                        duration: .8,
+                        height: 100,
+                        ease: "power2.inOut"
+                    });
+
+                gsap.to(`#${selectedElement}`,
+                    {
+                        duration: .8,
+                        height: 26,
+                        ease: "power2.inOut"
+                    });
+
+                selectedElement = newID;
+
             }
-
-            gsap.to(`#${newID}`,
-                {
-                    duration: 1, // animation duration in seconds
-                    height: 100, // target height
-                    ease: "power4.inOut", // easing function
-                });
-
-
-
-            gsap.to(`#${selectedElement}`,
-                {
-                    duration: 1, // animation duration in seconds
-                    height: 26, // target height
-                    ease: "power4.inOut", // easing function
-                });
-
-            selectedElement = newID;
-
         }
 
         // GSAP animation
@@ -383,26 +377,34 @@
         setTimeout(() => {
             gsap.fromTo("#theMenu",
                 {
-                    left: -500, // target height
+                    left: -500,
                 },
                 {
-                    left: 0, // target height,
+                    left: 0,
                     duration: 1,
                     delay: .2,
-                    ease: "power1.inOut", // easing function
+                    ease: "power1.inOut"
 
+                });
+
+            gsap.fromTo("#video",
+                { scale: 1.25 },
+                {
+                    duration: 2,
+                    scale: 1,
+                    ease: "power2.inOut"
                 });
 
             gsap.fromTo("#mainTitle",
+                { scale: 1.5, opacity: 0 },
                 {
-                    top: -500
-                }, // target height,
-                {
-                    top: 60, // target height,
-                    duration: 1.2,
-                    ease: "power1.inOut", // easing function
-
+                    duration: 2,
+                    scale: 1,
+                    opacity: 1,
+                    ease: "power2.out"
                 });
+
+
         }, 100);
 
 
