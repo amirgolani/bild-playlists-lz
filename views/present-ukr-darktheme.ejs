@@ -6,24 +6,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/style_11Themen.css">
-    <link rel="stylesheet" href="/assets/css/gp_styles.css">
+    <link rel="stylesheet" href="/assets/css/gp_styles_2.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="/assets/js/ukr-dark-theme.js"></script>
 </head>
 
-<body class="full-hd-container">
-    <video style="opacity: 0;" id="video" playsinline autoplay muted loop>
-        <source src="/assets/gp/BGUKR.webm" type="video/webm">
-    </video>
+<body style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, rgb(37, 37, 37) 150%);">
+    <div class="full-hd-container">
+        <video style="position: absolute; opacity: 0; left: 160px; top: -90px;" id="video" playsinline autoplay muted
+            loop>
+            <source src="/assets/gp/BGUKR.webm" type="video/webm">
+        </video>
+    </div>
     <div class="full-hd-container">
         <div id="mainTitle" class="main-title">
         </div>
         <div id="mainTitle" class="main-title">
         </div>
     </div>
-    <div class="left-dark-blur"></div>
+    <div class="full-hd-container">
+        <div class="bottom-dark-blur"></div>
+    </div>
     <div id="layoutBuildUp" class="full-hd-container"></div>
     <div id="seek" hidden>
         <a onclick="ctrlPlayVideo()" class="floatLeft0"><i class="material-icons align">play_arrow</i></a>

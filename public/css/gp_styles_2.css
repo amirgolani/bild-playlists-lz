@@ -1,0 +1,96 @@
+.main-title {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    opacity: 0;
+    background-image: url(/assets/gp/titles.png);
+    background-size: cover;
+    mix-blend-mode: overlay;
+}
+
+.bottom-dark-blur {
+    background-color: rgb(0, 0, 0);
+    filter: blur(100px);
+    position: absolute;
+    bottom: -400px;
+    left: -300px;
+    width: 2520px;
+    height: 800px;
+}
+
+.full-hd-container {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    overflow: clip;
+}
+
+.button-container {
+    align-self: stretch;
+    height: 26px;
+    padding: 10px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    border: 1px #e5e5e5 solid;
+    border-left: 4px #e5e5e5 solid;
+    border-right: 4px #e5e5e5 solid;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: inline-flex
+}
+
+.menu-container {
+    width: 320px;
+    height: 1080px;
+    left: -500px;
+    top: 10px;
+    gap: 10px;
+    position: absolute;
+    flex-direction: column;
+    justify-content: flex;
+    align-items: center;
+    display: inline-flex
+}
+
+.timecode {
+    font-size: 26px;
+    padding-left: 20px;
+    font-family: Gotham;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.timeline {
+    position: absolute;
+    bottom: 125px;
+    left: 200px;
+    width: 400px;
+    /* Set the width of the range input */
+    height: 10px;
+    /* Set the height of the range input */
+    background-color: white;
+    /* Set the background color of the track */
+    border: none;
+    /* Remove the default border */
+    appearance: none;
+    /* Remove default styles on Firefox */
+    outline: none;
+    /* Remove the default focus outline */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    /* Set the width of the thumb */
+    height: 20px;
+    /* Set the height of the thumb */
+    background-color: blue;
+    /* Set the background color of the thumb */
+    border: none;
+    /* Remove the default border */
+    border-radius: 0;
+    /* Ensure square shape by removing border-radius */
+    appearance: none;
+    /* Remove default styles on Chrome and Safari */
+}

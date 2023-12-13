@@ -21,7 +21,7 @@ function handleSelect(newID) {
                 { scale: 1.25 },
                 {
                     duration: 2,
-                    scale: 0.8333333333,
+                    scale: 1,
                     ease: "power2.inOut"
                 });
 
@@ -48,14 +48,14 @@ function handleSelect(newID) {
         gsap.to(`#${newID}`,
             {
                 duration: .8,
-                height: 180,
+                height: 100,
                 ease: "power2.inOut"
             });
 
         gsap.to(`#${selectedElement}`,
             {
                 duration: .8,
-                height: 60,
+                height: 26,
                 ease: "power2.inOut"
             });
 
@@ -83,7 +83,7 @@ setTimeout(() => {
         { scale: 1.25, opacity: 0 },
         {
             duration: 2,
-            scale: 0.8333333333,
+            scale: 1,
             opacity: 1,
             ease: "power2.inOut"
         });
@@ -108,11 +108,15 @@ function getLayout() {
     var layout = `<div id="theMenu" class="menu-container">
             <div onclick="handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" id="b_0" 
             style="align-self: stretch; 
-                height: 180px; 
+                height: 100px; 
                 padding: 10px; 
                 background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/HOMEUKR.jpg);
                 background-size: cover;
                 background-position: center;
+                border-radius: 10px; 
+                border: 1px #e5e5e5 solid; 
+                border-left: 4px #e5e5e5 solid;
+                border-right: 4px #e5e5e5 solid;
                 justify-content: center; 
                 align-items: center; 
                 gap: 10px; 
@@ -137,11 +141,15 @@ function getLayout() {
             layout += ` 
             <div onclick="handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();" id="b_${l}" 
             style="align-self: stretch; 
-                height: 60px; 
+                height: 26px; 
                 padding: 10px; 
-                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${filenameArr.split('.')[0]}.jpg);
+                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, black 125%), url(/assets/storage-ukr/${filenameArr.split('.')[0]}.jpg);
                 background-size: cover;
                 background-position: center;
+                border-radius: 10px; 
+                border: 1px #e5e5e5 solid; 
+                border-left: 4px #e5e5e5 solid;
+                border-right: 4px #e5e5e5 solid;
                 justify-content: center; 
                 align-items: center; 
                 gap: 10px; 
