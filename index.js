@@ -266,9 +266,10 @@ async function createThumbnail(inputPath, outputPath, filename) {
             .on('end', () => resolve())
             .on('error', (err) => reject(err))
             .screenshots({
-                timestamps: ['90%'],
+                timestamps: ['95%'],
                 filename: filename,
                 folder: outputPath,
+                size: '960x540',
             });
     });
 }
