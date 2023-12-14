@@ -1,6 +1,6 @@
 [
   {
-    "lastUpdate": 1702564871056
+    "lastUpdate": 1702585838017
   },
   {
     "name": [
@@ -12,78 +12,42 @@
     "name": [
       "Osten"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/2.webm"
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/4.webm"
   },
   {
     "name": [
       "Süden"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/3.webm"
-  },
-  {
-    "name": [
-      "Awdijiwka"
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/4.webm"
-  },
-  {
-    "name": [
-      "Gegenoff."
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/5.webm"
-  },
-  {
-    "name": [
-      "TANK"
+    "mute": [
+      "on"
     ],
     "ctrl": [
-      ""
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/6.webm"
-  },
-  {
-    "name": [
-      "ak47"
-    ],
-    "ctrl": [
-      ""
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/7.webm"
-  },
-  {
-    "name": [
-      "kiew"
-    ],
-    "ctrl": [
-      ""
+      "on"
     ],
     "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/8.webm"
   },
   {
     "name": [
-      "krynki"
+      "Awdijiwka"
+    ],
+    "mute": [
+      "on"
     ],
     "ctrl": [
-      ""
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/9.webm"
-  },
-  {
-    "name": [
-      "rpg"
-    ],
-    "ctrl": [
-      ""
-    ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/10.webm"
-  },
-  {
-    "name": [
-      "leopard"
-    ],
-    "ctrl": [
-      ""
+      "on"
     ],
     "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/11.webm"
+  },
+  {
+    "name": [
+      "Gegenoff."
+    ],
+    "mute": [
+      "on"
+    ],
+    "ctrl": [
+      "on"
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/6.webm"
   }
 ]

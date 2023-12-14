@@ -312,7 +312,6 @@ function getLayout() {
                 align-items: center; 
                 gap: 10px; 
                 box-shadow: 12px 12px 100px black; border-radius: 10px; border: 2px #cccccc solid;
-
                 display: inline-flex">
                 <div style="text-align: center; 
                     color: white; 
