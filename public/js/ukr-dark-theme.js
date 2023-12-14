@@ -1,3 +1,194 @@
+// Handle Menu Pos
+
+var menuPos = true;
+
+function handleMenuPos() {
+
+    menuPos = !menuPos;
+
+    console.log(menuPos)
+
+    gsap.to("#theMenu",
+        {
+            top: menuPos ? 760 : 1000,
+            opacity: menuPos ? 1 : 1,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.to("#bottom-dark-blur",
+        {
+            opacity: menuPos ? 1 : .5,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.to("#left-dark-blur",
+        {
+            opacity: menuPos ? 1 : 0,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.to("#menuPosIcon",
+        {
+            bottom: menuPos ? 300 : 60,
+            rotation: menuPos ? 0 : -540,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#play-icon",
+        {
+            bottom: menuPos ? 300 : 60,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#pause-icon",
+        {
+            bottom: menuPos ? 300 : 60,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#seekslider",
+        {
+            bottom: menuPos ? 320 : 80,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#art-icon",
+        {
+            bottom: menuPos ? 370 : 130,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#video-title",
+        {
+            opacity: menuPos ? 1 : 0,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#video-icon",
+        {
+            opacity: menuPos ? 1 : 0,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#video-timestamp",
+        {
+            opacity: menuPos ? 1 : 0,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+
+
+}
+
+setTimeout(() => {
+    gsap.fromTo("#video-title",
+        {
+            opacity: 0
+        },
+        {
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.fromTo("#video-icon",
+        {
+            opacity: 0
+        },
+        {
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.fromTo("#video-timestamp",
+        {
+            opacity: 0
+        },
+        {
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.fromTo("#menuPosIcon",
+        {
+            bottom: 60,
+            opacity: 0
+        },
+        {
+            bottom: 300,
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.fromTo("#play-icon",
+        {
+            bottom: 60,
+            opacity: 0
+        },
+        {
+            bottom: 300,
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.fromTo("#pause-icon",
+        {
+            bottom: 60,
+            opacity: 0
+        },
+        {
+            bottom: 300,
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.fromTo("#art-icon",
+        {
+            bottom: 130,
+            opacity: 0
+        },
+        {
+            bottom: 370,
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+}, 100)
+
+
 // Handle Select
 
 var selectedElement = "b_0"
@@ -21,7 +212,7 @@ function handleSelect(newID) {
                 { scale: 1.25 },
                 {
                     duration: 2,
-                    scale: 0.8333333333,
+                    scale: 1,
                     ease: "power2.inOut"
                 });
 
@@ -48,14 +239,14 @@ function handleSelect(newID) {
         gsap.to(`#${newID}`,
             {
                 duration: .8,
-                height: 180,
+                width: 360,
                 ease: "power2.inOut"
             });
 
         gsap.to(`#${selectedElement}`,
             {
                 duration: .8,
-                height: 60,
+                width: 160,
                 ease: "power2.inOut"
             });
 
@@ -69,21 +260,25 @@ function handleSelect(newID) {
 setTimeout(() => {
     gsap.fromTo("#theMenu",
         {
-            left: -500,
+            top: 1000,
+            opacity: 0
         },
         {
-            left: 0,
-            duration: 1,
+            top: 760,
+            opacity: 1,
+            duration: 2,
             delay: .2,
-            ease: "power1.inOut"
+            ease: "power2.inOut"
 
         });
+
+
 
     gsap.fromTo("#video",
         { scale: 1.25, opacity: 0 },
         {
             duration: 2,
-            scale: 0.8333333333,
+            scale: 1,
             opacity: 1,
             ease: "power2.inOut"
         });
@@ -108,7 +303,7 @@ function getLayout() {
     var layout = `<div id="theMenu" class="menu-container">
             <div onclick="handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" id="b_0" 
             style="align-self: stretch; 
-                height: 180px; 
+                width: 360px;
                 padding: 10px; 
                 background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/HOMEUKR.jpg);
                 background-size: cover;
@@ -116,6 +311,8 @@ function getLayout() {
                 justify-content: center; 
                 align-items: center; 
                 gap: 10px; 
+                box-shadow: 12px 12px 100px black; border-radius: 10px; border: 2px #cccccc solid;
+
                 display: inline-flex">
                 <div style="text-align: center; 
                     color: white; 
@@ -137,14 +334,16 @@ function getLayout() {
             layout += ` 
             <div onclick="handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();" id="b_${l}" 
             style="align-self: stretch; 
-                height: 60px; 
+            width: 160px;
                 padding: 10px; 
                 background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${filenameArr.split('.')[0]}.jpg);
                 background-size: cover;
                 background-position: center;
                 justify-content: center; 
                 align-items: center; 
-                gap: 10px; 
+                box-shadow: 12px 12px 100px black; 
+                border-radius: 10px; 
+                border: 2px #cccccc solid;
                 display: inline-flex">
                 <div style="text-align: center; 
                     color: white; 
@@ -197,9 +396,13 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
 
     if (PlayButtons == "withPlayButtons") {
         seek.hidden = false;
+        document.getElementById("play-icon").hidden = false
+        document.getElementById("pause-icon").hidden = false
         console.log("withPlay");
     } else {
         seek.hidden = true;
+        document.getElementById("play-icon").hidden = true
+        document.getElementById("pause-icon").hidden = true
     }
 
 
@@ -221,55 +424,4 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
         video.volume = 1;
         console.log("Com Audio");
     }
-}
-
-var seekslider;
-var video = document.getElementById('video'), frameTime = 1 / 25;
-seekslider = document.getElementById("seekslider");
-// Add event listeners
-seekslider.addEventListener("change", vidSeek, false);
-video.addEventListener("timeupdate", seektimeupdate, false);
-video.ontimeupdate = function () { timecodeUpdate() };
-function pauseVideo() {
-    video.pause();
-    console.log("pause");
-}
-function ctrlPlayVideo() {
-    video.play();
-    console.log("play");
-}
-function framePlus() {
-    video.currentTime = Math.min(video.duration, video.currentTime + frameTime);
-}
-function frameMinus() {
-    video.currentTime = Math.max(0, video.currentTime - frameTime);
-}
-
-function vidSeek() {
-    pauseVideo();
-    var seekto = video.duration * (seekslider.value / 1500);
-    video.currentTime = seekto;
-}
-function seektimeupdate() {
-    var nt = video.currentTime * (1500 / video.duration);
-    seekslider.value = nt;
-}
-function timecodeUpdate() {
-    // Display the current position of the video in a <p> element with id="demo"
-    document.getElementById("timecode").innerHTML = formatSecondsAsTime(video.currentTime);
-}
-function formatSecondsAsTime(secs, format) {
-    var hr = Math.floor(secs / 3600);
-    var min = Math.floor((secs - (hr * 3600)) / 60);
-    var sec = Math.floor(secs - (hr * 3600) - (min * 60));
-    if (min < 10) {
-        min = "0" + min;
-    }
-    if (sec < 10) {
-        sec = "0" + sec;
-    }
-
-    return min + ':' + sec;
-
-
 }

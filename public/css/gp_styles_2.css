@@ -1,3 +1,85 @@
+.menu-icon {
+    position: absolute;
+    left: 50px;
+    bottom: 300px;
+    background-image: url(/assets/gp/down.png);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+}
+
+.play-icon {
+    position: absolute;
+    left: 190px;
+    bottom: 300px;
+    background-image: url(/assets/gp/play.png);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+}
+
+.pause-icon {
+    position: absolute;
+    left: 120px;
+    bottom: 300px;
+    background-image: url(/assets/gp/pause.png);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+}
+
+.art-icon {
+    position: absolute;
+    left: 50px;
+    bottom: 400px;
+    background-image: url(/assets/gp/art.png);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+}
+
+.video-icon {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    width: 40px;
+    height: 40px;
+    background-image: url(/assets/gp/x.png);
+    background-size: cover;
+    opacity: 0;
+}
+
+.video-title {
+    color: white;
+    position: absolute;
+    left: 100px;
+    top: 60px;
+    font-size: 28px;
+    padding-left: 20px;
+    font-family: Gotham;
+    font-weight: 700;
+    line-height: 20px;
+    opacity: 0;
+}
+
+.video-timestamp {
+    color: white;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    font-size: 22px;
+    padding-left: 20px;
+    font-family: Gotham;
+    font-weight: 300;
+    line-height: 20px;
+    opacity: 0;
+
+}
+
 .main-title {
     width: 1920px;
     height: 1080px;
@@ -12,10 +94,20 @@
     background-color: rgb(0, 0, 0);
     filter: blur(100px);
     position: absolute;
-    bottom: -400px;
+    bottom: -200px;
     left: -300px;
     width: 2520px;
-    height: 800px;
+    height: 400px;
+}
+
+.left-dark-blur {
+    background-color: rgb(0, 0, 0);
+    filter: blur(400px);
+    position: absolute;
+    left: -2000px;
+    top: -500px;
+    width: 2660px;
+    height: 1880px;
 }
 
 .full-hd-container {
@@ -42,15 +134,15 @@
 }
 
 .menu-container {
-    width: 320px;
-    height: 1080px;
-    left: -500px;
-    top: 10px;
+    opacity: 0;
+    width: 1920px;
+    height: 220px;
+    top: 1000px;
     gap: 10px;
+    padding: 50px;
     position: absolute;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex;
-    align-items: center;
     display: inline-flex
 }
 
@@ -64,20 +156,14 @@
 
 .timeline {
     position: absolute;
-    bottom: 125px;
+    bottom: 550px;
     left: 200px;
     width: 400px;
-    /* Set the width of the range input */
     height: 10px;
-    /* Set the height of the range input */
     background-color: white;
-    /* Set the background color of the track */
     border: none;
-    /* Remove the default border */
     appearance: none;
-    /* Remove default styles on Firefox */
     outline: none;
-    /* Remove the default focus outline */
 }
 
 input[type="range"]::-webkit-slider-thumb {
