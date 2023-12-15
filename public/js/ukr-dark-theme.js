@@ -61,16 +61,9 @@ function handleMenuPos() {
             ease: "power2.inOut"
         });
 
-    gsap.to("#pause-icon",
-        {
-            bottom: menuPos ? 300 : 60,
-            duration: 1,
-            ease: "power2.inOut"
-        });
-
     gsap.to("#seekslider",
         {
-            bottom: menuPos ? 320 : 80,
+            bottom: menuPos ? 318 : 78,
             duration: 1,
             ease: "power2.inOut"
         });
@@ -167,20 +160,6 @@ setTimeout(() => {
         });
 
     gsap.fromTo("#play-icon",
-        {
-            bottom: 60,
-            opacity: 0
-        },
-        {
-            bottom: 300,
-            opacity: 1,
-            duration: 2,
-            delay: .2,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.fromTo("#pause-icon",
         {
             bottom: 60,
             opacity: 0
@@ -452,12 +431,12 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
     if (PlayButtons == "withPlayButtons") {
         seek.hidden = false;
         document.getElementById("play-icon").hidden = false
-        document.getElementById("pause-icon").hidden = false
+        // document.getElementById("pause-icon").hidden = false
         console.log("withPlay");
     } else {
         seek.hidden = true;
         document.getElementById("play-icon").hidden = true
-        document.getElementById("pause-icon").hidden = true
+        // document.getElementById("pause-icon").hidden = true
     }
 
 
