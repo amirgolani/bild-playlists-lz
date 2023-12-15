@@ -48,7 +48,7 @@ function handleMenuPos() {
 
     gsap.to("#menuPosIcon",
         {
-            bottom: menuPos ? 300 : 60,
+            top: menuPos ? 1040 - 300 : 1040 - 60,
             rotation: menuPos ? 0 : -540,
             duration: 1,
             ease: "power2.inOut"
@@ -56,28 +56,28 @@ function handleMenuPos() {
 
     gsap.to("#play-icon",
         {
-            bottom: menuPos ? 300 : 60,
+            top: menuPos ? 1040 - 300 : 1040 - 60,
             duration: 1,
             ease: "power2.inOut"
         });
 
     gsap.to("#seekslider",
         {
-            bottom: menuPos ? 318 : 78,
+            top: menuPos ? 760 : 1000,
             duration: 1,
             ease: "power2.inOut"
         });
 
     gsap.to("#art-icon",
         {
-            bottom: menuPos ? 440 : 200,
+            top: menuPos ? 1040 - 440 : 1040 - 200,
             duration: 1,
             ease: "power2.inOut"
         });
 
     gsap.to("#move-icon",
         {
-            bottom: menuPos ? 370 : 130,
+            top: menuPos ? 1040 - 370 : 1040 - 130,
             duration: 1,
             ease: "power2.inOut"
         });
@@ -147,11 +147,11 @@ setTimeout(() => {
 
     gsap.fromTo("#menuPosIcon",
         {
-            bottom: 60,
+            top: 1040 - 60,
             opacity: 0
         },
         {
-            bottom: 300,
+            top: 1040 - 300,
             opacity: 1,
             duration: 2,
             delay: .2,
@@ -161,11 +161,11 @@ setTimeout(() => {
 
     gsap.fromTo("#play-icon",
         {
-            bottom: 60,
+            top: 1040 - 60,
             opacity: 0
         },
         {
-            bottom: 300,
+            top: 1040 - 300,
             opacity: 1,
             duration: 2,
             delay: .2,
@@ -175,11 +175,11 @@ setTimeout(() => {
 
     gsap.fromTo("#art-icon",
         {
-            bottom: 200,
+            top: 1040 - 200,
             opacity: 0
         },
         {
-            bottom: 440,
+            top: 1040 - 440,
             opacity: .5,
             duration: 2,
             delay: .2,
@@ -189,11 +189,11 @@ setTimeout(() => {
 
     gsap.fromTo("#move-icon",
         {
-            bottom: 130,
+            top: 1040 - 130,
             opacity: 0
         },
         {
-            bottom: 370,
+            top: 1040 - 370,
             opacity: 1,
             duration: 2,
             delay: .2,
@@ -461,4 +461,228 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
 }
 
 
-// Blink on draw
+// Handle draw
+
+var canvas = document.getElementById('paintCanvas');
+var context = canvas.getContext('2d');
+var painting = false;
+var drawOnScreen = false;
+var isBlinking = false;
+
+function manageDraws() {
+    if (!drawOnScreen) {
+        drawOnScreen = !drawOnScreen;
+        gsap.to('#art-icon', { opacity: 1, duration: 0.5 });
+        console.log("on")
+        startPainting()
+        canvas.hidden = false;
+    } else {
+        drawOnScreen = !drawOnScreen;
+        gsap.to('#art-icon', { opacity: .5, duration: 0.5 });
+
+        stopPainting();
+        clearCanvas();
+        canvas.hidden = true;
+    }
+
+}
+
+function startPainting() {
+    canvas.addEventListener('touchstart', function (e) {
+        startPosition(e.touches);
+    });
+    canvas.addEventListener('touchend', endPosition);
+    canvas.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+        draw(e.touches);
+    });
+}
+
+function stopPainting() {
+    canvas.removeEventListener('touchstart', function (e) {
+        startPosition(e.touches);
+    });
+    canvas.removeEventListener('touchend', endPosition);
+    canvas.removeEventListener('touchmove', function (e) {
+        e.preventDefault();
+        draw(e.touches);
+    });
+}
+
+function clearCanvas() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function startPosition(touches) {
+    painting = true;
+    draw(touches);
+}
+
+function endPosition() {
+    painting = false;
+    context.beginPath();
+}
+
+function draw(touches) {
+    if (!painting) return;
+
+    context.lineWidth = 5;
+    context.lineCap = 'round';
+    context.strokeStyle = '#000';
+
+    for (var i = 0; i < touches.length; i++) {
+        context.lineTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+        context.stroke();
+        context.beginPath();
+        context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+    }
+}
+
+
+
+
+
+// handle plays
+
+var seekslider;
+var playButton = document.getElementById('play-icon');
+var video = document.getElementById('video'), frameTime = 1 / 25;
+seekslider = document.getElementById("seekslider");
+// Add event listeners
+seekslider.addEventListener("change", vidSeek, false);
+video.addEventListener("timeupdate", seektimeupdate, false);
+video.ontimeupdate = function () { timecodeUpdate() };
+var play = true;
+function pauseVideo() {
+    video.pause();
+    console.log("pause");
+}
+function ctrlPlayVideo() {
+    video.play();
+    console.log("play");
+}
+
+function handlePlays() {
+    play = !play;
+    if (play) {
+        video.play();
+        playButton.classList.replace('play-icon', 'pause-icon');
+    } else {
+        video.pause();
+        playButton.classList.replace('pause-icon', 'play-icon');
+
+    }
+}
+
+function framePlus() {
+    video.currentTime = Math.min(video.duration, video.currentTime + frameTime);
+}
+function frameMinus() {
+    video.currentTime = Math.max(0, video.currentTime - frameTime);
+}
+
+function vidSeek() {
+    // pauseVideo();
+    var seekto = video.duration * (seekslider.value / 1500);
+    video.currentTime = seekto;
+}
+function seektimeupdate() {
+    var nt = video.currentTime * (1500 / video.duration);
+    seekslider.value = nt;
+}
+function timecodeUpdate() {
+    // Display the current position of the video in a <p> element with id="demo"
+    // document.getElementById("timecode").innerHTML = formatSecondsAsTime(video.currentTime);
+}
+function formatSecondsAsTime(secs, format) {
+    var hr = Math.floor(secs / 3600);
+    var min = Math.floor((secs - (hr * 3600)) / 60);
+    var sec = Math.floor(secs - (hr * 3600) - (min * 60));
+    if (min < 10) {
+        min = "0" + min;
+    }
+    if (sec < 10) {
+        sec = "0" + sec;
+    }
+
+    return min + ':' + sec;
+
+
+}
+
+
+
+var canvas = document.getElementById('paintCanvas');
+var context = canvas.getContext('2d');
+var painting = false;
+var drawOnScreen = false;
+var isBlinking = false;
+
+function manageDraws() {
+    if (!drawOnScreen) {
+        drawOnScreen = !drawOnScreen;
+        gsap.to('#art-icon', { opacity: 1, duration: 0.5 });
+        console.log("on")
+        startPainting()
+        canvas.hidden = false;
+    } else {
+        drawOnScreen = !drawOnScreen;
+        gsap.to('#art-icon', { opacity: .5, duration: 0.5 });
+
+        stopPainting();
+        clearCanvas();
+        canvas.hidden = true;
+    }
+
+}
+
+function startPainting() {
+    canvas.addEventListener('touchstart', function (e) {
+        startPosition(e.touches);
+    });
+    canvas.addEventListener('touchend', endPosition);
+    canvas.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+        draw(e.touches);
+    });
+}
+
+function stopPainting() {
+    canvas.removeEventListener('touchstart', function (e) {
+        startPosition(e.touches);
+    });
+    canvas.removeEventListener('touchend', endPosition);
+    canvas.removeEventListener('touchmove', function (e) {
+        e.preventDefault();
+        draw(e.touches);
+    });
+}
+
+function clearCanvas() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function startPosition(touches) {
+    painting = true;
+    draw(touches);
+}
+
+function endPosition() {
+    painting = false;
+    context.beginPath();
+}
+
+function draw(touches) {
+    if (!painting) return;
+
+    context.lineWidth = 5;
+    context.lineCap = 'round';
+    context.strokeStyle = '#000';
+
+    for (var i = 0; i < touches.length; i++) {
+        context.lineTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+        context.stroke();
+        context.beginPath();
+        context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+    }
+}
