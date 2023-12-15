@@ -71,6 +71,9 @@ app.post('/create-ukr', (req, res) => {
             const mute = fields[`mute_${i}`];
             const loop = fields[`loop_${i}`];
             const ctrl = fields[`ctrl_${i}`];
+            const title = fields[`title_${i}`];
+            const time = fields[`time_${i}`];
+            const type = fields[`type_${i}`];
             const file = files[`file_${i}`];
 
             if (file) {
@@ -85,6 +88,9 @@ app.post('/create-ukr', (req, res) => {
                     mute,
                     loop,
                     ctrl,
+                    title,
+                    time,
+                    type,
                     file: newFilePath,
                 });
 
@@ -104,8 +110,6 @@ app.post('/create-ukr', (req, res) => {
         res.json(jsonData);
     });
 });
-
-
 
 app.get('/layout-ukr', (req, res) => {
     const filePath = path.join(__dirname, 'db-ukr', 'layout.json');

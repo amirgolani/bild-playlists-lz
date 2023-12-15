@@ -17,6 +17,15 @@ function handleMenuPos() {
 
         });
 
+    gsap.to("#listTitles",
+        {
+            top: menuPos ? 150 : 56,
+            scale: menuPos ? 1 : .8,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
+
     gsap.to("#bottom-dark-blur",
         {
             opacity: menuPos ? 1 : .5,
@@ -89,9 +98,6 @@ function handleMenuPos() {
             duration: 1,
             ease: "power2.inOut"
         });
-
-
-
 }
 
 setTimeout(() => {
@@ -253,6 +259,13 @@ function handleSelect(newID) {
         selectedElement = newID;
 
     }
+
+    if (menuPos) {
+
+        setTimeout(() => {
+            handleMenuPos()
+        }, 1500)
+    }
 }
 
 // GSAP animation
@@ -301,29 +314,36 @@ setTimeout(() => {
 function getLayout() {
 
     var layout = `<div id="theMenu" class="menu-container">
-            <div onclick="handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" id="b_0" 
-            style="align-self: stretch; 
+            <div 
+                onclick="handleTitles("gallery"", "Lagezentrum", "Julian Röpcke"); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" 
+                id="b_0"
+                style="align-self: stretch; 
                 width: 360px;
-                padding: 10px; 
-                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/HOMEUKR.jpg);
-                background-size: cover;
-                background-position: center;
-                justify-content: center; 
-                align-items: center; 
-                gap: 10px; 
-                box-shadow: 12px 12px 100px black; border-radius: 10px; border: 2px #cccccc solid;
-                display: inline-flex">
-                <div style="text-align: center; 
-                    color: white; 
-                    font-size: 20px; 
-                    font-family: Gotham; 
-                    font-weight: 400; 
-                    line-height: 20px; 
-                    word-wrap: break-word">
-                    <i class="fa-solid fa-house"></i>
+                    padding: 10px; 
+                    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/HOMEUKR.jpg);
+                    background-size: cover;
+                    background-position: center;
+                    justify-content: center; 
+                    gap: 10px; 
+                    box-shadow: 12px 12px 100px black; 
+                    border-radius: 10px; 
+                    border: 2px #cccccc solid;
+                    display: inline-flex">
+
+                    <div id="listTitles" style="text-align: center; 
+                        position: absolute;
+                        top: 150px;
+                        color: white; 
+                        font-size: 20px; 
+                        font-family: Gotham; 
+                        font-weight: 400; 
+                        line-height: 20px; 
+                        word-wrap: break-word">
+                        <i class="fa-solid fa-house"></i>
                     </div>
-            </div>
-            `;
+
+                </div>
+                `;
 
     fetch('/layout-ukr').then((response) => response.json()).then((json) => {
 
@@ -331,20 +351,22 @@ function getLayout() {
             var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
             console.log(`${filenameArr}`)
             layout += ` 
-            <div onclick="handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();" id="b_${l}" 
+            <div onclick="handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();" 
+            id="b_${l}" 
             style="align-self: stretch; 
-            width: 160px;
+                width: 160px;
                 padding: 10px; 
                 background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${filenameArr.split('.')[0]}.jpg);
                 background-size: cover;
                 background-position: center;
                 justify-content: center; 
-                align-items: center; 
                 box-shadow: 12px 12px 100px black; 
                 border-radius: 10px; 
                 border: 2px #cccccc solid;
                 display: inline-flex">
-                <div style="text-align: center; 
+                <div id="listTitles" style="text-align: center; 
+                position: absolute;
+                    top: 150px;
                     color: white; 
                     font-size: 18px; 
                     font-family: Gotham; 
@@ -358,9 +380,16 @@ function getLayout() {
 
         }
 
-        document.getElementById('layoutBuildUp').innerHTML = layout
+        document.getElementById('layoutBuildUp').innerHTML = layout;
 
     });
+
+}
+
+function handleTitles(icon, title, time) {
+    document.getElementById('video-title').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
+    document.getElementById('video-title').textContent = title;
+    document.getElementById('video-timestamp').textContent = time;
 
 }
 
