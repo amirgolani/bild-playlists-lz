@@ -18,7 +18,7 @@
     <script src="/assets/js/ukr-dark-theme.js"></script>
 </head>
 
-<body style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, rgb(37, 37, 37) 150%);">
+<body style="background-color: black;">
     <div class="full-hd-container">
         <video style="opacity: 0;" id="video" playsinline autoplay muted loop>
             <source src="/assets/gp/BGUKR.webm" type="video/webm">
@@ -49,13 +49,15 @@
 
     </div>
     <div id="video-icon" class="video-icon"></div>
-    <div id="play-icon" class="play-icon" onclick="ctrlPlayVideo()" hidden></div>
-    <div id="pause-icon" class="pause-icon" onclick="pauseVideo()" hidden></div>
-    <div id="art-icon" class="art-icon"></div>
     <div id="video-title" class="video-title">Lagezentrum</div>
     <div id="video-timestamp" class="video-timestamp">Julian Röpcke</div>
-    <div onclick="handleMenuPos()" id="menuPosIcon" class="menu-icon">
-    </div>
+    <div id="menuPosIcon" class="menu-icon" onclick="handleMenuPos()"></div>
+    <div id="move-icon" class="move-icon" onclick="handleScrollPos()"></div>
+    <div id="art-icon" class="art-icon"></div>
+    <div id="play-icon" class="play-icon" onclick="ctrlPlayVideo()" hidden></div>
+    <div id="pause-icon" class="pause-icon" onclick="pauseVideo()" hidden></div>
+
+
 
 
     <script>
@@ -92,7 +94,7 @@
         }
         function timecodeUpdate() {
             // Display the current position of the video in a <p> element with id="demo"
-            document.getElementById("timecode").innerHTML = formatSecondsAsTime(video.currentTime);
+            // document.getElementById("timecode").innerHTML = formatSecondsAsTime(video.currentTime);
         }
         function formatSecondsAsTime(secs, format) {
             var hr = Math.floor(secs / 3600);

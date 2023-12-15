@@ -1,6 +1,7 @@
 // Handle Menu Pos
 
 var menuPos = true;
+var scrollPos = true;
 
 function handleMenuPos() {
 
@@ -36,7 +37,7 @@ function handleMenuPos() {
 
     gsap.to("#left-dark-blur",
         {
-            opacity: menuPos ? 1 : 0,
+            top: menuPos ? -500 : -1800,
             duration: 1,
             ease: "power2.inOut"
 
@@ -73,31 +74,42 @@ function handleMenuPos() {
 
     gsap.to("#art-icon",
         {
+            bottom: menuPos ? 440 : 200,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+    gsap.to("#move-icon",
+        {
             bottom: menuPos ? 370 : 130,
             duration: 1,
             ease: "power2.inOut"
         });
 
-    gsap.to("#video-title",
+}
+
+function handleScrollPos() {
+
+    scrollPos = !scrollPos;
+
+    gsap.to("#move-icon",
         {
-            opacity: menuPos ? 1 : 0,
+            rotation: scrollPos ? -90 : 90,
             duration: 1,
             ease: "power2.inOut"
+
         });
 
-    gsap.to("#video-icon",
+    gsap.to("#theMenu",
         {
-            opacity: menuPos ? 1 : 0,
+            left: scrollPos ? 0 : -960,
             duration: 1,
             ease: "power2.inOut"
+
         });
 
-    gsap.to("#video-timestamp",
-        {
-            opacity: menuPos ? 1 : 0,
-            duration: 1,
-            ease: "power2.inOut"
-        });
+
+
 }
 
 setTimeout(() => {
@@ -180,6 +192,20 @@ setTimeout(() => {
         });
 
     gsap.fromTo("#art-icon",
+        {
+            bottom: 200,
+            opacity: 0
+        },
+        {
+            bottom: 440,
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.fromTo("#move-icon",
         {
             bottom: 130,
             opacity: 0
@@ -264,7 +290,7 @@ function handleSelect(newID) {
 
         setTimeout(() => {
             handleMenuPos()
-        }, 1500)
+        }, 500)
     }
 }
 
@@ -284,8 +310,6 @@ setTimeout(() => {
             ease: "power2.inOut"
 
         });
-
-
 
     gsap.fromTo("#video",
         { scale: 1.25, opacity: 0 },
@@ -315,7 +339,7 @@ function getLayout() {
 
     var layout = `<div id="theMenu" class="menu-container">
             <div 
-                onclick="handleTitles("gallery"", "Lagezentrum", "Julian Röpcke"); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" 
+                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" 
                 id="b_0"
                 style="align-self: stretch; 
                 width: 360px;
@@ -351,9 +375,9 @@ function getLayout() {
             var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
             console.log(`${filenameArr}`)
             layout += ` 
-            <div onclick="handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();" 
-            id="b_${l}" 
-            style="align-self: stretch; 
+            <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();" 
+                id="b_${l}" 
+                style="align-self: stretch; 
                 width: 160px;
                 padding: 10px; 
                 background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${filenameArr.split('.')[0]}.jpg);
@@ -364,18 +388,19 @@ function getLayout() {
                 border-radius: 10px; 
                 border: 2px #cccccc solid;
                 display: inline-flex">
-                <div id="listTitles" style="text-align: center; 
-                position: absolute;
-                    top: 150px;
-                    color: white; 
-                    font-size: 18px; 
-                    font-family: Gotham; 
-                    font-weight: 500; 
-                    line-height: 20px; 
-                    text-transform: uppercase;
-                    word-wrap: break-word">
-                    ${json[l].name}
-                    </div>
+
+                    <div id="listTitles" style="text-align: center; 
+                        position: absolute;
+                        top: 150px;
+                        color: white; 
+                        font-size: 18px; 
+                        font-family: Gotham; 
+                        font-weight: 500; 
+                        line-height: 20px; 
+                        text-transform: uppercase;
+                        word-wrap: break-word">
+                        ${json[l].name}
+                        </div>
             </div>`
 
         }
@@ -387,10 +412,9 @@ function getLayout() {
 }
 
 function handleTitles(icon, title, time) {
-    document.getElementById('video-title').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
+    document.getElementById('video-icon').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
     document.getElementById('video-title').textContent = title;
     document.getElementById('video-timestamp').textContent = time;
-
 }
 
 getLayout()

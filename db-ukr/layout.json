@@ -1,53 +1,170 @@
 [
   {
-    "lastUpdate": 1702585838017
+    "lastUpdate": 1702653712689
   },
   {
     "name": [
       "Ukraine"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/1.webm"
+    "title": [
+      "Ukraine Eroberung"
+    ],
+    "time": [
+      "15.12.2023"
+    ],
+    "type": [
+      "map"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Ukraine_Eroberung.webm"
   },
   {
     "name": [
       "Osten"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/4.webm"
+    "title": [
+      "Offensive im Osten"
+    ],
+    "time": [
+      "15.12.2023"
+    ],
+    "type": [
+      "Map"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Offensive_im_Osten.webm"
   },
   {
     "name": [
       "Süden"
     ],
-    "mute": [
-      "on"
+    "title": [
+      "Offensive im Süden"
     ],
-    "ctrl": [
-      "on"
+    "time": [
+      "15.12.2023"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/8.webm"
+    "type": [
+      "Map"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Offensive_im_Sueden.webm"
   },
   {
     "name": [
       "Awdijiwka"
     ],
-    "mute": [
-      "on"
+    "title": [
+      "Awdijiwka"
     ],
-    "ctrl": [
-      "on"
+    "time": [
+      "15.12.2023"
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/11.webm"
+    "type": [
+      "Map"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_Ukraine_Awdijiwka.webm"
   },
   {
     "name": [
       "Gegenoff."
     ],
-    "mute": [
-      "on"
+    "title": [
+      "Gegenoffensive"
+    ],
+    "time": [
+      "15.12.2023"
+    ],
+    "type": [
+      "Map"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Ukraine_Gegenoffensive.webm"
+  },
+  {
+    "name": [
+      "krynki"
     ],
     "ctrl": [
-      "on"
+      ""
     ],
-    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/6.webm"
+    "title": [
+      "@bayraktar_1love"
+    ],
+    "time": [
+      "6:04 PM · Dec 10, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\06_krynky.webm"
+  },
+  {
+    "name": [
+      "Bradley"
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      "@bayraktar_1love"
+    ],
+    "time": [
+      "12:02 PM · Dec 8, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\07_Bradley_MT_LB8.webm"
+  },
+  {
+    "name": [
+      "Himras"
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      "@front_ukrainian"
+    ],
+    "time": [
+      "10:57 AM · Dec 12, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\08_HIMARS.webm"
+  },
+  {
+    "name": [
+      "Kubaner"
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      "@markito0171"
+    ],
+    "time": [
+      "12:18 PM · Dec 10, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\09_KUBANER.webm"
+  },
+  {
+    "name": [
+      "su25"
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      "@orange_hawk"
+    ],
+    "time": [
+      "2:44 PM · Dec 10, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\08_Su25_BM21.webm"
   }
 ]
