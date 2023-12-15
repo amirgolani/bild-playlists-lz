@@ -48,17 +48,95 @@
         outline: none;">
 
     </div>
+    <canvas class="full-hd-container" id="paintCanvas" width="1920" height="1080" hidden></canvas>
+
     <div id="video-icon" class="video-icon"></div>
     <div id="video-title" class="video-title">Lagezentrum</div>
     <div id="video-timestamp" class="video-timestamp">Julian Röpcke</div>
     <div id="menuPosIcon" class="menu-icon" onclick="handleMenuPos()"></div>
     <div id="move-icon" class="move-icon" onclick="handleScrollPos()"></div>
-    <div id="art-icon" class="art-icon"></div>
+    <div id="art-icon" class="art-icon" onclick="manageDraws()"></div>
     <div id="play-icon" class="play-icon" onclick="ctrlPlayVideo()" hidden></div>
     <div id="pause-icon" class="pause-icon" onclick="pauseVideo()" hidden></div>
 
 
+    <script>
+        var canvas = document.getElementById('paintCanvas');
+        var context = canvas.getContext('2d');
+        var painting = false;
+        var drawOnScreen = false;
+        var isBlinking = false;
 
+        function manageDraws() {
+            if (!drawOnScreen) {
+                drawOnScreen = !drawOnScreen;
+                gsap.to('#art-icon', { opacity: 1, duration: 0.5 });
+                console.log("on")
+                startPainting()
+                canvas.hidden = false;
+            } else {
+                drawOnScreen = !drawOnScreen;
+                gsap.to('#art-icon', { opacity: .5, duration: 0.5 });
+
+                stopPainting();
+                clearCanvas();
+                canvas.hidden = true;
+            }
+
+        }
+
+
+        function startPainting() {
+            canvas.addEventListener('touchstart', function (e) {
+                startPosition(e.touches);
+            });
+            canvas.addEventListener('touchend', endPosition);
+            canvas.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+                draw(e.touches);
+            });
+        }
+
+        function stopPainting() {
+            canvas.removeEventListener('touchstart', function (e) {
+                startPosition(e.touches);
+            });
+            canvas.removeEventListener('touchend', endPosition);
+            canvas.removeEventListener('touchmove', function (e) {
+                e.preventDefault();
+                draw(e.touches);
+            });
+        }
+
+        function clearCanvas() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function startPosition(touches) {
+            painting = true;
+            draw(touches);
+        }
+
+        function endPosition() {
+            painting = false;
+            context.beginPath();
+        }
+
+        function draw(touches) {
+            if (!painting) return;
+
+            context.lineWidth = 5;
+            context.lineCap = 'round';
+            context.strokeStyle = '#000';
+
+            for (var i = 0; i < touches.length; i++) {
+                context.lineTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+                context.stroke();
+                context.beginPath();
+                context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+            }
+        }
+    </script>
 
     <script>
         var seekslider;

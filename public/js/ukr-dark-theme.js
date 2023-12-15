@@ -1,3 +1,6 @@
+
+
+
 // Handle Menu Pos
 
 var menuPos = true;
@@ -198,7 +201,7 @@ setTimeout(() => {
         },
         {
             bottom: 440,
-            opacity: 1,
+            opacity: .5,
             duration: 2,
             delay: .2,
             ease: "power2.inOut"
@@ -477,3 +480,6 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
         console.log("Com Audio");
     }
 }
+
+
+// Blink on draw
