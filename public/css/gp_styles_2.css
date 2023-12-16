@@ -191,3 +191,9 @@ input[type="range"]::-webkit-slider-thumb {
     appearance: none;
     /* Remove default styles on Chrome and Safari */
 }
+
+.hp-img {
+    width: 1920px;
+    height: 1080px;
+    background-size: cover;
+}

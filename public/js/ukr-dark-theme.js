@@ -1,6 +1,3 @@
-
-
-
 // Handle Menu Pos
 
 var menuPos = true;
