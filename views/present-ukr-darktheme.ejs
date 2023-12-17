@@ -33,22 +33,26 @@
         <div id="left-dark-blur" class="left-dark-blur"></div>
     </div>
     <!-- <div class="hp-img" id="imageContainer"></div> -->
-    <div id="layoutBuildUp" class="full-hd-container"></div>
-    <div id="seek" hidden>
-        <!-- <div id="timecode" class="timecode">00:00</div> -->
-        <input id="seekslider" type="range" min="0" max="1500" value="0" step="1"
-            style="position: absolute; top: 760px; left: 190px; width: 400px; height: 10px; background-color: white; border: none; appearance: none; outline: none;">
+    <div id="layoutBuildUp" class="full-hd-container">
     </div>
+
     <canvas class="full-hd-container" id="paintCanvas" width="1920" height="1080" hidden></canvas>
     <div id="video-icon" class="video-icon"></div>
     <div id="video-title" class="video-title">Lagezentrum</div>
     <div id="video-timestamp" class="video-timestamp">Julian Röpcke</div>
-    <div id="menuPosIcon" class="menu-icon" onclick="handleMenuPos()"></div>
-    <div id="move-icon" class="move-icon" onclick="handleScrollPos()"></div>
-    <div id="art-icon" class="art-icon" onclick="manageDraws()"></div>
-    <div id="play-icon" class="pause-icon" onclick="handlePlays()" hidden></div>
-    <script src="/assets/js/ukr-dark-theme.js"></script>
+    <div id="menuToggle" style="position: absolute; opacity: 0; ">
+        <div id="seek" hidden>
+            <!-- <div id="timecode" class="timecode">00:00</div> -->
+            <input id="seekslider" type="range" min="0" max="1500" value="0" step="1"
+                style="position: absolute; top: 760px; left: 190px; width: 400px; height: 10px; background-color: white; border: none; appearance: none; outline: none;">
+        </div>
+        <div id="menuPosIcon" class="menu-icon" onclick="handleMenuPos()"></div>
+        <div id="move-icon" class="move-icon" onclick="handleScrollPos()"></div>
+        <div id="art-icon" class="art-icon" onclick="manageDraws()"></div>
+        <div id="play-icon" class="pause-icon" onclick="handlePlays()" hidden></div>
+    </div>
 
+    <script src="/assets/js/ukr-dark-theme.js"></script>
 
 </body>
 

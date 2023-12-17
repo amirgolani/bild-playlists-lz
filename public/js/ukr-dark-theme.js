@@ -2,7 +2,6 @@
 
 var menuPos = true;
 var scrollPos = true;
-
 function handleMenuPos() {
 
     menuPos = !menuPos;
@@ -45,67 +44,34 @@ function handleMenuPos() {
 
     gsap.to("#menuPosIcon",
         {
-            top: menuPos ? 1040 - 300 : 1040 - 60,
             rotation: menuPos ? 0 : -540,
             duration: 1,
             ease: "power2.inOut"
         });
 
-    gsap.to("#play-icon",
+    gsap.to('#menuToggle',
         {
-            top: menuPos ? 1040 - 300 : 1040 - 60,
-            duration: 1,
-            ease: "power2.inOut"
-        });
-
-    gsap.to("#seekslider",
-        {
-            top: menuPos ? 760 : 1000,
-            duration: 1,
-            ease: "power2.inOut"
-        });
-
-    gsap.to("#art-icon",
-        {
-            top: menuPos ? 1040 - 440 : 1040 - 200,
-            duration: 1,
-            ease: "power2.inOut"
-        });
-
-    gsap.to("#move-icon",
-        {
-            top: menuPos ? 1040 - 370 : 1040 - 130,
+            top: menuPos ? 0 : 240,
             duration: 1,
             ease: "power2.inOut"
         });
 
 }
-
-function handleScrollPos() {
-
-    scrollPos = !scrollPos;
-
-    gsap.to("#move-icon",
-        {
-            rotation: scrollPos ? -90 : 90,
-            duration: 1,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.to("#theMenu",
-        {
-            left: scrollPos ? 0 : -960,
-            duration: 1,
-            ease: "power2.inOut"
-
-        });
-
-
-
-}
-
 setTimeout(() => {
+    gsap.fromTo("#theMenu",
+        {
+            top: 1000,
+            opacity: 0
+        },
+        {
+            top: 760,
+            opacity: 1,
+            duration: 2,
+            delay: .2,
+            ease: "power2.inOut"
+
+        });
+
     gsap.fromTo("#video-title",
         {
             opacity: 0
@@ -139,71 +105,53 @@ setTimeout(() => {
             duration: 2,
             delay: .2,
             ease: "power2.inOut"
-
         });
 
-    gsap.fromTo("#menuPosIcon",
+    gsap.fromTo("#menuToggle",
         {
-            top: 1040 - 60,
-            opacity: 0
+            opacity: 0,
+            top: 240
         },
         {
-            top: 1040 - 300,
+            top: 0,
             opacity: 1,
             duration: 2,
             delay: .2,
             ease: "power2.inOut"
-
-        });
-
-    gsap.fromTo("#play-icon",
-        {
-            top: 1040 - 60,
-            opacity: 0
-        },
-        {
-            top: 1040 - 300,
-            opacity: 1,
-            duration: 2,
-            delay: .2,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.fromTo("#art-icon",
-        {
-            top: 1040 - 200,
-            opacity: 0
-        },
-        {
-            top: 1040 - 440,
-            opacity: .5,
-            duration: 2,
-            delay: .2,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.fromTo("#move-icon",
-        {
-            top: 1040 - 130,
-            opacity: 0
-        },
-        {
-            top: 1040 - 370,
-            opacity: 1,
-            duration: 2,
-            delay: .2,
-            ease: "power2.inOut"
-
         });
 }, 100)
+
+
+// Handle Scroll
+
+function handleScrollPos() {
+
+    scrollPos = !scrollPos;
+
+    gsap.to("#move-icon",
+        {
+            rotation: scrollPos ? -90 : 90,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.to("#theMenu",
+        {
+            left: scrollPos ? 0 : -960,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
+
+
+
+}
 
 
 // Handle Select
 
 var selectedElement = "b_0"
-
 function handleSelect(newID) {
 
     if (newID !== selectedElement) {
@@ -272,24 +220,7 @@ function handleSelect(newID) {
         }, 500)
     }
 }
-
-// GSAP animation
-
 setTimeout(() => {
-    gsap.fromTo("#theMenu",
-        {
-            top: 1000,
-            opacity: 0
-        },
-        {
-            top: 760,
-            opacity: 1,
-            duration: 2,
-            delay: .2,
-            ease: "power2.inOut"
-
-        });
-
     gsap.fromTo("#video",
         { scale: 1.25, opacity: 0 },
         {
@@ -307,18 +238,16 @@ setTimeout(() => {
             opacity: 1,
             ease: "power2.out"
         });
-
-
 }, 100);
 
 
-// Create Buttons
+// Create Layout
 
 function getLayout() {
 
     var layout = `<div id="theMenu" class="menu-container">
             <div 
-                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons'); unhighlight();" 
+                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons');" 
                 id="b_0"
                 style="align-self: stretch; 
                 width: 360px;
@@ -354,7 +283,7 @@ function getLayout() {
             var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
             console.log(`${filenameArr}`)
             layout += ` 
-            <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}'); highlight();" 
+            <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}');" 
                 id="b_${l}" 
                 style="align-self: stretch; 
                 width: 160px;
@@ -389,38 +318,16 @@ function getLayout() {
     });
 
 }
-
 function handleTitles(icon, title, time) {
     document.getElementById('video-icon').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
     document.getElementById('video-title').textContent = title;
     document.getElementById('video-timestamp').textContent = time;
 }
+getLayout();
 
-getLayout()
 
+// handle plays
 
-// Player Controls
-
-// Highlightet Button *//
-function highlight(e) {
-    // var videos = document.getElementsByClassName("video");
-    // for (const video of videos) {
-    //     video.classList.remove("active");
-    // }
-    // e = e || window.event;
-    // e.srcElement.classList.add("active");
-    // console.log(e.srcElement);
-}
-
-// Unhighlightet Button *//
-function unhighlight(e) {
-    var videos = document.getElementsByClassName("video");
-    for (const video of videos) {
-        video.classList.remove("active");
-    }
-}
-
-// Audio optional part *//
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons") {
     var video = document.getElementById("video");
     var seek = document.getElementById("seek");
@@ -456,100 +363,16 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
         console.log("Com Audio");
     }
 }
-
-
-// Handle draw
-
-var canvas = document.getElementById('paintCanvas');
-var context = canvas.getContext('2d');
-var painting = false;
-var drawOnScreen = false;
-var isBlinking = false;
-
-function manageDraws() {
-    if (!drawOnScreen) {
-        drawOnScreen = !drawOnScreen;
-        gsap.to('#art-icon', { opacity: 1, duration: 0.5 });
-        console.log("on")
-        startPainting()
-        canvas.hidden = false;
-    } else {
-        drawOnScreen = !drawOnScreen;
-        gsap.to('#art-icon', { opacity: .5, duration: 0.5 });
-
-        stopPainting();
-        clearCanvas();
-        canvas.hidden = true;
-    }
-
-}
-
-function startPainting() {
-    canvas.addEventListener('touchstart', function (e) {
-        startPosition(e.touches);
-    });
-    canvas.addEventListener('touchend', endPosition);
-    canvas.addEventListener('touchmove', function (e) {
-        e.preventDefault();
-        draw(e.touches);
-    });
-}
-
-function stopPainting() {
-    canvas.removeEventListener('touchstart', function (e) {
-        startPosition(e.touches);
-    });
-    canvas.removeEventListener('touchend', endPosition);
-    canvas.removeEventListener('touchmove', function (e) {
-        e.preventDefault();
-        draw(e.touches);
-    });
-}
-
-function clearCanvas() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-function startPosition(touches) {
-    painting = true;
-    draw(touches);
-}
-
-function endPosition() {
-    painting = false;
-    context.beginPath();
-}
-
-function draw(touches) {
-    if (!painting) return;
-
-    context.lineWidth = 5;
-    context.lineCap = 'round';
-    context.strokeStyle = '#000';
-
-    for (var i = 0; i < touches.length; i++) {
-        context.lineTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
-        context.stroke();
-        context.beginPath();
-        context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
-    }
-}
-
-
-
-
-
-// handle plays
-
-var seekslider;
 var playButton = document.getElementById('play-icon');
 var video = document.getElementById('video'), frameTime = 1 / 25;
-seekslider = document.getElementById("seekslider");
-// Add event listeners
+var seekslider = document.getElementById("seekslider");
+
 seekslider.addEventListener("change", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 video.ontimeupdate = function () { timecodeUpdate() };
+
 var play = true;
+
 function pauseVideo() {
     video.pause();
     console.log("pause");
@@ -558,7 +381,6 @@ function ctrlPlayVideo() {
     video.play();
     console.log("play");
 }
-
 function handlePlays() {
     play = !play;
     if (play) {
@@ -570,14 +392,12 @@ function handlePlays() {
 
     }
 }
-
 function framePlus() {
     video.currentTime = Math.min(video.duration, video.currentTime + frameTime);
 }
 function frameMinus() {
     video.currentTime = Math.max(0, video.currentTime - frameTime);
 }
-
 function vidSeek() {
     // pauseVideo();
     var seekto = video.duration * (seekslider.value / 1500);
@@ -608,13 +428,13 @@ function formatSecondsAsTime(secs, format) {
 }
 
 
+// Handle draw
 
 var canvas = document.getElementById('paintCanvas');
 var context = canvas.getContext('2d');
 var painting = false;
 var drawOnScreen = false;
 var isBlinking = false;
-
 function manageDraws() {
     if (!drawOnScreen) {
         drawOnScreen = !drawOnScreen;
@@ -632,7 +452,6 @@ function manageDraws() {
     }
 
 }
-
 function startPainting() {
     canvas.addEventListener('touchstart', function (e) {
         startPosition(e.touches);
@@ -643,7 +462,6 @@ function startPainting() {
         draw(e.touches);
     });
 }
-
 function stopPainting() {
     canvas.removeEventListener('touchstart', function (e) {
         startPosition(e.touches);
@@ -654,21 +472,17 @@ function stopPainting() {
         draw(e.touches);
     });
 }
-
 function clearCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
-
 function startPosition(touches) {
     painting = true;
     draw(touches);
 }
-
 function endPosition() {
     painting = false;
     context.beginPath();
 }
-
 function draw(touches) {
     if (!painting) return;
 

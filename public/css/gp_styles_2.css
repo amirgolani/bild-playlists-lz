@@ -1,57 +1,52 @@
 .menu-icon {
     position: absolute;
     left: 50px;
-    bottom: 300px;
+    top: 740px;
     background-image: url(/assets/gp/down.png);
     background-size: cover;
     width: 50px;
     height: 50px;
-    opacity: 0;
 }
 
 .play-icon {
     position: absolute;
     left: 120px;
-    bottom: 300px;
+    top: 740px;
     background-image: url(/assets/gp/play.png);
     background-size: cover;
     width: 50px;
     height: 50px;
-    opacity: 0;
 }
 
 .pause-icon {
     position: absolute;
     left: 120px;
-    bottom: 300px;
+    top: 740px;
     background-image: url(/assets/gp/pause.png);
     background-size: cover;
     width: 50px;
     height: 50px;
-    opacity: 0;
 }
 
 .move-icon {
     position: absolute;
     left: 50px;
-    bottom: 400px;
+    top: 670px;
     background-image: url(/assets/gp/down.png);
     background-size: cover;
     width: 50px;
     rotate: -90deg;
     height: 50px;
-    opacity: 0;
 }
 
 .art-icon {
     position: absolute;
     left: 50px;
-    bottom: 500px;
+    top: 600px;
     background-image: url(/assets/gp/art.png);
     background-size: cover;
     width: 50px;
     height: 50px;
-    opacity: 0;
 }
 
 .video-icon {
