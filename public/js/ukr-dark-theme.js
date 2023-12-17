@@ -1,10 +1,13 @@
 // Handle Menu Pos
 
 var menuPos = true;
-var scrollPos = true;
-function handleMenuPos() {
+function handleMenuPos(selection) {
 
-    menuPos = !menuPos;
+    if (selection === undefined) {
+        menuPos = !menuPos
+    } else {
+        menuPos = selection
+    }
 
     console.log(menuPos)
 
@@ -56,6 +59,13 @@ function handleMenuPos() {
             ease: "power2.inOut"
         });
 
+    gsap.to('#video',
+        {
+            top: menuPos ? -100 : 0,
+            duration: 1,
+            ease: "power2.inOut"
+        })
+
 }
 setTimeout(() => {
     gsap.fromTo("#theMenu",
@@ -72,31 +82,7 @@ setTimeout(() => {
 
         });
 
-    gsap.fromTo("#video-title",
-        {
-            opacity: 0
-        },
-        {
-            opacity: 1,
-            duration: 2,
-            delay: .2,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.fromTo("#video-icon",
-        {
-            opacity: 0
-        },
-        {
-            opacity: 1,
-            duration: 2,
-            delay: .2,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.fromTo("#video-timestamp",
+    gsap.fromTo("#videoTitleToggle",
         {
             opacity: 0
         },
@@ -106,6 +92,7 @@ setTimeout(() => {
             delay: .2,
             ease: "power2.inOut"
         });
+
 
     gsap.fromTo("#menuToggle",
         {
@@ -123,17 +110,24 @@ setTimeout(() => {
 
 
 // Handle Scroll
+var scrollPos = true;
+function handleScrollPos(selection) {
 
-function handleScrollPos() {
+    console.log(selection)
 
-    scrollPos = !scrollPos;
+    if (selection === undefined) {
+        scrollPos = !scrollPos
+    } else {
+        scrollPos = selection
+    }
+
+    console.log(scrollPos)
 
     gsap.to("#move-icon",
         {
             rotation: scrollPos ? -90 : 90,
             duration: 1,
             ease: "power2.inOut"
-
         });
 
     gsap.to("#theMenu",
@@ -141,10 +135,7 @@ function handleScrollPos() {
             left: scrollPos ? 0 : -960,
             duration: 1,
             ease: "power2.inOut"
-
         });
-
-
 
 }
 
@@ -314,6 +305,37 @@ function getLayout() {
         }
 
         document.getElementById('layoutBuildUp').innerHTML = layout;
+
+        // drag the menu
+
+
+        // Select the movable div
+        const movableDiv = document.getElementById('theMenu');
+
+        // Initialize variables
+        let startX = 0;
+        let cumulativeDistance = 0;
+
+        // Add touchstart event listener
+        movableDiv.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        // Add touchmove event listener
+        movableDiv.addEventListener('touchmove', (e) => {
+            // Calculate the distance moved
+            const distance = e.touches[0].clientX - startX;
+
+            // Log the cumulative horizontal distance
+            cumulativeDistance += distance;
+            console.log('Cumulative Distance:', cumulativeDistance);
+
+            // Use GSAP to move the div horizontally
+            gsap.to(movableDiv, { x: cumulativeDistance * 2, duration: 0.2 });
+
+            // Update the starting position for the next move event
+            startX = e.touches[0].clientX;
+        });
 
     });
 
@@ -497,3 +519,32 @@ function draw(touches) {
         context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
     }
 }
+
+// Function to handle arrow key press
+function handleArrowKeyPress(event) {
+    // Check which arrow key is pressed based on the key code
+    switch (event.keyCode) {
+        case 37: // Left arrow key
+            console.log("Left arrow key pressed!");
+            handleScrollPos(true)
+            break;
+        case 38: // Up arrow key
+            console.log("Up arrow key pressed!");
+            handleMenuPos(true)
+            break;
+        case 39: // Right arrow key
+            console.log("Right arrow key pressed!");
+            handleScrollPos(false)
+            break;
+        case 40: // Down arrow key
+            console.log("Down arrow key pressed!");
+            handleMenuPos(false)
+            break;
+        default:
+        // Do nothing for other keys
+    }
+}
+
+// Adding the event listener to the document
+document.addEventListener("keydown", handleArrowKeyPress);
+

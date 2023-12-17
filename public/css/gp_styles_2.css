@@ -47,6 +47,7 @@
     background-size: cover;
     width: 50px;
     height: 50px;
+    opacity: .5;
 }
 
 .video-icon {
@@ -57,7 +58,7 @@
     height: 40px;
     background-image: url(/assets/gp/gallery.png);
     background-size: cover;
-    opacity: 0;
+    opacity: 1;
 }
 
 .video-title {
@@ -70,7 +71,7 @@
     font-family: Gotham;
     font-weight: 700;
     line-height: 20px;
-    opacity: 0;
+    opacity: 1;
 }
 
 .video-timestamp {
@@ -83,8 +84,7 @@
     font-family: Gotham;
     font-weight: 300;
     line-height: 20px;
-    opacity: 0;
-
+    opacity: 1;
 }
 
 .main-title {
@@ -149,7 +149,8 @@
     gap: 10px;
     padding: 50px;
     position: absolute;
-    display: inline-flex
+    display: inline-flex;
+    touch-action: none;
 }
 
 .timecode {
@@ -173,9 +174,9 @@
 }
 
 input[type="range"]::-webkit-slider-thumb {
-    width: 20px;
+    width: 10px;
     /* Set the width of the thumb */
-    height: 20px;
+    height: 10px;
     /* Set the height of the thumb */
     background-color: blue;
     /* Set the background color of the thumb */
