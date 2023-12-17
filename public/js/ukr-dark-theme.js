@@ -59,12 +59,12 @@ function handleMenuPos(selection) {
             ease: "power2.inOut"
         });
 
-    gsap.to('#video',
-        {
-            top: menuPos ? -100 : 0,
-            duration: 1,
-            ease: "power2.inOut"
-        })
+    // gsap.to('#video',
+    //     {
+    //         opacity: menuPos ? .8 : 1,
+    //         duration: 1,
+    //         ease: "power2.inOut"
+    //     })
 
 }
 setTimeout(() => {
