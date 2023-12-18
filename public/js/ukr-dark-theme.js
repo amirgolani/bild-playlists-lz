@@ -232,7 +232,7 @@ function getLayout() {
 
     var layout = `<div id="theMenu" class="menu-container">
             <div 
-                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons', '0');" 
+                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons', '0', '0.04');" 
                 id="b_0"
                 class="card-in-menu"
                 style="width: 360px;
@@ -251,7 +251,7 @@ function getLayout() {
         for (l = 1; l < json.length; l++) {
             var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
             layout += ` 
-            <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${json[l].info.resolution ? '1' : '0'}');" 
+            <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${json[l].info.resolution ? '1' : '0'}', '${json[l].info.fps}');" 
                 class="card-in-menu"    
                 id="b_${l}" 
                 style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${replaceFileExtension(filenameArr)});">
@@ -306,11 +306,12 @@ getLayout();
 
 
 // handle plays
-function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG) {
+function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG, fps) {
     var video = document.getElementById("video");
     var videoBg = document.getElementById("video-bg")
     var seek = document.getElementById("seek");
 
+    frameTime = parseInt(fps)
 
     video.setAttribute('src', path)
     video.setAttribute('type', `video/${getFileExtension(path)}`)

@@ -1,6 +1,6 @@
 [
   {
-    "lastUpdate": 1702911916454
+    "lastUpdate": 1702913359635
   },
   {
     "name": [
@@ -18,7 +18,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Ukraine_Eroberung.webm",
     "info": {
       "resolution": true,
-      "framerate": "25/1"
+      "framerate": 0.04
     }
   },
   {
@@ -37,7 +37,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Offensive_im_Osten.webm",
     "info": {
       "resolution": true,
-      "framerate": "25/1"
+      "framerate": 0.04
     }
   },
   {
@@ -56,7 +56,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Offensive_im_Sueden.webm",
     "info": {
       "resolution": true,
-      "framerate": "25/1"
+      "framerate": 0.04
     }
   },
   {
@@ -75,7 +75,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_Ukraine_Awdijiwka.webm",
     "info": {
       "resolution": true,
-      "framerate": "25/1"
+      "framerate": 0.04
     }
   },
   {
@@ -94,7 +94,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Ukraine_Gegenoffensive.webm",
     "info": {
       "resolution": true,
-      "framerate": "25/1"
+      "framerate": 0.04
     }
   },
   {
@@ -119,7 +119,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_front_ukrainian_a3fcab.mp4",
     "info": {
       "resolution": true,
-      "framerate": "2997/100"
+      "framerate": 0.0333667000333667
     }
   },
   {
@@ -144,7 +144,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_666_mancer_d57721.mp4",
     "info": {
       "resolution": true,
-      "framerate": "30/1"
+      "framerate": 0.03333333333333333
     }
   },
   {
@@ -169,7 +169,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_JulianRoepcke_fdc85c.mp4",
     "info": {
       "resolution": false,
-      "framerate": "30/1"
+      "framerate": 0.03333333333333333
     }
   },
   {
@@ -194,7 +194,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_RadarFennec_373156.mp4",
     "info": {
       "resolution": false,
-      "framerate": "30/1"
+      "framerate": 0.03333333333333333
     }
   },
   {
@@ -219,7 +219,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_efa39b.mp4",
     "info": {
       "resolution": false,
-      "framerate": "30/1"
+      "framerate": 0.03333333333333333
     }
   },
   {
@@ -244,7 +244,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_RadarFennec_6d0f8d.mp4",
     "info": {
       "resolution": true,
-      "framerate": "24000/1001"
+      "framerate": 0.04170833333333333
     }
   },
   {
@@ -269,7 +269,7 @@
     "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_Lithuanian_MoD_5fb54d.mp4",
     "info": {
       "resolution": true,
-      "framerate": "50/1"
+      "framerate": 0.02
     }
   }
 ]

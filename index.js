@@ -303,9 +303,14 @@ function getVideoInfo(videoPath) {
                 return;
             }
 
+            const framerateParts = videoStream.r_frame_rate.split('/');
+            const numerator = parseInt(framerateParts[1], 10);
+            const denominator = parseInt(framerateParts[0], 10);
+            const durationOfOneFrame = numerator / denominator;
+
             const videoInfo = {
                 resolution: videoStream.width / videoStream.height === 16 / 9 ? true : false,
-                framerate: videoStream.r_frame_rate,
+                framerate: durationOfOneFrame,
             };
 
             resolve(videoInfo);
