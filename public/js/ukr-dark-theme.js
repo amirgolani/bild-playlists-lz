@@ -111,7 +111,6 @@ setTimeout(() => {
 var scrollPos = true;
 function handleScrollPos(selection) {
 
-
     if (selection === undefined) {
         scrollPos = !scrollPos
     } else {
@@ -137,6 +136,7 @@ function handleScrollPos(selection) {
 
 // Handle Select
 var selectedElement = "b_0"
+var menuLeft = 0;
 function handleSelect(newID) {
 
     if (newID !== selectedElement) {
@@ -200,6 +200,8 @@ function handleSelect(newID) {
                 duration: 1,
                 ease: "power2.inOut"
             });
+
+        menuLeft = -parseInt(newID.split('_')[1]) * 160 + 8 * parseInt(newID.split('_')[1])
 
         selectedElement = newID;
 
@@ -276,28 +278,35 @@ function getLayout() {
         // Select the movable div
         const movableDiv = document.getElementById('theMenu');
 
-        // Initialize variables
+        // Initialize touch-related variables
+        let isDragging = false;
         let startX = 0;
-        let cumulativeDistance = 0;
+        let initialLeft = 0;
 
-        // Add touchstart event listener
-        movableDiv.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
+        // Add touch event listeners
+        movableDiv.addEventListener('touchstart', (event) => {
+            isDragging = true;
+            startX = event.touches[0].clientX;
+            initialLeft = parseFloat(window.getComputedStyle(movableDiv).left);
         });
 
-        // Add touchmove event listener
-        movableDiv.addEventListener('touchmove', (e) => {
-            // Calculate the distance moved
-            const distance = e.touches[0].clientX - startX;
+        movableDiv.addEventListener('touchmove', (event) => {
+            if (isDragging) {
+                const touchX = event.touches[0].clientX;
+                const moveX = touchX - startX;
+                const newLeft = initialLeft + moveX;
 
-            // Log the cumulative horizontal distance
-            cumulativeDistance += distance;
+                // Update the left property using GSAP for smooth animation
+                gsap.to(movableDiv, { left: newLeft });
+            }
+        });
 
-            // Use GSAP to move the div horizontally
-            gsap.to(movableDiv, { x: cumulativeDistance, duration: 0.2 });
+        movableDiv.addEventListener('touchend', () => {
+            isDragging = false;
+        });
 
-            // Update the starting position for the next move event
-            startX = e.touches[0].clientX;
+        movableDiv.addEventListener('touchcancel', () => {
+            isDragging = false;
         });
 
     });
