@@ -201,7 +201,6 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             });
 
-        menuLeft = -parseInt(newID.split('_')[1]) * 160 + 8 * parseInt(newID.split('_')[1])
 
         selectedElement = newID;
 
@@ -294,7 +293,7 @@ function getLayout() {
             if (isDragging) {
                 const touchX = event.touches[0].clientX;
                 const moveX = touchX - startX;
-                const newLeft = initialLeft + moveX;
+                const newLeft = clamp(initialLeft + moveX, -800, 0);
 
                 // Update the left property using GSAP for smooth animation
                 gsap.to(movableDiv, { left: newLeft });
@@ -643,3 +642,7 @@ function getFileExtension(fileName) {
     }
 }
 
+
+function clamp(value, min, max) {
+    if (value < min) {return min} else if (value > max) {return max} else {return value}
+}
