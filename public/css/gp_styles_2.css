@@ -32,10 +32,9 @@
     position: absolute;
     left: 50px;
     top: 670px;
-    background-image: url(/assets/gp/down.png);
+    background-image: url(/assets/gp/home.png);
     background-size: cover;
     width: 50px;
-    rotate: -90deg;
     height: 50px;
 }
 

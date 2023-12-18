@@ -109,25 +109,11 @@ setTimeout(() => {
 
 // Handle Scroll
 var scrollPos = true;
-function handleScrollPos(selection) {
-
-    if (selection === undefined) {
-        scrollPos = !scrollPos
-    } else {
-        scrollPos = selection
-    }
-
-
-    gsap.to("#move-icon",
-        {
-            rotation: scrollPos ? -90 : 90,
-            duration: 1,
-            ease: "power2.inOut"
-        });
+function handleScrollPos() {
 
     gsap.to("#theMenu",
         {
-            left: scrollPos ? 0 : -960,
+            left: 0,
             duration: 1,
             ease: "power2.inOut"
         });
@@ -235,6 +221,7 @@ setTimeout(() => {
 
 
 // Create Layout
+var listLength = 0;
 function getLayout() {
 
     var layout = `<div id="theMenu" class="menu-container">
@@ -254,7 +241,7 @@ function getLayout() {
                 `;
 
     fetch('/layout-ukr').then((response) => response.json()).then((json) => {
-
+        listLength = json.length;
         for (l = 1; l < json.length; l++) {
             var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
             layout += ` 
@@ -293,7 +280,7 @@ function getLayout() {
             if (isDragging) {
                 const touchX = event.touches[0].clientX;
                 const moveX = touchX - startX;
-                const newLeft = clamp(initialLeft + moveX, -800, 0);
+                const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
 
                 // Update the left property using GSAP for smooth animation
                 gsap.to(movableDiv, { left: newLeft });
@@ -644,5 +631,5 @@ function getFileExtension(fileName) {
 
 
 function clamp(value, min, max) {
-    if (value < min) {return min} else if (value > max) {return max} else {return value}
+    if (value < min) { return min } else if (value > max) { return max } else { return value }
 }
