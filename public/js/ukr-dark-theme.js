@@ -367,11 +367,12 @@ var video = document.getElementById('video'), frameTime = 1 / 25;
 var videoBg = document.getElementById('video-bg'), frameTime = 1 / 25;
 var seekslider = document.getElementById("seekslider");
 
-seekslider.addEventListener("change", vidSeek, false);
+seekslider.addEventListener("input", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 video.ontimeupdate = function () { timecodeUpdate() };
 
 var play = true;
+let isTimeDragging = false;
 
 function pauseVideo() {
     video.pause();
