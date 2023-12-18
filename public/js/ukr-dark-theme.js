@@ -288,7 +288,7 @@ function getLayout() {
             cumulativeDistance += distance;
 
             // Use GSAP to move the div horizontally
-            gsap.to(movableDiv, { x: cumulativeDistance * 2, duration: 0.2 });
+            gsap.to(movableDiv, { x: cumulativeDistance, duration: 0.2 });
 
             // Update the starting position for the next move event
             startX = e.touches[0].clientX;
