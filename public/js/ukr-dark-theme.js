@@ -132,7 +132,6 @@ function handleScrollPos(selection) {
             duration: 1,
             ease: "power2.inOut"
         });
-
 }
 
 
@@ -192,6 +191,13 @@ function handleSelect(newID) {
             {
                 duration: .8,
                 width: 120,
+                ease: "power2.inOut"
+            });
+
+        gsap.to("#theMenu",
+            {
+                left: -parseInt(newID.split('_')[1]) * 160 + 8 * parseInt(newID.split('_')[1]),
+                duration: 1,
                 ease: "power2.inOut"
             });
 
