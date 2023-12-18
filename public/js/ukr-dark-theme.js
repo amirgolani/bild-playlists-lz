@@ -438,7 +438,7 @@ function manageColors(color) {
 }
 function manageDraws() {
     if (!drawOnScreen) {
-        console.log("on")
+        canvas.hidden = false;
         startPainting()
     } else {
         stopPainting();
@@ -446,8 +446,8 @@ function manageDraws() {
     }
 
     drawOnScreen = !drawOnScreen;
-    canvas.hidden = !drawOnScreen
-    
+    // canvas.hidden = !drawOnScreen
+
 
     gsap.to('#art-icon',
         {
@@ -493,6 +493,11 @@ function startPainting() {
         e.preventDefault();
         draw(e.touches);
     });
+    gsap.to('#paintCanvas',
+        {
+            opacity: drawOnScreen ? 0 : 1,
+            duration: .5
+        })
 }
 function stopPainting() {
     canvas.removeEventListener('touchstart', function (e) {
@@ -505,8 +510,12 @@ function stopPainting() {
     });
 }
 function clearCanvas() {
-    
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    gsap.to('#paintCanvas',
+        {
+            opacity: drawOnScreen ? 0 : 1,
+            duration: .5,
+            onComplete: function () { canvas.hidden = true; context.clearRect(0, 0, canvas.width, canvas.height) }
+        })
 }
 function startPosition(touches) {
     painting = true;
