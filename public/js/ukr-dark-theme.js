@@ -156,6 +156,7 @@ function handleSelect(newID) {
                     opacity: 0,
                     ease: "power2.inOut"
                 });
+
         }
 
         gsap.fromTo("#video",
@@ -182,7 +183,9 @@ function handleSelect(newID) {
 
         gsap.to("#theMenu",
             {
-                left: -parseInt(newID.split('_')[1]) * 160 + 8 * parseInt(newID.split('_')[1]),
+                left: newID !== 'b_0'
+                    ? -(parseInt(newID.split('_')[1]) - 1) * 160 + 8 * parseInt(newID.split('_')[1]) - 8
+                    : -(parseInt(newID.split('_')[1])) * 160 + 8 * parseInt(newID.split('_')[1]),
                 duration: 1,
                 ease: "power2.inOut"
             });
