@@ -1,5 +1,4 @@
 // Handle Menu Pos
-
 var menuPos = true;
 function handleMenuPos(selection) {
 
@@ -141,7 +140,6 @@ function handleScrollPos(selection) {
 
 
 // Handle Select
-
 var selectedElement = "b_0"
 function handleSelect(newID) {
 
@@ -233,7 +231,6 @@ setTimeout(() => {
 
 
 // Create Layout
-
 function getLayout() {
 
     var layout = `<div id="theMenu" class="menu-container">
@@ -315,7 +312,6 @@ getLayout();
 
 
 // handle plays
-
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons") {
     var video = document.getElementById("video");
     var videoBg = document.getElementById("video-bg")
@@ -430,27 +426,62 @@ function formatSecondsAsTime(secs, format) {
 
 
 // Handle draw
-
 var canvas = document.getElementById('paintCanvas');
 var context = canvas.getContext('2d');
 var painting = false;
 var drawOnScreen = false;
 var isBlinking = false;
+var drawColor = "#080808"
+function manageColors(color) {
+    drawColor = color;
+    console.log(drawColor)
+}
 function manageDraws() {
     if (!drawOnScreen) {
-        drawOnScreen = !drawOnScreen;
-        gsap.to('#art-icon', { opacity: 1, duration: 0.5 });
         console.log("on")
         startPainting()
-        canvas.hidden = false;
     } else {
-        drawOnScreen = !drawOnScreen;
-        gsap.to('#art-icon', { opacity: .5, duration: 0.5 });
-
         stopPainting();
         clearCanvas();
-        canvas.hidden = true;
     }
+
+    drawOnScreen = !drawOnScreen;
+    canvas.hidden = !drawOnScreen
+    
+
+    gsap.to('#art-icon',
+        {
+            opacity: drawOnScreen ? 1 : .5,
+            duration: 0.5
+        });
+    gsap.to('#blue-circle',
+        {
+            scale: drawOnScreen ? 1 : 0,
+            delay: !drawOnScreen ? 0.3 : 0,
+            duration: .8,
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+        });
+    gsap.to('#red-circle',
+        {
+            scale: drawOnScreen ? 1 : 0,
+            delay: !drawOnScreen ? 0.2 : 0.1,
+            duration: .8,
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+        });
+    gsap.to('#black-circle',
+        {
+            scale: drawOnScreen ? 1 : 0,
+            delay: !drawOnScreen ? 0.1 : 0.2,
+            duration: .8,
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+        });
+    gsap.to('#white-circle',
+        {
+            scale: drawOnScreen ? 1 : 0,
+            delay: !drawOnScreen ? 0 : 0.3,
+            duration: .8,
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+        });
 
 }
 function startPainting() {
@@ -474,6 +505,7 @@ function stopPainting() {
     });
 }
 function clearCanvas() {
+    
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 function startPosition(touches) {
@@ -489,7 +521,8 @@ function draw(touches) {
 
     context.lineWidth = 5;
     context.lineCap = 'round';
-    context.strokeStyle = '#000';
+    context.lineJoin = 'round'
+    context.strokeStyle = drawColor;
 
     for (var i = 0; i < touches.length; i++) {
         context.lineTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
