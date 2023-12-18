@@ -142,7 +142,6 @@
 
 .menu-container {
     opacity: 0;
-    width: 1920px;
     height: 220px;
     top: 1000px;
     left: 0px;
@@ -192,4 +191,30 @@ input[type="range"]::-webkit-slider-thumb {
     width: 1920px;
     height: 1080px;
     background-size: cover;
+}
+
+.card-in-menu {
+    align-self: stretch;
+    width: 120px;
+    padding: 10px;
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    box-shadow: 12px 12px 100px black;
+    border-radius: 10px;
+    border: 2px #cccccc solid;
+    display: inline-flex;
+
+}
+
+.title-in-menu {
+    position: relative;
+    top: 90px;
+    color: white;
+    font-size: 18px;
+    font-family: Gotham;
+    font-weight: 500;
+    line-height: 20px;
+    text-transform: uppercase;
+    word-wrap: break-word"
 }

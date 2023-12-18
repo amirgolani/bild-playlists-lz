@@ -22,7 +22,7 @@ function handleMenuPos(selection) {
 
     gsap.to("#listTitles",
         {
-            top: menuPos ? 150 : 56,
+            top: menuPos ? 90 : -22,
             scale: menuPos ? 1 : .8,
             duration: 1,
             ease: "power2.inOut"
@@ -196,7 +196,7 @@ function handleSelect(newID) {
         gsap.to(`#${selectedElement}`,
             {
                 duration: .8,
-                width: 160,
+                width: 120,
                 ease: "power2.inOut"
             });
 
@@ -240,28 +240,12 @@ function getLayout() {
             <div 
                 onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons');" 
                 id="b_0"
-                style="align-self: stretch; 
-                width: 360px;
-                    padding: 10px; 
+                class="card-in-menu"
+                style="width: 360px;
                     background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/HOMEUKR.jpg);
-                    background-size: cover;
-                    background-position: center;
-                    justify-content: center; 
-                    gap: 10px; 
-                    box-shadow: 12px 12px 100px black; 
-                    border-radius: 10px; 
-                    border: 2px #cccccc solid;
-                    display: inline-flex">
+                    ">
 
-                    <div id="listTitles" style="text-align: center; 
-                        position: absolute;
-                        top: 150px;
-                        color: white; 
-                        font-size: 20px; 
-                        font-family: Gotham; 
-                        font-weight: 400; 
-                        line-height: 20px; 
-                        word-wrap: break-word">
+                    <div id="listTitles" class="title-in-menu">
                         <i class="fa-solid fa-house"></i>
                     </div>
 
@@ -275,31 +259,13 @@ function getLayout() {
             console.log(`${filenameArr}`)
             layout += ` 
             <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}');" 
+                class="card-in-menu"    
                 id="b_${l}" 
-                style="align-self: stretch; 
-                width: 160px;
-                padding: 10px; 
-                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${filenameArr.split('.')[0]}.jpg);
-                background-size: cover;
-                background-position: center;
-                justify-content: center; 
-                box-shadow: 12px 12px 100px black; 
-                border-radius: 10px; 
-                border: 2px #cccccc solid;
-                display: inline-flex">
+                style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${replaceFileExtension(filenameArr)});">
 
-                    <div id="listTitles" style="text-align: center; 
-                        position: absolute;
-                        top: 150px;
-                        color: white; 
-                        font-size: 18px; 
-                        font-family: Gotham; 
-                        font-weight: 500; 
-                        line-height: 20px; 
-                        text-transform: uppercase;
-                        word-wrap: break-word">
-                        ${json[l].name}
-                        </div>
+                <div id="listTitles" class="title-in-menu">
+                    ${json[l].name}
+                </div>
             </div>`
 
         }
@@ -352,6 +318,7 @@ getLayout();
 
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons") {
     var video = document.getElementById("video");
+    var videoBg = document.getElementById("video-bg")
     var seek = document.getElementById("seek");
 
     if (PlayButtons == "withPlayButtons") {
@@ -368,25 +335,33 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
 
     console.log(video);
     video.setAttribute('src', path)
+    videoBg.setAttribute('src', path)
 
-    if (loop == "loop" || loop == "true")
+    if (loop == "loop" || loop == "true") {
         video.loop = true;
-    else {
+        videoBg.loop = true;
+    } else {
         video.loop = false;
+        videoBg.loop = false
     }
 
     if (volume == "muted") {
         video.muted = true;
         video.volume = 0;
         console.log("Sem Audio");
+        videoBg.muted = true;
+        videoBg.volume = 0;
     } else {
         video.muted = false;
         video.volume = 1;
         console.log("Com Audio");
+        videoBg.muted = true;
+        videoBg.volume = 0;
     }
 }
 var playButton = document.getElementById('play-icon');
 var video = document.getElementById('video'), frameTime = 1 / 25;
+var videoBg = document.getElementById('video-bg'), frameTime = 1 / 25;
 var seekslider = document.getElementById("seekslider");
 
 seekslider.addEventListener("change", vidSeek, false);
@@ -401,15 +376,18 @@ function pauseVideo() {
 }
 function ctrlPlayVideo() {
     video.play();
+    videoBg.play();
     console.log("play");
 }
 function handlePlays() {
     play = !play;
     if (play) {
         video.play();
+        videoBg.play();
         playButton.classList.replace('play-icon', 'pause-icon');
     } else {
         video.pause();
+        videoBg.pause();
         playButton.classList.replace('pause-icon', 'play-icon');
 
     }
@@ -424,6 +402,7 @@ function vidSeek() {
     // pauseVideo();
     var seekto = video.duration * (seekslider.value / 1500);
     video.currentTime = seekto;
+    videoBg.currentTime = seekto;
 }
 function seektimeupdate() {
     var nt = video.currentTime * (1500 / video.duration);
@@ -548,3 +527,21 @@ function handleArrowKeyPress(event) {
 // Adding the event listener to the document
 document.addEventListener("keydown", handleArrowKeyPress);
 
+function replaceFileExtension(fileName) {
+    // Find the last occurrence of a dot (.) in the file name
+    const dotIndex = fileName.lastIndexOf('.');
+
+    // Check if a dot is found and it's not the first character of the file name
+    if (dotIndex !== -1 && dotIndex !== 0) {
+        // Extract the file name without the extension
+        const baseName = fileName.substring(0, dotIndex);
+
+        // Concatenate the base name with the new extension ".jpg"
+        const newFileName = baseName + '.jpg';
+
+        return newFileName;
+    } else {
+        // If no dot is found or it's the first character, simply append ".jpg" to the file name
+        return fileName + '.jpg';
+    }
+}

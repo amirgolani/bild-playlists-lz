@@ -1,6 +1,6 @@
 [
   {
-    "lastUpdate": 1702653712689
+    "lastUpdate": 1702897310425
   },
   {
     "name": [
@@ -10,7 +10,7 @@
       "Ukraine Eroberung"
     ],
     "time": [
-      "15.12.2023"
+      "18.12.2023"
     ],
     "type": [
       "map"
@@ -25,7 +25,7 @@
       "Offensive im Osten"
     ],
     "time": [
-      "15.12.2023"
+      "18.12.2023"
     ],
     "type": [
       "Map"
@@ -40,7 +40,7 @@
       "Offensive im Süden"
     ],
     "time": [
-      "15.12.2023"
+      "18.12.2023"
     ],
     "type": [
       "Map"
@@ -55,7 +55,7 @@
       "Awdijiwka"
     ],
     "time": [
-      "15.12.2023"
+      "18.12.2023"
     ],
     "type": [
       "Map"
@@ -70,7 +70,7 @@
       "Gegenoffensive"
     ],
     "time": [
-      "15.12.2023"
+      "18.12.2023"
     ],
     "type": [
       "Map"
@@ -79,43 +79,10 @@
   },
   {
     "name": [
-      "krynki"
+      "Awdijiwka"
     ],
-    "ctrl": [
+    "mute": [
       ""
-    ],
-    "title": [
-      "@bayraktar_1love"
-    ],
-    "time": [
-      "6:04 PM · Dec 10, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\06_krynky.webm"
-  },
-  {
-    "name": [
-      "Bradley"
-    ],
-    "ctrl": [
-      ""
-    ],
-    "title": [
-      "@bayraktar_1love"
-    ],
-    "time": [
-      "12:02 PM · Dec 8, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\07_Bradley_MT_LB8.webm"
-  },
-  {
-    "name": [
-      "Himras"
     ],
     "ctrl": [
       ""
@@ -124,47 +91,137 @@
       "@front_ukrainian"
     ],
     "time": [
-      "10:57 AM · Dec 12, 2023"
+      "7:23 PM · Dec 15, 2023"
     ],
     "type": [
       "x"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\08_HIMARS.webm"
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_front_ukrainian_a3fcab.mp4"
   },
   {
     "name": [
-      "Kubaner"
+      "RP-377 A"
+    ],
+    "mute": [
+      ""
     ],
     "ctrl": [
       ""
     ],
     "title": [
-      "@markito0171"
+      "@666_mancer"
     ],
     "time": [
-      "12:18 PM · Dec 10, 2023"
+      "3:45 PM · Dec 16, 2023"
     ],
     "type": [
       "x"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\09_KUBANER.webm"
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_666_mancer_d57721.mp4"
   },
   {
     "name": [
-      "su25"
+      "RP-377 B"
+    ],
+    "mute": [
+      ""
     ],
     "ctrl": [
       ""
     ],
     "title": [
-      "@orange_hawk"
+      "@JulianRoepcke"
     ],
     "time": [
-      "2:44 PM · Dec 10, 2023"
+      "6:35 PM · Dec 16, 2023"
     ],
     "type": [
       "x"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\08_Su25_BM21.webm"
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_JulianRoepcke_fdc85c.mp4"
+  },
+  {
+    "name": [
+      "T-64BV"
+    ],
+    "mute": [
+      ""
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      " @RadarFennec"
+    ],
+    "time": [
+      "8:21 PM · Dec 16, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_RadarFennec_373156.mp4"
+  },
+  {
+    "name": [
+      "Nowomi..."
+    ],
+    "mute": [
+      ""
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      "@RadarFennec"
+    ],
+    "time": [
+      "8:14 PM · Dec 16, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_efa39b.mp4"
+  },
+  {
+    "name": [
+      "Saporisch..."
+    ],
+    "mute": [
+      ""
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      "@RadarFennec"
+    ],
+    "time": [
+      "8:41 PM · Dec 16, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_RadarFennec_6d0f8d.mp4"
+  },
+  {
+    "name": [
+      "Leopard 2A6"
+    ],
+    "mute": [
+      ""
+    ],
+    "ctrl": [
+      ""
+    ],
+    "title": [
+      "@Lithuanian_MoD"
+    ],
+    "time": [
+      "11:19 AM · Dec 16, 2023"
+    ],
+    "type": [
+      "x"
+    ],
+    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_Lithuanian_MoD_5fb54d.mp4"
   }
 ]

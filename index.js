@@ -94,7 +94,7 @@ app.post('/create-ukr', (req, res) => {
                     file: newFilePath,
                 });
 
-                await createThumbnail(newFilePath, storagePath, `${file[0].originalFilename.split('.')[0]}.jpg`);
+                await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename));
 
             }
         }
@@ -133,7 +133,7 @@ app.get('/layout-ukr', (req, res) => {
             res.status(500).send('Internal Server Error');
         }
     });
-}); 
+});
 
 // ISR
 
@@ -278,3 +278,21 @@ async function createThumbnail(inputPath, outputPath, filename) {
     });
 }
 
+function replaceFileExtension(fileName) {
+    // Find the last occurrence of a dot (.) in the file name
+    const dotIndex = fileName.lastIndexOf('.');
+
+    // Check if a dot is found and it's not the first character of the file name
+    if (dotIndex !== -1 && dotIndex !== 0) {
+        // Extract the file name without the extension
+        const baseName = fileName.substring(0, dotIndex);
+
+        // Concatenate the base name with the new extension ".jpg"
+        const newFileName = baseName + '.jpg';
+
+        return newFileName;
+    } else {
+        // If no dot is found or it's the first character, simply append ".jpg" to the file name
+        return fileName + '.jpg';
+    }
+}
