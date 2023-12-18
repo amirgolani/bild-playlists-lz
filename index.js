@@ -82,6 +82,13 @@ app.post('/create-ukr', (req, res) => {
                 // Move the file to the storage directory
                 fs.renameSync(file[0].filepath, newFilePath);
 
+                // getVideoInfo(newFilePath)
+                //     .then((videoInfo) => {
+                //         console.log(videoInfo);
+                //     })
+
+                const videoInfo = await getVideoInfo(newFilePath)
+
                 // Add information to the JSON data
                 jsonData.push({
                     name,
@@ -92,6 +99,7 @@ app.post('/create-ukr', (req, res) => {
                     time,
                     type,
                     file: newFilePath,
+                    info: videoInfo
                 });
 
                 await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename));
@@ -137,105 +145,105 @@ app.get('/layout-ukr', (req, res) => {
 
 // ISR
 
-app.get('/create-isr', (req, res) => {
-    res.render('create-isr')
-});
+// app.get('/create-isr', (req, res) => {
+//     res.render('create-isr')
+// });
 
-app.get('/present-isr', (req, res) => {
-    res.render('present-isr')
-});
+// app.get('/present-isr', (req, res) => {
+//     res.render('present-isr')
+// });
 
-app.post('/create-isr', (req, res) => {
-    const form = new formidable.IncomingForm({
-        multiples: true,
-        maxFileSize: 2 * 1024 * 1024 * 1024, // 2 GB limit
-    });
+// app.post('/create-isr', (req, res) => {
+//     const form = new formidable.IncomingForm({
+//         multiples: true,
+//         maxFileSize: 2 * 1024 * 1024 * 1024, // 2 GB limit
+//     });
 
-    form.parse(req, async (err, fields, files) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error parsing the form' });
-        }
+//     form.parse(req, async (err, fields, files) => {
+//         if (err) {
+//             return res.status(500).json({ error: 'Error parsing the form' });
+//         }
 
-        // Create directory if it doesn't exist
-        const storagePath = path.join(__dirname, 'public', 'storage-isr');
-        if (!fs.existsSync(storagePath)) {
-            fs.mkdirSync(storagePath);
-        }
+//         // Create directory if it doesn't exist
+//         const storagePath = path.join(__dirname, 'public', 'storage-isr');
+//         if (!fs.existsSync(storagePath)) {
+//             fs.mkdirSync(storagePath);
+//         }
 
-        // Create directory for JSON file if it doesn't exist
-        const dbPath = path.join(__dirname, 'db-isr');
-        if (!fs.existsSync(dbPath)) {
-            fs.mkdirSync(dbPath);
-        }
+//         // Create directory for JSON file if it doesn't exist
+//         const dbPath = path.join(__dirname, 'db-isr');
+//         if (!fs.existsSync(dbPath)) {
+//             fs.mkdirSync(dbPath);
+//         }
 
-        fse.emptyDirSync(dbPath);
-        fse.emptyDirSync(storagePath);
+//         fse.emptyDirSync(dbPath);
+//         fse.emptyDirSync(storagePath);
 
-        const jsonData = [];
+//         const jsonData = [];
 
-        // Iterate over the fields and handle each set of inputs
-        for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
-            const name = fields[`name_${i}`];
-            const mute = fields[`mute_${i}`];
-            const loop = fields[`loop_${i}`];
-            const ctrl = fields[`ctrl_${i}`];
-            const file = files[`file_${i}`];
+//         // Iterate over the fields and handle each set of inputs
+//         for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
+//             const name = fields[`name_${i}`];
+//             const mute = fields[`mute_${i}`];
+//             const loop = fields[`loop_${i}`];
+//             const ctrl = fields[`ctrl_${i}`];
+//             const file = files[`file_${i}`];
 
-            if (file) {
-                const newFilePath = path.join(storagePath, file[0].originalFilename);
+//             if (file) {
+//                 const newFilePath = path.join(storagePath, file[0].originalFilename);
 
-                // Move the file to the storage directory
-                fs.renameSync(file[0].filepath, newFilePath);
+//                 // Move the file to the storage directory
+//                 fs.renameSync(file[0].filepath, newFilePath);
 
-                // Add information to the JSON data
-                jsonData.push({
-                    name,
-                    mute,
-                    loop,
-                    ctrl,
-                    file: newFilePath,
-                });
+//                 // Add information to the JSON data
+//                 jsonData.push({
+//                     name,
+//                     mute,
+//                     loop,
+//                     ctrl,
+//                     file: newFilePath,
+//                 });
 
-            }
-        }
+//             }
+//         }
 
-        jsonData.unshift({ lastUpdate: Date.now() })
+//         jsonData.unshift({ lastUpdate: Date.now() })
 
-        // Create JSON file
-        const jsonFilePath = path.join(dbPath, `layout.json`);
-        fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
+//         // Create JSON file
+//         const jsonFilePath = path.join(dbPath, `layout.json`);
+//         fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
 
-        // console.log('Fields:', fields);
-        // console.log('Files:', files);
-        var d = new Date(Date.now());
-        console.log(chalk.yellowBright(d.toString().split('GMT')[0], `ISR Page created`));
-        res.json(jsonData);
-    });
-});
+//         // console.log('Fields:', fields);
+//         // console.log('Files:', files);
+//         var d = new Date(Date.now());
+//         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `ISR Page created`));
+//         res.json(jsonData);
+//     });
+// });
 
-app.get('/layout-isr', (req, res) => {
-    const filePath = path.join(__dirname, 'db-isr', 'layout.json');
+// app.get('/layout-isr', (req, res) => {
+//     const filePath = path.join(__dirname, 'db-isr', 'layout.json');
 
-    // Read the file asynchronously
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading file:', err);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
+//     // Read the file asynchronously
+//     fs.readFile(filePath, 'utf8', (err, data) => {
+//         if (err) {
+//             console.error('Error reading file:', err);
+//             res.status(500).send('Internal Server Error');
+//             return;
+//         }
 
-        try {
-            // Parse the file content as JSON
-            const jsonData = JSON.parse(data);
+//         try {
+//             // Parse the file content as JSON
+//             const jsonData = JSON.parse(data);
 
-            // Send the parsed JSON as the response
-            res.json(jsonData);
-        } catch (parseError) {
-            console.error('Error parsing JSON:', parseError);
-            res.status(500).send('Internal Server Error');
-        }
-    });
-});
+//             // Send the parsed JSON as the response
+//             res.json(jsonData);
+//         } catch (parseError) {
+//             console.error('Error parsing JSON:', parseError);
+//             res.status(500).send('Internal Server Error');
+//         }
+//     });
+// });
 
 app.listen(port, () => {
     var d = new Date(Date.now());
@@ -275,6 +283,33 @@ async function createThumbnail(inputPath, outputPath, filename) {
                 folder: outputPath,
                 size: '960x540',
             });
+    });
+}
+
+
+
+function getVideoInfo(videoPath) {
+    return new Promise((resolve, reject) => {
+        ffmpeg.ffprobe(videoPath, (err, metadata) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            const videoStream = metadata.streams.find(stream => stream.codec_type === 'video');
+
+            if (!videoStream) {
+                reject(new Error('No video stream found in the file.'));
+                return;
+            }
+
+            const videoInfo = {
+                resolution: videoStream.width / videoStream.height === 16 / 9 ? true : false,
+                framerate: videoStream.r_frame_rate,
+            };
+
+            resolve(videoInfo);
+        });
     });
 }
 

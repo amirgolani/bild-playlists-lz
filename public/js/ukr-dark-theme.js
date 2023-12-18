@@ -8,7 +8,6 @@ function handleMenuPos(selection) {
         menuPos = selection
     }
 
-    console.log(menuPos)
 
     gsap.to("#theMenu",
         {
@@ -112,7 +111,6 @@ setTimeout(() => {
 var scrollPos = true;
 function handleScrollPos(selection) {
 
-    console.log(selection)
 
     if (selection === undefined) {
         scrollPos = !scrollPos
@@ -120,7 +118,6 @@ function handleScrollPos(selection) {
         scrollPos = selection
     }
 
-    console.log(scrollPos)
 
     gsap.to("#move-icon",
         {
@@ -235,7 +232,7 @@ function getLayout() {
 
     var layout = `<div id="theMenu" class="menu-container">
             <div 
-                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons');" 
+                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons', '0');" 
                 id="b_0"
                 class="card-in-menu"
                 style="width: 360px;
@@ -253,13 +250,11 @@ function getLayout() {
 
         for (l = 1; l < json.length; l++) {
             var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
-            console.log(`${filenameArr}`)
             layout += ` 
-            <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}');" 
+            <div onclick="handleTitles('${json[l].type}', '${json[l].title}', '${json[l].time}'); handleSelect(this.id); playVideo('/assets/storage-ukr/${filenameArr}', '${json[l].loop ? 'loop' : 'notloop'}', '${json[l].mute ? 'muted' : 'unmuted'}', '${json[l].ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${json[l].info.resolution ? '1' : '0'}');" 
                 class="card-in-menu"    
                 id="b_${l}" 
                 style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), url(/assets/storage-ukr/${replaceFileExtension(filenameArr)});">
-
                 <div id="listTitles" class="title-in-menu">
                     ${json[l].name}
                 </div>
@@ -291,7 +286,6 @@ function getLayout() {
 
             // Log the cumulative horizontal distance
             cumulativeDistance += distance;
-            console.log('Cumulative Distance:', cumulativeDistance);
 
             // Use GSAP to move the div horizontally
             gsap.to(movableDiv, { x: cumulativeDistance * 2, duration: 0.2 });
@@ -312,16 +306,31 @@ getLayout();
 
 
 // handle plays
-function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons") {
+function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG) {
     var video = document.getElementById("video");
     var videoBg = document.getElementById("video-bg")
     var seek = document.getElementById("seek");
+
+
+    video.setAttribute('src', path)
+    video.setAttribute('type', `video/${getFileExtension(path)}`)
+
+    if (reqBG === '0') {
+        videoBg.setAttribute('src', path)
+        videoBg.setAttribute('type', `video/${getFileExtension(path)}`)
+    }
+
+    if (reqBG === '1') {
+        videoBg.setAttribute('src', '')
+        videoBg.setAttribute('type', '')
+    }
+
+
 
     if (PlayButtons == "withPlayButtons") {
         seek.hidden = false;
         document.getElementById("play-icon").hidden = false
         // document.getElementById("pause-icon").hidden = false
-        console.log("withPlay");
     } else {
         seek.hidden = true;
         document.getElementById("play-icon").hidden = true
@@ -329,9 +338,6 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
     }
 
 
-    console.log(video);
-    video.setAttribute('src', path)
-    videoBg.setAttribute('src', path)
 
     if (loop == "loop" || loop == "true") {
         video.loop = true;
@@ -344,17 +350,16 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
     if (volume == "muted") {
         video.muted = true;
         video.volume = 0;
-        console.log("Sem Audio");
         videoBg.muted = true;
         videoBg.volume = 0;
     } else {
         video.muted = false;
         video.volume = 1;
-        console.log("Com Audio");
         videoBg.muted = true;
         videoBg.volume = 0;
     }
 }
+
 var playButton = document.getElementById('play-icon');
 var video = document.getElementById('video'), frameTime = 1 / 25;
 var videoBg = document.getElementById('video-bg'), frameTime = 1 / 25;
@@ -368,12 +373,10 @@ var play = true;
 
 function pauseVideo() {
     video.pause();
-    console.log("pause");
 }
 function ctrlPlayVideo() {
     video.play();
     videoBg.play();
-    console.log("play");
 }
 function handlePlays() {
     play = !play;
@@ -434,7 +437,6 @@ var isBlinking = false;
 var drawColor = "#080808"
 function manageColors(color) {
     drawColor = color;
-    console.log(drawColor)
 }
 function manageDraws() {
     if (!drawOnScreen) {
@@ -457,29 +459,29 @@ function manageDraws() {
     gsap.to('#blue-circle',
         {
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0.3 : 0,
-            duration: .8,
+            delay: !drawOnScreen ? 0.15 : 0,
+            duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out'
         });
     gsap.to('#red-circle',
         {
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0.2 : 0.1,
-            duration: .8,
+            delay: !drawOnScreen ? 0.1 : 0.05,
+            duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out'
         });
     gsap.to('#black-circle',
         {
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0.1 : 0.2,
-            duration: .8,
+            delay: !drawOnScreen ? 0.05 : 0.1,
+            duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out'
         });
     gsap.to('#white-circle',
         {
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0 : 0.3,
-            duration: .8,
+            delay: !drawOnScreen ? 0 : 0.15,
+            duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out'
         });
 
@@ -569,6 +571,8 @@ function handleArrowKeyPress(event) {
 // Adding the event listener to the document
 document.addEventListener("keydown", handleArrowKeyPress);
 
+
+// Additional functions
 function replaceFileExtension(fileName) {
     // Find the last occurrence of a dot (.) in the file name
     const dotIndex = fileName.lastIndexOf('.');
@@ -587,3 +591,39 @@ function replaceFileExtension(fileName) {
         return fileName + '.jpg';
     }
 }
+
+function getVideoFrameRate(videoElement) {
+    if (!(videoElement instanceof HTMLVideoElement)) {
+        console.error('Provided element is not a video tag');
+        return null;
+    }
+
+    // Check if metadata is loaded
+    if (!videoElement.videoWidth || !videoElement.videoHeight) {
+        console.error('Video metadata not loaded');
+        return null;
+    }
+
+    // Get the total number of frames and the duration
+    const totalFrames = videoElement.webkitDecodedFrameCount;
+    const duration = videoElement.duration;
+
+    // Calculate the frame rate
+    const frameRate = totalFrames / duration;
+
+    return frameRate;
+}
+
+function getFileExtension(fileName) {
+    // Split the file name by dot (.)
+    const parts = fileName.split('.');
+
+    // If there is more than one part, consider the last part as the extension
+    if (parts.length > 1) {
+        return parts[parts.length - 1].toLowerCase();
+    } else {
+        // If there is only one part or no parts, the file has no extension
+        return '';
+    }
+}
+
