@@ -24,8 +24,32 @@ app.use((req, res, next) => {
 
 // UKR
 
-app.get('/present-ukr-d', (req, res) => {
-    res.render('present-ukr-darktheme')
+app.get('/present', (req, res) => {
+    const gp = req.query.gp;
+
+    switch (gp) {
+        case 'ukr': // Left arrow key
+            res.render('present',
+                {
+                    bg: '/assets/gp/BGUKR.webm',
+                    vidType: 'video/webm',
+                    headline: '/assets/gp/titles-ukr.png'
+                })
+            break;
+        case 'isr': // Up arrow key
+            res.render('present',
+                {
+                    bg: '/assets/gp/BGISR.mp4',
+                    vidType: 'video/mp4',
+                    headline: '/assets/gp/titles-isr.png'
+                })
+            break;
+        default:
+        // Do nothing for other keys
+    }
+
+
+
 });
 
 app.get('/create-ukr', (req, res) => {
