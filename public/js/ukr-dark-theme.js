@@ -227,28 +227,12 @@ setTimeout(() => {
 var listLength = 0;
 function getLayout() {
 
-    var layout = `<div id="theMenu" class="menu-container">
-            <div 
-                onclick="handleTitles('gallery', 'Lagezentrum', 'Julian Röpke'); handleSelect(this.id); playVideo('/assets/gp/BGUKR.webm', 'loop', 'muted', 'noPlayButtons', '0', '0.04');" 
-                id="b_0"
-                class="card-in-menu"
-                style="width: 360px;
-                    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(/assets/gp/HOMEUKR.jpg);
-                    ">
+    fetch(document.getElementById('endPoint').getAttribute('name')).then((response) => response.json()).then((json) => {
 
-                    <div id="listTitles" class="title-in-menu">
-                        <i class="fa-solid fa-house"></i>
-                    </div>
-
-                </div>
-                `;
-
-    fetch('/layout-ukr').then((response) => response.json()).then((json) => {
-        listLength = json.length;
+        var layout = ''; // Initialize layout variabl        listLength = json.length;
         for (l = 1; l < json.length; l++) {
             var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
             const { type, title, time, start, end, loop, mute, ctrl, info, name } = json[l];
-
 
             layout += ` 
             <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); 
@@ -264,7 +248,7 @@ function getLayout() {
 
         }
 
-        document.getElementById('layoutBuildUp').innerHTML = layout;
+        document.getElementById('theMenu').innerHTML += layout;
 
         // drag the menu
 

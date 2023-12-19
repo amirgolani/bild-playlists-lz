@@ -33,15 +33,25 @@ app.get('/present', (req, res) => {
                 {
                     bg: '/assets/gp/BGUKR.webm',
                     vidType: 'video/webm',
-                    headline: '/assets/gp/titles-ukr.png'
+                    headline: '/assets/gp/titles-ukr.png',
+                    thumbnail: '/assets/gp/HOMEUKR.jpg',
+                    icon: 'gallery',
+                    title: 'Lagezentrum',
+                    sub: 'Julian Röpke',
+                    endpoint: '/layout-ukr'
                 })
             break;
         case 'isr': // Up arrow key
             res.render('present',
                 {
-                    bg: '/assets/gp/BGISR.mp4',
+                    bg: '/assets/gp/BGISR.webm',
                     vidType: 'video/mp4',
-                    headline: '/assets/gp/titles-isr.png'
+                    headline: '/assets/gp/titles-isr.png',
+                    thumbnail: '/assets/gp/HOMEISR.jpg',
+                    icon: 'gallery',
+                    title: 'Lagezentrum',
+                    sub: 'Julian Röpke',
+                    endpoint: '/layout-isr'
                 })
             break;
         default:

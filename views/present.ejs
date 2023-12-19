@@ -17,7 +17,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body class="full-hd-container" style="background-color: black; position: fixed; margin: 0; padding: 0;">
+<body id="endPoint" name="<%= endpoint %>" class="full-hd-container"
+    style="background-color: black; position: fixed; margin: 0; padding: 0;">
 
     <div class="full-hd-container">
         <div class="full-hd-container">
@@ -41,6 +42,18 @@
     </div>
     <!-- <div class="hp-img" id="imageContainer"></div> -->
     <div id="layoutBuildUp" class="full-hd-container">
+        <div id="theMenu" class="menu-container">
+            <div onclick="handleTitles('<%= icon %>', '<%= title %>', '<%= sub %>'); handleSelect(this.id); playVideo('<%= bg %>', 'loop', 'muted', 'noPlayButtons', '0', '0.04');"
+                id="b_0" class="card-in-menu"
+                style="width: 360px;
+                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(<%= thumbnail %>);">
+
+                <div id="listTitles" class="title-in-menu">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+
+            </div>
+        </div>
     </div>
     <canvas class="full-hd-container" id="paintCanvas" width="1920" height="1080" hidden></canvas>
     <div id="videoTitleToggle" style="opacity: 0; position: relative; left: 200px">
