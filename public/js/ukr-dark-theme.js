@@ -584,6 +584,10 @@ function handleArrowKeyPress(event) {
             console.log("Down arrow key pressed!");
             handleMenuPos(false)
             break;
+        case 32: // Down arrow key
+            console.log("Space arrow key pressed!");
+            handlePlays()
+            break;
         default:
         // Do nothing for other keys
     }
