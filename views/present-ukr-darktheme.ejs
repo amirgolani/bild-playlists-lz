@@ -49,15 +49,17 @@
         <div id="video-timestamp" class="video-timestamp">Julian Röpcke</div>
     </div>
     <div id="menuToggle" style="position: absolute; opacity: 0; ">
-        <div id="seek" hidden>
-            <!-- <div id="timecode" class="timecode">00:00</div> -->
-            <input id="seekslider" type="range" min="0" max="1500" value="0" step="1" 
-                style="position: absolute; top: 760px; left: 190px; width: 400px; height: 6px; background-color: white; border: none; appearance: none; outline: none;">
+        <div id="seek" style="opacity: 0;">
+            <div id="play-icon" class="pause-icon" onclick="handlePlays()"></div>
+            <input id="seekslider" type="range" min="0" max="1500" value="0" step="1"
+                style="position: absolute; top: 740px; left: 190px; width: 400px; height: 46px; backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.05); border-radius: 25px; padding-left: 6px; padding-right: 6px;">
+            <div id="timecode"
+                style="position: absolute; top: 746px; left: 620px; font-family: Gotham; font-weight: 400; line-height: 20px;">
+                00:00</div>
         </div>
         <div id="menuPosIcon" class="menu-icon" onclick="handleMenuPos()"></div>
         <div id="move-icon" class="move-icon" onclick="handleScrollPos()"></div>
         <div id="art-icon" class="art-icon" onclick="manageDraws()"></div>
-        <div id="play-icon" class="pause-icon" onclick="handlePlays()" hidden></div>
         <div id="blue-circle" class="blue-circle" onclick="manageColors('#004f98')"></div>
         <div id="red-circle" class="red-circle" onclick="manageColors('#ee2e31')"></div>
         <div id="black-circle" class="black-circle" onclick="manageColors('#080808')"></div>

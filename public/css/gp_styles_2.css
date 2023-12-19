@@ -28,6 +28,17 @@
     height: 50px;
 }
 
+.timecode {
+    position: absolute;
+    left: 520px;
+    top: 740px;
+    font-size: 26px;
+    padding-left: 20px;
+    font-family: Gotham;
+    font-weight: 400;
+    line-height: 20px;
+}
+
 .move-icon {
     position: absolute;
     left: 50px;
@@ -203,13 +214,7 @@
     touch-action: none;
 }
 
-.timecode {
-    font-size: 26px;
-    padding-left: 20px;
-    font-family: Gotham;
-    font-weight: 400;
-    line-height: 20px;
-}
+
 
 .timeline {
     position: absolute;
@@ -270,3 +275,4 @@ input[type="range"]::-webkit-slider-thumb {
     word-wrap: break-word"
 
 }
+

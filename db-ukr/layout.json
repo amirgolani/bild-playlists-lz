@@ -1,6 +1,6 @@
 [
   {
-    "lastUpdate": 1702913359635
+    "lastUpdate": 1702979650304
   },
   {
     "name": [
@@ -10,12 +10,18 @@
       "Ukraine Eroberung"
     ],
     "time": [
-      "18.12.2023"
+      "19.12.2023"
     ],
     "type": [
       "map"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Ukraine_Eroberung.webm",
+    "start": [
+      ""
+    ],
+    "end": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/231213_KARTE_Ukraine_Eroberung.webm",
     "info": {
       "resolution": true,
       "framerate": 0.04
@@ -29,12 +35,18 @@
       "Offensive im Osten"
     ],
     "time": [
-      "18.12.2023"
+      "19.12.2023"
     ],
     "type": [
       "Map"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Offensive_im_Osten.webm",
+    "start": [
+      ""
+    ],
+    "end": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/231213_KARTE_Offensive_im_Osten.webm",
     "info": {
       "resolution": true,
       "framerate": 0.04
@@ -48,12 +60,18 @@
       "Offensive im Süden"
     ],
     "time": [
-      "18.12.2023"
+      "19.12.2023"
     ],
     "type": [
       "Map"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Offensive_im_Sueden.webm",
+    "start": [
+      ""
+    ],
+    "end": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/231213_KARTE_Offensive_im_Sueden.webm",
     "info": {
       "resolution": true,
       "framerate": 0.04
@@ -67,12 +85,18 @@
       "Awdijiwka"
     ],
     "time": [
-      "18.12.2023"
+      "19.12.2023"
     ],
     "type": [
       "Map"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_Ukraine_Awdijiwka.webm",
+    "start": [
+      ""
+    ],
+    "end": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/231213_Ukraine_Awdijiwka.webm",
     "info": {
       "resolution": true,
       "framerate": 0.04
@@ -86,12 +110,18 @@
       "Gegenoffensive"
     ],
     "time": [
-      "18.12.2023"
+      "19.12.2023"
     ],
     "type": [
       "Map"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\231213_KARTE_Ukraine_Gegenoffensive.webm",
+    "start": [
+      ""
+    ],
+    "end": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/231213_KARTE_Ukraine_Gegenoffensive.webm",
     "info": {
       "resolution": true,
       "framerate": 0.04
@@ -99,174 +129,27 @@
   },
   {
     "name": [
-      "Awdijiwka"
-    ],
-    "mute": [
-      ""
+      "Tank"
     ],
     "ctrl": [
       ""
     ],
     "title": [
-      "@front_ukrainian"
+      "Leopard"
     ],
     "time": [
-      "7:23 PM · Dec 15, 2023"
+      "Test"
     ],
     "type": [
-      "x"
+      "yt"
     ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_front_ukrainian_a3fcab.mp4",
-    "info": {
-      "resolution": true,
-      "framerate": 0.0333667000333667
-    }
-  },
-  {
-    "name": [
-      "RP-377 A"
+    "start": [
+      "10"
     ],
-    "mute": [
-      ""
+    "end": [
+      "20"
     ],
-    "ctrl": [
-      ""
-    ],
-    "title": [
-      "@666_mancer"
-    ],
-    "time": [
-      "3:45 PM · Dec 16, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_666_mancer_d57721.mp4",
-    "info": {
-      "resolution": true,
-      "framerate": 0.03333333333333333
-    }
-  },
-  {
-    "name": [
-      "RP-377 B"
-    ],
-    "mute": [
-      ""
-    ],
-    "ctrl": [
-      ""
-    ],
-    "title": [
-      "@JulianRoepcke"
-    ],
-    "time": [
-      "6:35 PM · Dec 16, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_JulianRoepcke_fdc85c.mp4",
-    "info": {
-      "resolution": false,
-      "framerate": 0.03333333333333333
-    }
-  },
-  {
-    "name": [
-      "T-64BV"
-    ],
-    "mute": [
-      ""
-    ],
-    "ctrl": [
-      ""
-    ],
-    "title": [
-      " @RadarFennec"
-    ],
-    "time": [
-      "8:21 PM · Dec 16, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_RadarFennec_373156.mp4",
-    "info": {
-      "resolution": false,
-      "framerate": 0.03333333333333333
-    }
-  },
-  {
-    "name": [
-      "Nowomi..."
-    ],
-    "mute": [
-      ""
-    ],
-    "ctrl": [
-      ""
-    ],
-    "title": [
-      "@RadarFennec"
-    ],
-    "time": [
-      "8:14 PM · Dec 16, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_efa39b.mp4",
-    "info": {
-      "resolution": false,
-      "framerate": 0.03333333333333333
-    }
-  },
-  {
-    "name": [
-      "Saporisch..."
-    ],
-    "mute": [
-      ""
-    ],
-    "ctrl": [
-      ""
-    ],
-    "title": [
-      "@RadarFennec"
-    ],
-    "time": [
-      "8:41 PM · Dec 16, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_RadarFennec_6d0f8d.mp4",
-    "info": {
-      "resolution": true,
-      "framerate": 0.04170833333333333
-    }
-  },
-  {
-    "name": [
-      "Leopard 2A6"
-    ],
-    "mute": [
-      ""
-    ],
-    "ctrl": [
-      ""
-    ],
-    "title": [
-      "@Lithuanian_MoD"
-    ],
-    "time": [
-      "11:19 AM · Dec 16, 2023"
-    ],
-    "type": [
-      "x"
-    ],
-    "file": "C:\\Projects\\lz-all\\public\\storage-ukr\\twittervid.com_Lithuanian_MoD_5fb54d.mp4",
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/storage-ukr/twittervid.com_Lithuanian_MoD_5fb54d.mp4",
     "info": {
       "resolution": true,
       "framerate": 0.02
