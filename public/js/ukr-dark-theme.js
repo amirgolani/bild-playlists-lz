@@ -379,6 +379,14 @@ var video = document.getElementById('video'), frameTime = 1 / 25;
 var videoBg = document.getElementById('video-bg'), frameTime = 1 / 25;
 var seekslider = document.getElementById("seekslider");
 
+video.addEventListener("pause", (event) => {
+    playButton.classList.replace('pause-icon', 'play-icon');
+});
+
+video.addEventListener("play", (event) => {
+    playButton.classList.replace('play-icon', 'pause-icon');
+});
+
 seekslider.addEventListener("input", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 video.ontimeupdate = function () { timecodeUpdate() };
@@ -398,11 +406,9 @@ function handlePlays() {
     if (play) {
         video.play();
         videoBg.play();
-        playButton.classList.replace('play-icon', 'pause-icon');
     } else {
         video.pause();
         videoBg.pause();
-        playButton.classList.replace('pause-icon', 'play-icon');
 
     }
 }
