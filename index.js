@@ -29,7 +29,7 @@ app.get('/present', (req, res) => {
 
     switch (gp) {
         case 'ukr': // Left arrow key
-            res.render('present',
+            res.render('present-vid-player',
                 {
                     bg: '/assets/gp/BGUKR.webm',
                     vidType: 'video/webm',
@@ -42,7 +42,20 @@ app.get('/present', (req, res) => {
                 })
             break;
         case 'isr': // Up arrow key
-            res.render('present',
+            res.render('present-vid-player',
+                {
+                    bg: '/assets/gp/BGISR.webm',
+                    vidType: 'video/mp4',
+                    headline: '/assets/gp/titles-isr.png',
+                    thumbnail: '/assets/gp/HOMEISR.jpg',
+                    icon: 'gallery',
+                    title: 'Lagezentrum',
+                    sub: 'Julian Röpke',
+                    endpoint: '/layout-isr'
+                })
+            break;
+        case 'isr': // Up arrow key
+            res.render('team',
                 {
                     bg: '/assets/gp/BGISR.webm',
                     vidType: 'video/mp4',
@@ -66,7 +79,7 @@ app.get('/create-ukr', (req, res) => {
     res.render('create-ukr')
 });
 
-app.post('/create-ukr', (req, res) => {
+app.post('/create-playlist', (req, res) => {
     const form = new formidable.IncomingForm({
         multiples: true,
         maxFileSize: 2 * 1024 * 1024 * 1024, // 2 GB limit

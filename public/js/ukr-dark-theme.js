@@ -272,7 +272,8 @@ function getLayout() {
             if (isDragging) {
                 const touchX = event.touches[0].clientX;
                 const moveX = touchX - startX;
-                const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
+                // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
+                const newLeft = initialLeft + moveX > 0 ? 0 : initialLeft + moveX;
 
                 // Update the left property using GSAP for smooth animation
                 gsap.to(movableDiv, { left: newLeft });
