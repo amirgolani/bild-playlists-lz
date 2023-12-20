@@ -114,7 +114,7 @@ function handleScrollPos() {
     gsap.to("#theMenu",
         {
             left: 0,
-            duration: 1,
+            duration: .6,
             ease: "power2.inOut"
         });
 }
@@ -237,6 +237,7 @@ function getLayout() {
             for (l = 1; l < json.length; l++) {
 
                 if (json[l].mime.split('/'))
+
                     var filenameArr = json[l].file.split('playlists')[1].substring(1);
 
                 const { type, title, time, start, end, loop, mute, ctrl, info, name, mime } = json[l];
@@ -245,9 +246,8 @@ function getLayout() {
 
                     var thumbnameArr = json[l].thumb.split('playlists')[1].substring(1);
 
-
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('')
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('');
                         playVideo('/assets/playlists/${filenameArr}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
@@ -467,15 +467,72 @@ function formatSecondsAsTime(secs, format) {
 // Handle Images
 
 function setImage(img) {
-var frontImage = document.getElementById('frontImage');
-var backImage = document.getElementById('backImage');
+    var frontImage = document.getElementById('frontImage');
+    var backImage = document.getElementById('backImage');
+    var mainImage = document.getElementById('mainImage')
+    var zoomIcon = document.getElementById('zoom-icon');
 
-frontImage.style.backgroundImage = `url(${img})`;
-backImage.style.backgroundImage = `url(${img})`;
 
+    // frontImage.style.backgroundImage = `url(${img})`;
+    mainImage.setAttribute('src', img)
+    backImage.style.backgroundImage = `url(${img})`;
+
+    gsap.fromTo('#backImage',
+        {
+            x: 0,
+            y: 0,
+            opacity: 0,
+            scale: 1.1
+        },
+        {
+            x: 0,
+            y: 0,
+            opacity: .3,
+            scale: 1,
+            ease: 'power1.inOut',
+            duration: 1
+        })
+
+    zoomed = false
+
+    gsap.fromTo('#frontImage',
+        {
+            x: 0,
+            y: 0,
+            opacity: 0,
+            scale: .9
+        },
+        {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            scale: .78,
+            ease: 'power1.inOut',
+            duration: 1
+        })
+
+    gsap.to('#zoom-icon',
+        {
+            onStart: img === '' ? function () { } : function () { zoomIcon.hidden = false },
+            opacity: img === '' ? 0 : 1,
+            ease: 'power1.inOut',
+            duration: .6,
+            onComplete: img === '' ? function () { zoomIcon.hidden = true } : function () { },
+        })
 }
 
-
+var zoomed = true
+function handleZoom(toggle) {
+    gsap.to('#frontImage',
+        {
+            onStart: toggle === undefined ? function () { zoomed = !zoomed } : function () { zoomed = toggle },
+            scale: zoomed ? 1.5 : .78,
+            x: 0,
+            y: 0,
+            ease: 'power1.inOut',
+            duration: .6
+        })
+}
 // Handle draw
 var canvas = document.getElementById('paintCanvas');
 var context = canvas.getContext('2d');
@@ -501,8 +558,8 @@ function manageDraws() {
 
     gsap.to('#art-icon',
         {
-            opacity: drawOnScreen ? 1 : .5,
-            duration: 0.5
+            opacity: drawOnScreen ? 1 : .3,
+            duration: .6
         });
     gsap.to('#blue-circle',
         {
@@ -546,7 +603,7 @@ function startPainting() {
     gsap.to('#paintCanvas',
         {
             opacity: drawOnScreen ? 0 : 1,
-            duration: .5
+            duration: .6
         })
 }
 function stopPainting() {
@@ -563,7 +620,7 @@ function clearCanvas() {
     gsap.to('#paintCanvas',
         {
             opacity: drawOnScreen ? 0 : 1,
-            duration: .5,
+            duration: .6,
             onComplete: function () { canvas.hidden = true; context.clearRect(0, 0, canvas.width, canvas.height) }
         })
 }
@@ -698,3 +755,23 @@ function addVidRange(startTime, endTime) {
     return timeRange
 }
 
+
+// Get the element you want to make movable
+const movableElement = document.getElementById('frontImage');
+
+// Use Draggable to make the element movable
+const draggable = new Draggable(movableElement, {
+    type: 'x,y', // Allow movement along the x and y axes
+    edgeResistance: .8, // Resistance when dragging towards the edges
+    bounds: 'body', // Restrict movement within the body of the document
+});
+
+// Example GSAP animation on drag start
+draggable.addEventListener('dragstart', () => {
+    gsap.set('#frontImage', { zIndex: 0 });
+});
+
+// // Example GSAP animation on drag end
+// draggable.addEventListener('dragend', () => {
+//     gsap.to(movableElement, { scale: 1, duration: 0.3 });
+// });
