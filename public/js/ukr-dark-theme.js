@@ -227,25 +227,26 @@ setTimeout(() => {
 var listLength = 0;
 function getLayout() {
 
-    fetch(document.getElementById('endPoint').getAttribute('name')).then((response) => response.json()).then((json) => {
+    fetch(`/layout?playlist=${document.getElementById('endPoint').getAttribute('name')}`).then((response) => response.json()).then((json) => {
 
         var layout = ''; // Initialize layout variabl        listLength = json.length;
         for (l = 1; l < json.length; l++) {
-            var filenameArr = json[l].file.split('storage-ukr')[1].substring(1);
+            var filenameArr = json[l].file.split('playlists')[1].substring(1);
+            var thumbnameArr = json[l].thumb.split('playlists')[1].substring(1);
+
             const { type, title, time, start, end, loop, mute, ctrl, info, name } = json[l];
 
             layout += ` 
             <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); 
-            playVideo('/assets/storage-ukr/${filenameArr}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
+            playVideo('/assets/playlists/${filenameArr}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                 class="card-in-menu"    
                 id="b_${l}" 
                 style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                url(/assets/storage-ukr/${replaceFileExtension(filenameArr)});">
+                url(/assets/playlists/${thumbnameArr});">
                 <div id="listTitles" class="title-in-menu">
                     ${name}
                 </div>
             </div>`
-
         }
 
         document.getElementById('theMenu').innerHTML += layout;

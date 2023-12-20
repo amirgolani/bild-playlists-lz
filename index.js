@@ -6,6 +6,7 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 const localIpAddress = require("local-ip-address")
 const ffmpeg = require('fluent-ffmpeg');
+const short = require('short-uuid');
 
 
 const app = express();
@@ -25,7 +26,11 @@ app.use((req, res, next) => {
 // UKR
 
 app.get('/present', (req, res) => {
-    const gp = req.query.gp;
+
+    const { gp, playlist } = req.query
+    // const gp = req.query.gp;
+    // const playlist = req.query.playlist;
+
 
     switch (gp) {
         case 'ukr': // Left arrow key
@@ -38,7 +43,7 @@ app.get('/present', (req, res) => {
                     icon: 'gallery',
                     title: 'Lagezentrum',
                     sub: 'Julian Röpke',
-                    endpoint: '/layout-ukr'
+                    endpoint: playlist
                 })
             break;
         case 'isr': // Up arrow key
@@ -51,7 +56,7 @@ app.get('/present', (req, res) => {
                     icon: 'gallery',
                     title: 'Lagezentrum',
                     sub: 'Julian Röpke',
-                    endpoint: '/layout-isr'
+                    endpoint: playlist
                 })
             break;
         case 'isr': // Up arrow key
@@ -64,15 +69,12 @@ app.get('/present', (req, res) => {
                     icon: 'gallery',
                     title: 'Lagezentrum',
                     sub: 'Julian Röpke',
-                    endpoint: '/layout-isr'
+                    endpoint: playlist
                 })
             break;
         default:
         // Do nothing for other keys
     }
-
-
-
 });
 
 app.get('/create-ukr', (req, res) => {
@@ -90,20 +92,19 @@ app.post('/create-playlist', (req, res) => {
             return res.status(500).json({ error: 'Error parsing the form' });
         }
 
-        // Create directory if it doesn't exist
-        const storagePath = path.join(__dirname, 'public', 'storage-ukr');
-        if (!fs.existsSync(storagePath)) {
-            fs.mkdirSync(storagePath);
-        }
+        var newFolder = short.generate();
 
         // Create directory for JSON file if it doesn't exist
-        const dbPath = path.join(__dirname, 'db-ukr');
+        const dbPath = path.join(__dirname, 'public', 'playlists', newFolder);
         if (!fs.existsSync(dbPath)) {
             fs.mkdirSync(dbPath);
         }
 
-        fse.emptyDirSync(dbPath);
-        fse.emptyDirSync(storagePath);
+        // Create directory if it doesn't exist
+        const storagePath = path.join(__dirname, 'public', 'playlists', newFolder, 'storage');
+        if (!fs.existsSync(storagePath)) {
+            fs.mkdirSync(storagePath);
+        }
 
         const jsonData = [];
 
@@ -145,6 +146,7 @@ app.post('/create-playlist', (req, res) => {
                     start,
                     end,
                     file: newFilePath,
+                    thumb: replaceFileExtension(newFilePath),
                     info: videoInfo
                 });
 
@@ -161,12 +163,13 @@ app.post('/create-playlist', (req, res) => {
 
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `UKR Page created`));
-        res.json(jsonData);
+        res.json(newFolder);
     });
 });
 
-app.get('/layout-ukr', (req, res) => {
-    const filePath = path.join(__dirname, 'db-ukr', 'layout.json');
+app.get('/layout', (req, res) => {
+    const playlist = req.query.playlist;
+    const filePath = path.join(__dirname, 'public', 'playlists', playlist, 'layout.json');
 
     // Read the file asynchronously
     fs.readFile(filePath, 'utf8', (err, data) => {

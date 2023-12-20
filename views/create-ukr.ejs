@@ -19,12 +19,12 @@
             <div class="block has-background-white-bis p-6">
                 <span class="title is-2">Lagezentrum</span><span class="title is-2 m-0 has-text-grey">
                     Ukraine</span><br>
-                <span id="commsIconS" class=""><i class="fa-solid fa-table-list"></i></span>
+                <!-- <span id="commsIconS" class=""><i class="fa-solid fa-table-list"></i></span> -->
                 <span id="commsIconM" class="is-hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
 
-                <span id="lastUpdateSpan" class="title is-5 m-0">Date</span>
+                <span id="lastUpdateSpan" class="title is-5 m-0"></span>
 
-                <a class="title has-text-link is-5 mb-4" href="/present-ukr">View current live page</a><br><br>
+                <a id="returnedLink" class="title has-text-link is-5 mb-4 is-hidden" href="/">Go to page</a><br><br>
 
                 <div id="boxes-container" class="my-4">
                     <!-- Existing box -->
@@ -500,25 +500,25 @@
 </script>
 
 <script>
-    fetch('/layout-ukr', {
-        method: 'GET',
-    })
-        .then(async response => {
-            if (response.ok) {
-                // Success: Show an alert or perform any other success action
-                var lastUpdate = await response.json()
-                var d = new Date(lastUpdate[0].lastUpdate)
-                // alert(d.toString().split('GMT')[0]);
-                document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
-            } else {
-                // Error: Log the error to the console
-                console.error('Form submission failed:', response.statusText);
-            }
-        })
-        .catch(error => {
-            // Error: Log the error to the console
-            console.error('Error during form submission:', error);
-        });
+    // fetch('/layout-ukr', {
+    //     method: 'GET',
+    // })
+    //     .then(async response => {
+    //         if (response.ok) {
+    //             // Success: Show an alert or perform any other success action
+    //             var lastUpdate = await response.json()
+    //             var d = new Date(lastUpdate[0].lastUpdate)
+    //             // alert(d.toString().split('GMT')[0]);
+    //             document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+    //         } else {
+    //             // Error: Log the error to the console
+    //             console.error('Form submission failed:', response.statusText);
+    //         }
+    //     })
+    //     .catch(error => {
+    //         // Error: Log the error to the console
+    //         console.error('Error during form submission:', error);
+    //     });
 </script>
 
 <script>
@@ -528,9 +528,9 @@
         var formData = new FormData(this);
 
         document.getElementById("commsIconM").classList.remove("is-hidden")
-        document.getElementById("commsIconS").classList.add("is-hidden")
+        // document.getElementById("commsIconS").classList.add("is-hidden")
 
-        fetch('/create-ukr', {
+        fetch('/create-playlist', {
             method: 'POST',
             body: formData
         })
@@ -538,11 +538,14 @@
                 if (response.ok) {
                     // Success: Show an alert or perform any other success action
                     var lastUpdate = await response.json()
-                    var d = new Date(lastUpdate[0].lastUpdate)
+                    // var d = new Date(lastUpdate[0].lastUpdate)
                     // alert(d.toString().split('GMT')[0]);
-                    document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
+                    document.getElementById('lastUpdateSpan').textContent = lastUpdate;
+                    document.getElementById('returnedLink').setAttribute('href', `/present?gp=ukr&playlist=${lastUpdate}`);
+
                     document.getElementById("commsIconM").classList.add("is-hidden")
-                    document.getElementById("commsIconS").classList.remove("is-hidden")
+                    document.getElementById("returnedLink").classList.remove("is-hidden")
+                    console.log()
 
                 } else {
                     // Error: Log the error to the console
