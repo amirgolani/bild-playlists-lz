@@ -1,0 +1,54 @@
+[
+  {
+    "lastUpdate": 1703087709197
+  },
+  {
+    "name": [
+      "Ukraine"
+    ],
+    "title": [
+      "Ukraine Eroberung"
+    ],
+    "time": [
+      ""
+    ],
+    "type": [
+      "map"
+    ],
+    "start": [
+      ""
+    ],
+    "end": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/playlists/qejnZLze/storage/231213_Ukraine_Awdijiwka.webm",
+    "thumb": "/Users/amirgolani/Projects/Git/lz-all/public/playlists/qejnZLze/storage/231213_Ukraine_Awdijiwka.jpg",
+    "info": {
+      "resolution": true,
+      "framerate": 0.04
+    },
+    "mime": "video/webm"
+  },
+  {
+    "name": [
+      "Osten"
+    ],
+    "title": [
+      "Offensive im Osten"
+    ],
+    "time": [
+      ""
+    ],
+    "type": [
+      "Map"
+    ],
+    "start": [
+      ""
+    ],
+    "end": [
+      ""
+    ],
+    "file": "/Users/amirgolani/Projects/Git/lz-all/public/playlists/qejnZLze/storage/AFP_34864FY (2).jpg",
+    "mime": "image/jpeg"
+  }
+]

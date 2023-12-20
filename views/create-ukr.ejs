@@ -26,40 +26,56 @@
 
                 <a id="returnedLink" class="title has-text-link is-5 mb-4 is-hidden" href="/">Go to page</a><br><br>
 
+                <div class="my-4">
+                    <!-- Existing box -->
+                    <div class="box has-background-white-bis my-2">
+                        <div class="columns is-vcentered  is-1 is-variable">
+                            <div class="column is-2">
+                                <input id="title" class="input is-small" type="text" placeholder="Home Screen Title"
+                                    value="" required>
+                            </div>
+                            <div class="column is-2">
+                                <input id="sub" class="input is-small" type="text"
+                                    placeholder="Home Screen Subline / Claim" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="boxes-container" class="my-4">
                     <!-- Existing box -->
                     <div class="box my-2" id="box_1">
-                        <div class="columns is-vcentered">
+                        <div class="columns is-vcentered  is-1 is-variable">
 
                             <div class="column is-1">
                                 <input class="input is-small" type="text" placeholder="Button Text" name="name_1"
                                     value="Ukraine" required>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="mute_1">
                                     <i class="fa-solid fa-volume-xmark"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="loop_1">
                                     <i class="fa-solid fa-repeat"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="ctrl_1">
                                     <i class="fa-solid fa-sliders"></i>
                                 </label>
                             </div>
-                            <div class="column is-fullwidth">
+                            <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4" name="file_1"
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_1"
                                             onchange="updateFileName(this)" required>
-                                        <span class="file-cta">
-                                            <span class="file-icon">
+                                        <span class="file-cta px-1">
+                                            <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
                                             </span>
                                             <span class="file-label">
@@ -70,7 +86,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-left">
                                     <input class="input is-small" type="number" placeholder="0" name="start_1">
                                     <span class="icon is-small is-left">
@@ -78,7 +94,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-right">
                                     <input class="input is-small" type="number" placeholder="0" name="end_1">
                                     <span class="icon is-small is-right">
@@ -92,7 +108,7 @@
                             </div>
                             <div class="column is-2">
                                 <input class="input is-small" type="text" placeholder="Note / Time" name="time_1"
-                                    value="" required>
+                                    value="">
                             </div>
                             <div class="column is-1">
                                 <select class="select is-small is-fullwidth" name="type_1" required>
@@ -110,36 +126,36 @@
                     </div>
 
                     <div class="box my-2" id="box_2">
-                        <div class="columns is-vcentered">
+                        <div class="columns is-vcentered  is-1 is-variable">
                             <div class="column is-1">
                                 <input class="input is-small" type="text" placeholder="Button Text" name="name_2"
                                     value="Osten" required>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="mute_2">
                                     <i class="fa-solid fa-volume-xmark"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="loop_2">
                                     <i class="fa-solid fa-repeat"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="ctrl_2">
                                     <i class="fa-solid fa-sliders"></i>
                                 </label>
                             </div>
-                            <div class="column is-fullwidthullwidth">
+                            <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4" name="file_2"
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_2"
                                             onchange="updateFileName(this)" required>
-                                        <span class="file-cta">
-                                            <span class="file-icon">
+                                        <span class="file-cta px-1">
+                                            <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
                                             </span>
                                             <span class="file-label">
@@ -150,7 +166,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-left">
                                     <input class="input is-small" type="number" placeholder="0" name="start_2">
                                     <span class="icon is-small is-left">
@@ -158,7 +174,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-right">
                                     <input class="input is-small" type="number" placeholder="0" name="end_2">
                                     <span class="icon is-small is-right">
@@ -172,7 +188,7 @@
                             </div>
                             <div class="column is-2">
                                 <input class="input is-small" type="text" placeholder="Note / Time" name="time_2"
-                                    value="" required>
+                                    value="">
                             </div>
                             <div class="column is-1">
                                 <select class="select is-small is-fullwidth" name="type_2" required>
@@ -190,36 +206,36 @@
                     </div>
 
                     <div class="box my-2" id="box_3">
-                        <div class="columns is-vcentered">
+                        <div class="columns is-vcentered  is-1 is-variable">
                             <div class="column is-1">
                                 <input class="input is-small" type="text" placeholder="Button Text" name="name_3"
                                     value="Süden" required>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="mute_3">
                                     <i class="fa-solid fa-volume-xmark"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="loop_3">
                                     <i class="fa-solid fa-repeat"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="ctrl_3">
                                     <i class="fa-solid fa-sliders"></i>
                                 </label>
                             </div>
-                            <div class="column is-fullwidthullwidth">
+                            <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4" name="file_3"
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_3"
                                             onchange="updateFileName(this)" required>
-                                        <span class="file-cta">
-                                            <span class="file-icon">
+                                        <span class="file-cta px-1">
+                                            <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
                                             </span>
                                             <span class="file-label">
@@ -230,7 +246,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-left">
                                     <input class="input is-small" type="number" placeholder="0" name="start_3">
                                     <span class="icon is-small is-left">
@@ -238,7 +254,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-right">
                                     <input class="input is-small" type="number" placeholder="0" name="end_3">
                                     <span class="icon is-small is-right">
@@ -252,7 +268,7 @@
                             </div>
                             <div class="column is-2">
                                 <input class="input is-small" type="text" placeholder="Note / Time" name="time_3"
-                                    value="" required>
+                                    value="">
                             </div>
                             <div class="column is-1">
                                 <select class="select is-small is-fullwidth" name="type_3" required>
@@ -270,36 +286,36 @@
                     </div>
 
                     <div class="box my-2" id="box_4">
-                        <div class="columns is-vcentered">
+                        <div class="columns is-vcentered  is-1 is-variable">
                             <div class="column is-1">
                                 <input class="input is-small" type="text" placeholder="Button Text" name="name_4"
                                     value="Awdijiwka" required>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="mute_4">
                                     <i class="fa-solid fa-volume-xmark"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="loop_4">
                                     <i class="fa-solid fa-repeat"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="ctrl_4">
                                     <i class="fa-solid fa-sliders"></i>
                                 </label>
                             </div>
-                            <div class="column is-fullwidthullwidth">
+                            <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4" name="file_4"
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_4"
                                             onchange="updateFileName(this)" required>
-                                        <span class="file-cta">
-                                            <span class="file-icon">
+                                        <span class="file-cta px-1">
+                                            <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
                                             </span>
                                             <span class="file-label">
@@ -310,7 +326,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-left">
                                     <input class="input is-small" type="number" placeholder="0" name="start_4">
                                     <span class="icon is-small is-left">
@@ -318,7 +334,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-right">
                                     <input class="input is-small" type="number" placeholder="0" name="end_4">
                                     <span class="icon is-small is-right">
@@ -332,7 +348,7 @@
                             </div>
                             <div class="column is-2">
                                 <input class="input is-small" type="text" placeholder="Note / Time" name="time_4"
-                                    value="" required>
+                                    value="">
                             </div>
                             <div class="column is-1">
                                 <select class="select is-small is-fullwidth" name="type_4" required>
@@ -350,36 +366,36 @@
                     </div>
 
                     <div class="box my-2" id="box_5">
-                        <div class="columns is-vcentered">
+                        <div class="columns is-vcentered is-1 is-variable">
                             <div class="column is-1">
                                 <input class="input is-small" type="text" placeholder="Button Text" name="name_5"
                                     value="Gegenoff." required>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="mute_5">
                                     <i class="fa-solid fa-volume-xmark"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="loop_5">
                                     <i class="fa-solid fa-repeat"></i>
                                 </label>
                             </div>
                             <div class="column is-narrow">
-                                <label class="checkbox">
+                                <label class="checkbox mr-4">
                                     <input type="checkbox" name="ctrl_5">
                                     <i class="fa-solid fa-sliders"></i>
                                 </label>
                             </div>
-                            <div class="column is-fullwidthullwidth">
+                            <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4" name="file_5"
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_5"
                                             onchange="updateFileName(this)" required>
-                                        <span class="file-cta">
-                                            <span class="file-icon">
+                                        <span class="file-cta px-1">
+                                            <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
                                             </span>
                                             <span class="file-label">
@@ -390,7 +406,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-left">
                                     <input class="input is-small" type="number" placeholder="0" name="start_5">
                                     <span class="icon is-small is-left">
@@ -398,7 +414,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <div class="column is-1" style="width: 100px;">
+                            <div class="column is-1" style="width: 90px;">
                                 <p class="control has-icons-right">
                                     <input class="input is-small" type="number" placeholder="0" name="end_5">
                                     <span class="icon is-small is-right">
@@ -412,7 +428,7 @@
                             </div>
                             <div class="column is-2">
                                 <input class="input is-small" type="text" placeholder="Note / Time" name="time_5"
-                                    value="" required>
+                                    value="">
                             </div>
                             <div class="column is-1">
                                 <select class="select is-small is-fullwidth" name="type_5" required>
@@ -540,8 +556,10 @@
                     var lastUpdate = await response.json()
                     // var d = new Date(lastUpdate[0].lastUpdate)
                     // alert(d.toString().split('GMT')[0]);
-                    document.getElementById('lastUpdateSpan').textContent = lastUpdate;
-                    document.getElementById('returnedLink').setAttribute('href', `/present?gp=ukr&playlist=${lastUpdate}`);
+                    // document.getElementById('lastUpdateSpan').textContent = lastUpdate;
+                    var title = document.getElementById('title').value;
+                    var sub = document.getElementById('sub').value;
+                    document.getElementById('returnedLink').setAttribute('href', `/present?gp=lz-ukr&playlist=${lastUpdate}&title=${title}&subline=${sub}`);
 
                     document.getElementById("commsIconM").classList.add("is-hidden")
                     document.getElementById("returnedLink").classList.remove("is-hidden")

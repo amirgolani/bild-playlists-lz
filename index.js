@@ -27,13 +27,14 @@ app.use((req, res, next) => {
 
 app.get('/present', (req, res) => {
 
-    const { gp, playlist } = req.query
+    const { gp, title, subline, playlist } = req.query
     // const gp = req.query.gp;
     // const playlist = req.query.playlist;
 
+    console.log(gp, title, subline, playlist)
 
     switch (gp) {
-        case 'ukr': // Left arrow key
+        case 'lz-ukr': // Left arrow key
             res.render('present-vid-player',
                 {
                     bg: '/assets/gp/BGUKR.webm',
@@ -41,12 +42,12 @@ app.get('/present', (req, res) => {
                     headline: '/assets/gp/titles-ukr.png',
                     thumbnail: '/assets/gp/HOMEUKR.jpg',
                     icon: 'gallery',
-                    title: 'Lagezentrum',
-                    sub: 'Julian Röpke',
+                    title: title,
+                    sub: subline,
                     endpoint: playlist
                 })
             break;
-        case 'isr': // Up arrow key
+        case 'lz-isr': // Up arrow key
             res.render('present-vid-player',
                 {
                     bg: '/assets/gp/BGISR.webm',
@@ -54,8 +55,8 @@ app.get('/present', (req, res) => {
                     headline: '/assets/gp/titles-isr.png',
                     thumbnail: '/assets/gp/HOMEISR.jpg',
                     icon: 'gallery',
-                    title: 'Lagezentrum',
-                    sub: 'Julian Röpke',
+                    title: title,
+                    sub: subline,
                     endpoint: playlist
                 })
             break;
@@ -67,18 +68,23 @@ app.get('/present', (req, res) => {
                     headline: '/assets/gp/titles-isr.png',
                     thumbnail: '/assets/gp/HOMEISR.jpg',
                     icon: 'gallery',
-                    title: 'Lagezentrum',
-                    sub: 'Julian Röpke',
+                    title: title,
+                    sub: subline,
                     endpoint: playlist
                 })
             break;
-        default:
+        default: res.status(404).send()
         // Do nothing for other keys
     }
 });
 
-app.get('/create-ukr', (req, res) => {
-    res.render('create-ukr')
+app.get('/create', (req, res) => {
+    const { gp } = req.query;
+
+    if (gp === 'ukr') {
+        res.render('create-ukr')
+    }
+
 });
 
 app.post('/create-playlist', (req, res) => {
@@ -92,7 +98,7 @@ app.post('/create-playlist', (req, res) => {
             return res.status(500).json({ error: 'Error parsing the form' });
         }
 
-        var newFolder = short.generate();
+        var newFolder = short.generate().slice(0, 8);
 
         // Create directory for JSON file if it doesn't exist
         const dbPath = path.join(__dirname, 'public', 'playlists', newFolder);
@@ -122,36 +128,53 @@ app.post('/create-playlist', (req, res) => {
             const file = files[`file_${i}`];
 
             if (file) {
+
                 const newFilePath = path.join(storagePath, file[0].originalFilename);
 
                 // Move the file to the storage directory
                 fs.renameSync(file[0].filepath, newFilePath);
 
-                // getVideoInfo(newFilePath)
-                //     .then((videoInfo) => {
-                //         console.log(videoInfo);
-                //     })
+                if (file[0].mimetype.split('/')[0] === 'video') {
 
-                const videoInfo = await getVideoInfo(newFilePath)
+                    const videoInfo = await getVideoInfo(newFilePath)
 
-                // Add information to the JSON data
-                jsonData.push({
-                    name,
-                    mute,
-                    loop,
-                    ctrl,
-                    title,
-                    time,
-                    type,
-                    start,
-                    end,
-                    file: newFilePath,
-                    thumb: replaceFileExtension(newFilePath),
-                    info: videoInfo
-                });
+                    await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename, '.jpg'));
 
-                await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename));
+                    // Add information to the JSON data
+                    jsonData.push({
+                        name,
+                        mute,
+                        loop,
+                        ctrl,
+                        title,
+                        time,
+                        type,
+                        start,
+                        end,
+                        file: newFilePath,
+                        thumb: replaceFileExtension(newFilePath, '.jpg'),
+                        info: videoInfo,
+                        mime: file[0].mimetype
+                    });
+                }
 
+                if (file[0].mimetype.split('/')[0] === 'image') {
+
+                    // Add information to the JSON data
+                    jsonData.push({
+                        name,
+                        mute,
+                        loop,
+                        ctrl,
+                        title,
+                        time,
+                        type,
+                        start,
+                        end,
+                        file: newFilePath,
+                        mime: file[0].mimetype
+                    });
+                }
             }
         }
 
@@ -233,8 +256,6 @@ async function createThumbnail(inputPath, outputPath, filename) {
     });
 }
 
-
-
 function getVideoInfo(videoPath) {
     return new Promise((resolve, reject) => {
         ffmpeg.ffprobe(videoPath, (err, metadata) => {
@@ -265,7 +286,7 @@ function getVideoInfo(videoPath) {
     });
 }
 
-function replaceFileExtension(fileName) {
+function replaceFileExtension(fileName, ext) {
     // Find the last occurrence of a dot (.) in the file name
     const dotIndex = fileName.lastIndexOf('.');
 
@@ -275,11 +296,22 @@ function replaceFileExtension(fileName) {
         const baseName = fileName.substring(0, dotIndex);
 
         // Concatenate the base name with the new extension ".jpg"
-        const newFileName = baseName + '.jpg';
+        const newFileName = baseName + ext;
 
         return newFileName;
     } else {
         // If no dot is found or it's the first character, simply append ".jpg" to the file name
-        return fileName + '.jpg';
+        return fileName + ext;
+    }
+}
+
+function trimTo(inputString, trim) {
+    // Check if the input string is not empty and has at least 6 characters
+    if (inputString && inputString.length >= trim) {
+        // Use the slice method to extract the first 6 characters
+        return inputString.slice(0, trim);
+    } else {
+        // If the string is empty or has fewer than 6 characters, return the original string
+        return inputString;
     }
 }

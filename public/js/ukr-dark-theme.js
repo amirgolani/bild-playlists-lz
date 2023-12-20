@@ -227,69 +227,98 @@ setTimeout(() => {
 var listLength = 0;
 function getLayout() {
 
-    fetch(`/layout?playlist=${document.getElementById('endPoint').getAttribute('name')}`).then((response) => response.json()).then((json) => {
+    var endPoint = document.getElementById('endPoint').getAttribute('name')
 
-        var layout = ''; // Initialize layout variabl        listLength = json.length;
-        for (l = 1; l < json.length; l++) {
-            var filenameArr = json[l].file.split('playlists')[1].substring(1);
-            var thumbnameArr = json[l].thumb.split('playlists')[1].substring(1);
+    if (endPoint.length !== 0) {
 
-            const { type, title, time, start, end, loop, mute, ctrl, info, name } = json[l];
+        fetch(`/layout?playlist=${endPoint}`).then((response) => response.json()).then((json) => {
 
-            layout += ` 
-            <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); 
-            playVideo('/assets/playlists/${filenameArr}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
-                class="card-in-menu"    
-                id="b_${l}" 
-                style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                url(/assets/playlists/${thumbnameArr});">
-                <div id="listTitles" class="title-in-menu">
-                    ${name}
-                </div>
-            </div>`
-        }
+            var layout = ''; // Initialize layout variabl        listLength = json.length;
+            for (l = 1; l < json.length; l++) {
 
-        document.getElementById('theMenu').innerHTML += layout;
+                if (json[l].mime.split('/'))
+                    var filenameArr = json[l].file.split('playlists')[1].substring(1);
 
-        // drag the menu
+                const { type, title, time, start, end, loop, mute, ctrl, info, name, mime } = json[l];
+
+                if (mime.split('/')[0] === 'video') {
+
+                    var thumbnameArr = json[l].thumb.split('playlists')[1].substring(1);
 
 
-        // Select the movable div
-        const movableDiv = document.getElementById('theMenu');
+                    layout += ` 
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('')
+                        playVideo('/assets/playlists/${filenameArr}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
+                            class="card-in-menu"    
+                            id="b_${l}" 
+                            style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
+                            url(/assets/playlists/${thumbnameArr});">
+                            <div id="listTitles" class="title-in-menu">
+                                ${name}
+                            </div>
+                        </div>`
+                }
 
-        // Initialize touch-related variables
-        let isDragging = false;
-        let startX = 0;
-        let initialLeft = 0;
+                if (mime.split('/')[0] === 'image') {
+                    layout += ` 
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${filenameArr}')
+                        playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', '');" 
+                            class="card-in-menu"    
+                            id="b_${l}" 
+                            style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
+                            url(/assets/playlists/${filenameArr});">
+                            <div id="listTitles" class="title-in-menu">
+                                ${name}
+                            </div>
+                        </div>`
+                }
 
-        // Add touch event listeners
-        movableDiv.addEventListener('touchstart', (event) => {
-            isDragging = true;
-            startX = event.touches[0].clientX;
-            initialLeft = parseFloat(window.getComputedStyle(movableDiv).left);
-        });
 
-        movableDiv.addEventListener('touchmove', (event) => {
-            if (isDragging) {
-                const touchX = event.touches[0].clientX;
-                const moveX = touchX - startX;
-                // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
-                const newLeft = initialLeft + moveX > 0 ? 0 : initialLeft + moveX;
-
-                // Update the left property using GSAP for smooth animation
-                gsap.to(movableDiv, { left: newLeft });
             }
+
+            document.getElementById('theMenu').innerHTML += layout;
+
+            // drag the menu
+
+
+            // Select the movable div
+            const movableDiv = document.getElementById('theMenu');
+
+            // Initialize touch-related variables
+            let isDragging = false;
+            let startX = 0;
+            let initialLeft = 0;
+
+            // Add touch event listeners
+            movableDiv.addEventListener('touchstart', (event) => {
+                isDragging = true;
+                startX = event.touches[0].clientX;
+                initialLeft = parseFloat(window.getComputedStyle(movableDiv).left);
+            });
+
+            movableDiv.addEventListener('touchmove', (event) => {
+                if (isDragging) {
+                    const touchX = event.touches[0].clientX;
+                    const moveX = touchX - startX;
+                    // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
+                    const newLeft = initialLeft + moveX > 0 ? 0 : initialLeft + moveX;
+
+                    // Update the left property using GSAP for smooth animation
+                    gsap.to(movableDiv, { left: newLeft });
+                }
+            });
+
+            movableDiv.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            movableDiv.addEventListener('touchcancel', () => {
+                isDragging = false;
+            });
+
         });
 
-        movableDiv.addEventListener('touchend', () => {
-            isDragging = false;
-        });
-
-        movableDiv.addEventListener('touchcancel', () => {
-            isDragging = false;
-        });
-
-    });
+    }
 
 }
 function handleTitles(icon, title, time) {
@@ -431,6 +460,18 @@ function formatSecondsAsTime(secs, format) {
 
     return min + ':' + sec;
 
+
+}
+
+
+// Handle Images
+
+function setImage(img) {
+var frontImage = document.getElementById('frontImage');
+var backImage = document.getElementById('backImage');
+
+frontImage.style.backgroundImage = `url(${img})`;
+backImage.style.backgroundImage = `url(${img})`;
 
 }
 
@@ -645,13 +686,15 @@ function clamp(value, min, max) {
 function addVidRange(startTime, endTime) {
 
     let timeRange = '';
-    if (parseInt(startTime) !== undefined && parseInt(endTime) !== undefined) {
-        timeRange = `#t=${startTime},${endTime}`;
-    } else if (parseInt(startTime) !== undefined) {
-        timeRange = `#t=${startTime}`;
-    } else if (parseInt(endTime) !== undefined) {
-        timeRange = `#t=0,${endTime}`;
+
+    if (startTime[0].length > 0 && endTime[0].length > 0) {
+        timeRange = `#t=${startTime[0]},${endTime[0]}`;
+    } else if (startTime[0].length > 0) {
+        timeRange = `#t=${startTime[0]}`;
+    } else if (endTime[0].length > 0) {
+        timeRange = `#t=0,${endTime[0]}`;
     }
 
     return timeRange
 }
+

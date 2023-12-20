@@ -32,6 +32,11 @@
             <source src="<%= bg %>" type="<%= vidType %>">
         </video>
     </div>
+    <div id="backImage" class="full-hd-container"
+        style="background-image: url(); background-size: cover; scale: 3; filter: blur(10px);">
+    </div>
+    <div id="frontImage" class="full-hd-container" style="background-image: url(); background-size: cover; scale: .75;">
+    </div>
     <div class="full-hd-container">
         <div id="mainTitle" class="main-title" style="background-image: url(<%= headline %>);"></div>
         <div id="mainTitle" class="main-title" style="background-image: url(<%= headline %>);"></div>
@@ -47,19 +52,21 @@
                 id="b_0" class="card-in-menu"
                 style="width: 360px;
                 background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0,0,0,1) 100%), url(<%= thumbnail %>);">
-
                 <div id="listTitles" class="title-in-menu">
                     <i class="fa-solid fa-house"></i>
                 </div>
-
             </div>
         </div>
     </div>
     <canvas class="full-hd-container" id="paintCanvas" width="1920" height="1080" hidden></canvas>
     <div id="videoTitleToggle" style="opacity: 0; position: relative; left: 200px">
         <div id="video-icon" class="video-icon"></div>
-        <div id="video-title" class="video-title">Lagezentrum</div>
-        <div id="video-timestamp" class="video-timestamp">Julian Röpcke</div>
+        <div id="video-title" class="video-title">
+            <%= title %>
+        </div>
+        <div id="video-timestamp" class="video-timestamp">
+            <%= sub %>
+        </div>
     </div>
     <div id="menuToggle" style="position: absolute; opacity: 0; ">
         <div id="seek" style="opacity: 0;">
