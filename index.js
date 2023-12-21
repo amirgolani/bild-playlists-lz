@@ -82,8 +82,11 @@ app.get('/create', (req, res) => {
     const { gp } = req.query;
 
     if (gp === 'ukr') {
-        res.render('create-ukr')
+        return res.render('create-ukr')
     }
+
+    return res.render('create')
+    
 
 });
 
