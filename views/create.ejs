@@ -216,12 +216,15 @@
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
+        var title = document.getElementById('title').value;
+        var sub = document.getElementById('sub').value;
+
         var formData = new FormData(this);
 
         document.getElementById("commsIconM").classList.remove("is-hidden")
         // document.getElementById("commsIconS").classList.add("is-hidden")
 
-        fetch('/create-playlist', {
+        fetch(`/create-playlist?title=${title}&subline=${sub}`, {
             method: 'POST',
             body: formData
         })
@@ -232,8 +235,7 @@
                     // var d = new Date(lastUpdate[0].lastUpdate)
                     // alert(d.toString().split('GMT')[0]);
                     // document.getElementById('lastUpdateSpan').textContent = lastUpdate;
-                    var title = document.getElementById('title').value;
-                    var sub = document.getElementById('sub').value;
+
                     document.getElementById('returnedLink').setAttribute('href', `/present?gp=lz-ukr&playlist=${lastUpdate}&title=${title}&subline=${sub}`);
 
                     document.getElementById("commsIconM").classList.add("is-hidden")

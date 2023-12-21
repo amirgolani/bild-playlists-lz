@@ -1,4 +1,5 @@
 const express = require('express');
+const fsm = require('fs').promises;
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
 
 app.get('/present', (req, res) => {
 
-    const { gp, title, subline, playlist } = req.query;
+    const { gp, title, subline, playlist, size } = req.query;
 
     switch (gp) {
         case 'lz-ukr': // Left arrow key
@@ -40,36 +41,45 @@ app.get('/present', (req, res) => {
                     icon: 'gallery',
                     title: title,
                     sub: subline,
-                    endpoint: playlist
+                    endpoint: playlist,
+                    size: size ? size / 100 : '1',
+                    width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
+                    height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
                 })
             break;
         case 'lz-isr': // Up arrow key
             res.render('present-vid-player',
                 {
                     bg: '/assets/gp/BGISR.webm',
-                    vidType: 'video/mp4',
+                    vidType: 'video/webm',
                     headline: '/assets/gp/titles-isr.png',
                     thumbnail: '/assets/gp/HOMEISR.jpg',
                     icon: 'gallery',
                     title: title,
                     sub: subline,
-                    endpoint: playlist
+                    endpoint: playlist,
+                    size: size ? size / 100 : '1',
+                    width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
+                    height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
                 })
             break;
-        case 'isr': // Up arrow key
-            res.render('team',
+        case 'bild': // Up arrow key
+            res.render('present-vid-player',
                 {
-                    bg: '/assets/gp/BGISR.webm',
-                    vidType: 'video/mp4',
-                    headline: '/assets/gp/titles-isr.png',
-                    thumbnail: '/assets/gp/HOMEISR.jpg',
+                    bg: '/assets/gp/BGBILD.webm',
+                    vidType: 'video/webm',
+                    headline: '',
+                    thumbnail: '/assets/gp/HOMEBILD.jpg',
                     icon: 'gallery',
                     title: title,
                     sub: subline,
-                    endpoint: playlist
+                    endpoint: playlist,
+                    size: size ? size / 100 : '1',
+                    width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
+                    height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px',
                 })
             break;
-        default: res.status(404).send()
+        default:
         // Do nothing for other keys
     }
 });
@@ -87,6 +97,8 @@ app.get('/create', (req, res) => {
 });
 
 app.post('/create-playlist', (req, res) => {
+
+    const { title, subline } = req.query
     const form = new formidable.IncomingForm({
         multiples: true,
         maxFileSize: 2 * 1024 * 1024 * 1024, // 2 GB limit
@@ -193,6 +205,7 @@ app.get('/layout', (req, res) => {
     const playlist = req.query.playlist;
     const filePath = path.join(__dirname, 'public', 'playlists', playlist, 'layout.json');
 
+
     // Read the file asynchronously
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
@@ -204,7 +217,7 @@ app.get('/layout', (req, res) => {
         try {
             // Parse the file content as JSON
             const jsonData = JSON.parse(data);
-
+            console.log(jsonData)
             // Send the parsed JSON as the response
             res.json(jsonData);
         } catch (parseError) {
@@ -213,6 +226,19 @@ app.get('/layout', (req, res) => {
         }
     });
 });
+
+app.get('/layouts', (req, res) => {
+    // Example usage
+    const directoryPath = path.join(__dirname, 'public', 'playlists');
+    getFoldersWithLayout(directoryPath)
+        .then((result) => {
+            console.log(result);
+            res.json(result);
+        })
+        .catch((error) => {
+            console.error('Error:', error.message);
+        });
+})
 
 app.listen(port, () => {
     var d = new Date(Date.now());
@@ -314,3 +340,52 @@ function trimTo(inputString, trim) {
         return inputString;
     }
 }
+
+
+async function getFoldersWithLayout(directoryPath) {
+    try {
+        // Read the contents of the directory
+        const files = await fs.readdir(directoryPath);
+
+        // Filter out only directories
+        const directories = await Promise.all(
+            files.map(async (file) => {
+                const fullPath = path.join(directoryPath, file);
+                const stat = await fs.stat(fullPath);
+
+                return { name: file, path: fullPath, isDirectory: stat.isDirectory(), ctime: stat.ctime };
+            })
+        );
+
+        // Filter out only directories and sort them by creation time
+        const sortedDirectories = directories
+            .filter((dir) => dir.isDirectory)
+            .sort((a, b) => b.ctime.getTime() - a.ctime.getTime());
+
+        // Attach layout.json content to each directory
+        const directoriesWithLayout = await Promise.all(
+            sortedDirectories.map(async (dir) => {
+                try {
+                    const layoutPath = path.join(dir.path, 'layout.json');
+                    const layoutContent = await fs.readFile(layoutPath, 'utf8');
+                    dir.layout = JSON.parse(layoutContent);
+                } catch (error) {
+                    // Handle errors if layout.json is not found or invalid JSON
+                    dir.layout = null;
+                }
+
+                return dir;
+            })
+        );
+
+        return directoriesWithLayout;
+    } catch (error) {
+        // Handle errors while reading the directory or files
+        console.error('Error:', error.message);
+        return [];
+    }
+}
+
+
+
+
