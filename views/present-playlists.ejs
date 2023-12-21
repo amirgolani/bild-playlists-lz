@@ -28,68 +28,41 @@
     </style>
 </head>
 
-<body>
-
-    <body>
-
-        <div id="layouts-list"></div><br>
+<body style="background: linear-gradient(#1f1f1f, #000000);">
+    <div
+        style="width: 100%; height: 100%; padding-top: 250px; padding-bottom: 50px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 12px; display: inline-flex">
         <div
-            style="width: 300px; height: 100px; background-color: black; border-radius: 10px; border: 3px solid #232323; padding: 10px;">
-            <div style="font-size: 18px; font-family: Gotham; font-weight: 700; line-height: 20px; opacity: 1; color: white"> Name</div>
+            style="height: 162px; width: 960px; padding: 20px; background: #1A1A1A; border-radius: 20px; border: 1px #333333 solid; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex">
+            <div
+                style="text-align: center; color: white; font-size: 20px; font-family: Montserrat; font-weight: 700; line-height: 20px; word-wrap: break-word">
+                Mon 04 Dec. 2023 11:32 AM</div>
+            <div
+                style="text-align: center; color: white; font-size: 32px; font-family: Montserrat; font-weight: 900; line-height: 32px; word-wrap: break-word">
+                Angriff an Kiew</div>
+            <div
+                style="text-align: center; color: white; font-size: 20px; font-family: Montserrat; font-weight: 300; line-height: 20px; word-wrap: break-word">
+                Lagezentrum</div>
+            <div
+                style="text-align: center; color: #424242; font-size: 20px; font-family: Montserrat; font-weight: 700; line-height: 20px; word-wrap: break-word">
+                kJgH45Hg</div>
         </div>
-        <script>
-            // Function to fetch data from the '/layouts' endpoint
-            function fetchData() {
-                fetch('/layouts')
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
+        <div
+            style="height: 162px; width: 960px; padding: 20px; background: #1A1A1A; border-radius: 20px; border: 1px #333333 solid; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex">
+            <div
+                style="text-align: center; color: white; font-size: 20px; font-family: Montserrat; font-weight: 700; line-height: 20px; word-wrap: break-word">
+                Mon 04 Dec. 2023 11:32 AM</div>
+            <div
+                style="text-align: center; color: white; font-size: 32px; font-family: Montserrat; font-weight: 900; line-height: 32px; word-wrap: break-word">
+                Angriff an Kiew</div>
+            <div
+                style="text-align: center; color: white; font-size: 20px; font-family: Montserrat; font-weight: 300; line-height: 20px; word-wrap: break-word">
+                Lagezentrum</div>
+            <div
+                style="text-align: center; color: #424242; font-size: 20px; font-family: Montserrat; font-weight: 700; line-height: 20px; word-wrap: break-word">
+                kJgH45Hg</div>
+        </div>
+    </div>
 
-                        document.getElementById('layouts-list').innerHTML = data
-
-                    })
-                    .catch(error => console.error('Error fetching data:', error));
-            }
-
-            // Function to display layouts in a stylized list
-            function displayLayouts(layouts) {
-
-            }
-
-            // Fetch data when the page loads
-            fetchData();
-
-            function stylizeArray(array) {
-                let result = '<ul>';
-
-                array.forEach(item => {
-                    result += '<li>';
-
-                    if (item.isDirectory) {
-                        result += `<strong>${item.name}</strong>`;
-                        result += stylizeArray(item.layout);
-                    } else {
-                        result += `<span>${item.title[0]}</span>`;
-                        result += `<span>${item.type[0]}</span>`;
-                        result += `<span>${item.file}</span>`;
-                        // Add more properties as needed
-
-                        // Add thumbnail if available
-                        if (item.thumb) {
-                            result += `<img src="${item.thumb}" alt="${item.title[0]} Thumbnail" />`;
-                        }
-                    }
-
-                    result += '</li>';
-                });
-
-                result += '</ul>';
-                return result;
-            }
-        </script>
-
-
-
-    </body>
+</body>
 
 </html>

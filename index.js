@@ -84,6 +84,12 @@ app.get('/present', (req, res) => {
     }
 });
 
+app.get('/playlists', (req, res) => {
+
+    res.render('present-playlists')
+
+});
+
 app.get('/create', (req, res) => {
     const { gp } = req.query;
 
@@ -98,7 +104,7 @@ app.get('/create', (req, res) => {
 
 app.post('/create-playlist', (req, res) => {
 
-    const { title, subline } = req.query
+    const { title, subline, gp } = req.query
     const form = new formidable.IncomingForm({
         multiples: true,
         maxFileSize: 2 * 1024 * 1024 * 1024, // 2 GB limit
@@ -183,13 +189,19 @@ app.post('/create-playlist', (req, res) => {
                         start,
                         end,
                         file: newFilePath,
-                        mime: file[0].mimetype
+                        mime: file[0].mimetype,
                     });
                 }
             }
         }
 
-        jsonData.unshift({ lastUpdate: Date.now() })
+        jsonData.unshift({
+            lastUpdate: Date.now(),
+            url: `/present?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
+            gp: gp,
+            title: title,
+            subline: subline
+        })
 
         // Create JSON file
         const jsonFilePath = path.join(dbPath, `layout.json`);
@@ -197,7 +209,7 @@ app.post('/create-playlist', (req, res) => {
 
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
-        res.json(newFolder);
+        res.json({ url: `/present?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
     });
 });
 
@@ -232,7 +244,7 @@ app.get('/layouts', (req, res) => {
     const directoryPath = path.join(__dirname, 'public', 'playlists');
     getFoldersWithLayout(directoryPath)
         .then((result) => {
-            console.log(result);
+            // console.log(result);
             res.json(result);
         })
         .catch((error) => {
@@ -345,13 +357,13 @@ function trimTo(inputString, trim) {
 async function getFoldersWithLayout(directoryPath) {
     try {
         // Read the contents of the directory
-        const files = await fs.readdir(directoryPath);
+        const files = await fsm.readdir(directoryPath);
 
         // Filter out only directories
         const directories = await Promise.all(
             files.map(async (file) => {
                 const fullPath = path.join(directoryPath, file);
-                const stat = await fs.stat(fullPath);
+                const stat = await fsm.stat(fullPath);
 
                 return { name: file, path: fullPath, isDirectory: stat.isDirectory(), ctime: stat.ctime };
             })
@@ -367,7 +379,7 @@ async function getFoldersWithLayout(directoryPath) {
             sortedDirectories.map(async (dir) => {
                 try {
                     const layoutPath = path.join(dir.path, 'layout.json');
-                    const layoutContent = await fs.readFile(layoutPath, 'utf8');
+                    const layoutContent = await fsm.readFile(layoutPath, 'utf8');
                     dir.layout = JSON.parse(layoutContent);
                 } catch (error) {
                     // Handle errors if layout.json is not found or invalid JSON
