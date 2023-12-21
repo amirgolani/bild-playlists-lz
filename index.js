@@ -27,11 +27,7 @@ app.use((req, res, next) => {
 
 app.get('/present', (req, res) => {
 
-    const { gp, title, subline, playlist } = req.query
-    // const gp = req.query.gp;
-    // const playlist = req.query.playlist;
-
-    console.log(gp, title, subline, playlist)
+    const { gp, title, subline, playlist } = req.query;
 
     switch (gp) {
         case 'lz-ukr': // Left arrow key
@@ -86,7 +82,7 @@ app.get('/create', (req, res) => {
     }
 
     return res.render('create')
-    
+
 
 });
 
@@ -188,7 +184,7 @@ app.post('/create-playlist', (req, res) => {
         fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
 
         var d = new Date(Date.now());
-        console.log(chalk.yellowBright(d.toString().split('GMT')[0], `UKR Page created`));
+        console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
         res.json(newFolder);
     });
 });
