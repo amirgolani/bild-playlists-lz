@@ -229,7 +229,7 @@ app.get('/layout', (req, res) => {
         try {
             // Parse the file content as JSON
             const jsonData = JSON.parse(data);
-            console.log(jsonData)
+            // console.log(jsonData)
             // Send the parsed JSON as the response
             res.json(jsonData);
         } catch (parseError) {
@@ -255,25 +255,7 @@ app.get('/layouts', (req, res) => {
 app.listen(port, () => {
     var d = new Date(Date.now());
     console.log(d.toString().split('GMT')[0].trim(), `Lagezentrum running on ${localIpAddress()}:${port}`);
-    console.log(chalk.yellowBright(`
-    ██    ██ ██   ██ ██████  
-    ██    ██ ██  ██  ██   ██ 
-    ██    ██ █████   ██████  
-    ██    ██ ██  ██  ██   ██ 
-     ██████  ██   ██ ██   ██ 
-                             `));
-    console.log(chalk.yellowBright(`- "http://${localIpAddress()}:${port}/create-ukr"`));
-    console.log(chalk.yellowBright(`- "http://${localIpAddress()}:${port}/present-ukr"`));
-    console.log(chalk.blueBright(`
-    ██ ███████ ██████  
-    ██ ██      ██   ██ 
-    ██ ███████ ██████  
-    ██      ██ ██   ██ 
-    ██ ███████ ██   ██ 
-                       `));
-    console.log(chalk.blueBright(`- "http://${localIpAddress()}:${port}/create-isr"`));
-    console.log(chalk.blueBright(`- "http://${localIpAddress()}:${port}/present-isr"`));
-});
+})
 
 
 // Additional Functions
