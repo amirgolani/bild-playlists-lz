@@ -19,6 +19,17 @@
     opacity: 0;
 }
 
+.playlists-icon {
+    position: absolute;
+    left: 120px;
+    top: 748px;
+    background-image: url(/assets/gp/magnifying-glass.png);
+    background-size: cover;
+    width: 36px;
+    height: 36px;
+    opacity: 0;
+}
+
 .play-icon {
     position: absolute;
     left: 120px;
@@ -223,8 +234,6 @@
     display: inline-flex;
     touch-action: none;
 }
-
-
 
 .timeline {
     position: absolute;

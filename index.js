@@ -79,7 +79,7 @@ app.get('/present', (req, res) => {
                     height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px',
                 })
             break;
-        default:
+        default: res.redirect('/playlists')
         // Do nothing for other keys
     }
 });
@@ -98,7 +98,6 @@ app.get('/create', (req, res) => {
     }
 
     return res.render('create')
-
 
 });
 
@@ -143,6 +142,7 @@ app.post('/create-playlist', (req, res) => {
             const start = fields[`start_${i}`];
             const end = fields[`end_${i}`];
             const file = files[`file_${i}`];
+            const link = files[`link_${i}`];
 
             if (file) {
 
@@ -193,6 +193,18 @@ app.post('/create-playlist', (req, res) => {
                     });
                 }
             }
+
+            if (!file) {
+                jsonData.push({
+                    name,
+                    title,
+                    time,
+                    type,
+                    mime: file[0].mimetype
+                });
+            }
+
+
         }
 
         jsonData.unshift({
@@ -217,6 +229,7 @@ app.get('/layout', (req, res) => {
     const playlist = req.query.playlist;
     const filePath = path.join(__dirname, 'public', 'playlists', playlist, 'layout.json');
 
+    console.log(req.query.playlist)
 
     // Read the file asynchronously
     fs.readFile(filePath, 'utf8', (err, data) => {

@@ -19,7 +19,8 @@
                     Ukraine</span><br>
                 <span id="commsIconM" class="is-hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
                 <span id="lastUpdateSpan" class="title is-5 m-0"></span>
-                <a id="returnedLink" class="title has-text-link is-5 mb-4 is-hidden" href="/">Go to page</a><br><br>
+                <a id="returnedLink" class="title has-text-link is-5 mb-4 is-hidden"
+                    href="/playlists">Playlists</a><br><br>
                 <div class="my-4">
                     <!-- Existing box -->
                     <div class="box has-background-white-bis my-2">
@@ -46,8 +47,7 @@
                 <div id="boxes-container" class="my-4">
                     <!-- Existing box -->
                     <div class="box my-2" id="box_1">
-                        <div class="columns is-vcentered  is-1 is-variable">
-
+                        <div class="columns is-vcentered is-1 is-variable">
                             <div class="column is-1">
                                 <input class="input is-small" type="text" placeholder="Button" name="name_1" value=""
                                     required>
@@ -70,24 +70,7 @@
                                     <i class="fa-solid fa-sliders"></i>
                                 </label>
                             </div>
-                            <div class="column is-2">
-                                <div class="file has-name is-small">
-                                    <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png"
-                                            name="file_1" onchange="updateFileName(this)" required>
-                                        <span class="file-cta px-1">
-                                            <span class="file-icon mx-0 px-0">
-                                                <i class="fas fa-upload"></i>
-                                            </span>
-                                            <span class="file-label">
-                                            </span>
-                                        </span>
-                                        <span class="file-name">
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="column is-1" style="width: 90px;">
+                            <div class="column is-1" style="width: 70px;">
                                 <p class="control has-icons-left">
                                     <input class="input is-small" type="number" placeholder="0" name="start_1">
                                     <span class="icon is-small is-left">
@@ -95,7 +78,7 @@
                                     </span>
                                 </p>
                             </div>
-                            <div class="column is-1" style="width: 90px;">
+                            <div class="column is-1" style="width: 70px;">
                                 <p class="control has-icons-right">
                                     <input class="input is-small" type="number" placeholder="0" name="end_1">
                                     <span class="icon is-small is-right">
@@ -103,6 +86,8 @@
                                     </span>
                                 </p>
                             </div>
+                        </div>
+                        <div class="columns is-vcentered is-1 is-variable">
                             <div class="column is-2">
                                 <input class="input is-small" type="text" placeholder="Title / User" name="title_1"
                                     value="" required>
@@ -124,8 +109,30 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="columns is-vcentered is-1 is-variable">
+                            <div class="column is-4">
+                                <input class="input is-small" type="text" placeholder="Link" name="link_1" value=""
+                                    onchange="handleLinks(this.name)">
+                            </div>
+                            <div class="column is-6">
+                                <div class="file has-name is-small">
+                                    <label class="file-label">
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png"
+                                            name="file_1" onchange="updateFileName(this)" required>
+                                        <span class="file-cta px-1">
+                                            <span class="file-icon mx-0 px-0">
+                                                <i class="fas fa-upload"></i>
+                                            </span>
+                                            <span class="file-label">
+                                            </span>
+                                        </span>
+                                        <span class="file-name">
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
 
                 </div>
                 <div class="mt-6">
@@ -148,6 +155,22 @@
         if (input.files.length > 0) {
             fileNameContainer.textContent = input.files[0].name;
         } else {
+        }
+    }
+
+    function handleLinks(theID) {
+
+
+        var fileIn = document.getElementsByName(`file_${theID.split('_')[1]}`);
+        var linkIn = document.getElementsByName(theID);
+
+
+        if (linkIn[0].value.length === 0) {
+            fileIn[0].disabled = false;
+        }
+
+        if (linkIn[0].value.length !== 0) {
+            fileIn[0].disabled = true
         }
     }
 </script>
@@ -198,28 +221,6 @@
 </script>
 
 <script>
-    // fetch('/layout-ukr', {
-    //     method: 'GET',
-    // })
-    //     .then(async response => {
-    //         if (response.ok) {
-    //             // Success: Show an alert or perform any other success action
-    //             var lastUpdate = await response.json()
-    //             var d = new Date(lastUpdate[0].lastUpdate)
-    //             // alert(d.toString().split('GMT')[0]);
-    //             document.getElementById('lastUpdateSpan').textContent = `Last Update at ${d.toString().split('GMT')[0]}`
-    //         } else {
-    //             // Error: Log the error to the console
-    //             console.error('Form submission failed:', response.statusText);
-    //         }
-    //     })
-    //     .catch(error => {
-    //         // Error: Log the error to the console
-    //         console.error('Error during form submission:', error);
-    //     });
-</script>
-
-<script>
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -247,7 +248,6 @@
                     // alert(d.toString().split('GMT')[0]);
                     // document.getElementById('lastUpdateSpan').textContent = lastUpdate;
 
-                    document.getElementById('returnedLink').setAttribute('href', lastUpdate.url);
                     document.getElementById("commsIconM").classList.add("is-hidden")
                     document.getElementById("returnedLink").classList.remove("is-hidden")
                     console.log()

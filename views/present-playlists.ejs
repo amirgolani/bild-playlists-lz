@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/gp/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/gp/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/gp/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/gp/favicon/site.webmanifest">
     <style>
         body {
             display: flex;
@@ -64,7 +68,7 @@
 
                 for (i = 0; i < playlists.length; i++) {
                     playlistsHTML +=
-                        `<div class="playlist" onclick="goToPage('${playlists[i].layout[0].url}')">
+                        `<div class="playlist" id="" onclick="goToPage('${playlists[i].layout[0].url}')">
                                                 <div style="color: white; font-size: 20px; font-family: Gotham; font-weight: 700; line-height: 20px; ">
                                                     ${convertToLocaleDateTime(playlists[i].ctime)}</div>
                                                 <div style="color: white; font-size: 32px; font-family: Gotham; font-weight: 900; line-height: 32px; ">

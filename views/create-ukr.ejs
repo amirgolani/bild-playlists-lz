@@ -24,12 +24,18 @@
 
                 <span id="lastUpdateSpan" class="title is-5 m-0"></span>
 
-                <a id="returnedLink" class="title has-text-link is-5 mb-4 is-hidden" href="/">Go to page</a><br><br>
+                <a id="returnedLink" class="title has-text-link is-5 mb-4 is-hidden"
+                    href="/playlists">Playlists</a><br><br>
 
                 <div class="my-4">
                     <!-- Existing box -->
                     <div class="box has-background-white-bis my-2">
                         <div class="columns is-vcentered  is-1 is-variable">
+                            <div class="column is-2">
+                                <select id="gp" class="select is-small is-fullwidth" required>
+                                    <option value="lz-ukr" selected>Lagezentrum Ukraine</option>
+                                </select>
+                            </div>
                             <div class="column is-2">
                                 <input id="title" class="input is-small" type="text" placeholder="Home Screen Title"
                                     value="" required>
@@ -72,8 +78,8 @@
                             <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_1"
-                                            onchange="updateFileName(this)" required>
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png"
+                                            name="file_1" onchange="updateFileName(this)" required>
                                         <span class="file-cta px-1">
                                             <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
@@ -152,8 +158,8 @@
                             <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_2"
-                                            onchange="updateFileName(this)" required>
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png"
+                                            name="file_2" onchange="updateFileName(this)" required>
                                         <span class="file-cta px-1">
                                             <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
@@ -232,8 +238,8 @@
                             <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_3"
-                                            onchange="updateFileName(this)" required>
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png"
+                                            name="file_3" onchange="updateFileName(this)" required>
                                         <span class="file-cta px-1">
                                             <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
@@ -312,8 +318,8 @@
                             <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_4"
-                                            onchange="updateFileName(this)" required>
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png"
+                                            name="file_4" onchange="updateFileName(this)" required>
                                         <span class="file-cta px-1">
                                             <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
@@ -392,8 +398,8 @@
                             <div class="column is-2">
                                 <div class="file has-name is-small">
                                     <label class="file-label">
-                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png" name="file_5"
-                                            onchange="updateFileName(this)" required>
+                                        <input class="file-input" type="file" accept=".webm, .mp4, .jpg, .png"
+                                            name="file_5" onchange="updateFileName(this)" required>
                                         <span class="file-cta px-1">
                                             <span class="file-icon mx-0 px-0">
                                                 <i class="fas fa-upload"></i>
@@ -541,12 +547,18 @@
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
+        var gp = document.getElementById('gp').value;
+        var title = document.getElementById('title').value;
+        var sub = document.getElementById('sub').value;
+
+        console.log(gp, title, sub)
+
         var formData = new FormData(this);
 
         document.getElementById("commsIconM").classList.remove("is-hidden")
         // document.getElementById("commsIconS").classList.add("is-hidden")
 
-        fetch('/create-playlist', {
+        fetch(`/create-playlist?gp=${gp}&title=${title}&subline=${sub}`, {
             method: 'POST',
             body: formData
         })
@@ -554,12 +566,10 @@
                 if (response.ok) {
                     // Success: Show an alert or perform any other success action
                     var lastUpdate = await response.json()
+                    console.log(lastUpdate.url)
                     // var d = new Date(lastUpdate[0].lastUpdate)
                     // alert(d.toString().split('GMT')[0]);
                     // document.getElementById('lastUpdateSpan').textContent = lastUpdate;
-                    var title = document.getElementById('title').value;
-                    var sub = document.getElementById('sub').value;
-                    document.getElementById('returnedLink').setAttribute('href', `/present?gp=lz-ukr&playlist=${lastUpdate}&title=${title}&subline=${sub}`);
 
                     document.getElementById("commsIconM").classList.add("is-hidden")
                     document.getElementById("returnedLink").classList.remove("is-hidden")

@@ -146,6 +146,8 @@ function handleSelect(newID) {
                     ease: "power2.inOut"
                 });
 
+
+
             // TO VIDEO
 
         } else {
@@ -227,7 +229,7 @@ setTimeout(() => {
 var listLength = 0;
 function getLayout() {
 
-    var endPoint = document.getElementById('endPoint').getAttribute('name')
+    var endPoint = document.getElementById('endPoint').getAttribute('name');
 
     if (endPoint.length !== 0) {
 
@@ -272,7 +274,6 @@ function getLayout() {
                             </div>
                         </div>`
                 }
-
 
             }
 
@@ -467,11 +468,28 @@ function formatSecondsAsTime(secs, format) {
 // Handle Images
 
 function setImage(img) {
+
+    var imageDisplay = document.getElementById('imageDisplay');
     var frontImage = document.getElementById('frontImage');
     var backImage = document.getElementById('backImage');
-    var mainImage = document.getElementById('mainImage')
+    var mainImage = document.getElementById('mainImage');
     var zoomIcon = document.getElementById('zoom-icon');
 
+    if (img === '') {
+
+        gsap.to('#zoom-icon',
+            {
+                onStart: img === '' ? function () { } : function () { zoomIcon.hidden = false },
+                opacity: img === '' ? 0 : 1,
+                ease: 'power1.inOut',
+                duration: .6,
+                onComplete: img === '' ? function () { zoomIcon.hidden = true } : function () { },
+            })
+
+        return imageDisplay.hidden = true;
+    } else {
+        imageDisplay.hidden = false;
+    }
 
     // frontImage.style.backgroundImage = `url(${img})`;
     mainImage.setAttribute('src', img)
@@ -648,6 +666,25 @@ function draw(touches) {
     }
 }
 
+// Image Dragging
+
+// Get the element you want to make movable
+const movableElement = document.getElementById('frontImage');
+
+// Use Draggable to make the element movable
+const draggable = new Draggable(movableElement, {
+    type: 'x,y', // Allow movement along the x and y axes
+    edgeResistance: .8, // Resistance when dragging towards the edges
+    bounds: 'body', // Restrict movement within the body of the document
+});
+
+// Example GSAP animation on drag start
+draggable.addEventListener('dragstart', () => {
+    gsap.set('#frontImage', { zIndex: 0 });
+});
+
+
+
 // Function to handle arrow key press
 function handleArrowKeyPress(event) {
     // Check which arrow key is pressed based on the key code
@@ -755,23 +792,3 @@ function addVidRange(startTime, endTime) {
     return timeRange
 }
 
-
-// Get the element you want to make movable
-const movableElement = document.getElementById('frontImage');
-
-// Use Draggable to make the element movable
-const draggable = new Draggable(movableElement, {
-    type: 'x,y', // Allow movement along the x and y axes
-    edgeResistance: .8, // Resistance when dragging towards the edges
-    bounds: 'body', // Restrict movement within the body of the document
-});
-
-// Example GSAP animation on drag start
-draggable.addEventListener('dragstart', () => {
-    gsap.set('#frontImage', { zIndex: 0 });
-});
-
-// // Example GSAP animation on drag end
-// draggable.addEventListener('dragend', () => {
-//     gsap.to(movableElement, { scale: 1, duration: 0.3 });
-// });
