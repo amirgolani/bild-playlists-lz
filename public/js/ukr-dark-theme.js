@@ -241,6 +241,7 @@ function getLayout() {
                 if (json[l].mime.split('/'))
 
                     var filenameArr = json[l].file.split('playlists')[1].substring(1);
+                console.log(filenameArr);
 
                 const { type, title, time, start, end, loop, mute, ctrl, info, name, mime } = json[l];
 
@@ -250,11 +251,11 @@ function getLayout() {
 
                     layout += ` 
                         <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('');
-                        playVideo('/assets/playlists/${filenameArr}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
+                        playVideo('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].file)}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${thumbnameArr});">
+                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].thumb)});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -263,12 +264,12 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${filenameArr}')
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].file)}')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', '');" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${filenameArr});">
+                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].file)});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -792,3 +793,12 @@ function addVidRange(startTime, endTime) {
     return timeRange
 }
 
+function getLastPartOfPath(filePath) {
+    // Split the path using the path separator (e.g., "/" or "\")
+    const pathParts = filePath.split(/[\/\\]/);
+
+    // Get the last part of the path
+    const lastPart = pathParts[pathParts.length - 1];
+
+    return lastPart;
+}

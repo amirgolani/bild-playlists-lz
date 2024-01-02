@@ -142,7 +142,7 @@ app.post('/create-playlist', (req, res) => {
             const start = fields[`start_${i}`];
             const end = fields[`end_${i}`];
             const file = files[`file_${i}`];
-            const link = files[`link_${i}`];
+            // const link = files[`link_${i}`];
 
             if (file) {
 
@@ -194,15 +194,15 @@ app.post('/create-playlist', (req, res) => {
                 }
             }
 
-            if (!file) {
-                jsonData.push({
-                    name,
-                    title,
-                    time,
-                    type,
-                    mime: file[0].mimetype
-                });
-            }
+            // if (!file) {
+            //     jsonData.push({
+            //         name,
+            //         title,
+            //         time,
+            //         type,
+            //         mime: file[0].mimetype
+            //     });
+            // }
 
 
         }
@@ -347,7 +347,6 @@ function trimTo(inputString, trim) {
         return inputString;
     }
 }
-
 
 async function getFoldersWithLayout(directoryPath) {
     try {
