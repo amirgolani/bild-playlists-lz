@@ -165,10 +165,10 @@ function handleSelect(newID) {
 
         gsap.to("#playlists-icon",
             {
-                onStart: newID === "b_0" ? function () {playlistsIcon.hidden = false } : function () {  },
+                onStart: newID === "b_0" ? function () { playlistsIcon.hidden = false } : function () { },
                 opacity: newID === "b_0" ? 1 : 0,
                 ease: "power2.out",
-                onComplete: newID !== "b_0" ? function () {playlistsIcon.hidden = true  } : function () { }
+                onComplete: newID !== "b_0" ? function () { playlistsIcon.hidden = true } : function () { }
 
             })
 
@@ -570,6 +570,12 @@ function manageColors(color) {
     drawColor = color;
 }
 function manageDraws() {
+
+    var drawBlue = document.getElementById('blue-circle')
+    var drawRed = document.getElementById('red-circle')
+    var drawWhite = document.getElementById('black-circle')
+    var drawBlack = document.getElementById('white-circle')
+
     if (!drawOnScreen) {
         canvas.hidden = false;
         startPainting()
@@ -589,31 +595,39 @@ function manageDraws() {
         });
     gsap.to('#blue-circle',
         {
+            onStart: drawOnScreen ? function () { drawBlue.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
             delay: !drawOnScreen ? 0.15 : 0,
             duration: .6,
-            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out',
+            onComplete: drawOnScreen ? function () { } : function () { drawBlue.hidden = true }
         });
     gsap.to('#red-circle',
         {
+            onStart: drawOnScreen ? function () { drawRed.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
             delay: !drawOnScreen ? 0.1 : 0.05,
             duration: .6,
-            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out',
+            onComplete: drawOnScreen ? function () { } : function () { drawRed.hidden = true }
         });
     gsap.to('#black-circle',
         {
+            onStart: drawOnScreen ? function () { drawBlack.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
             delay: !drawOnScreen ? 0.05 : 0.1,
             duration: .6,
-            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out',
+            onComplete: drawOnScreen ? function () { } : function () { drawBlack.hidden = true }
         });
     gsap.to('#white-circle',
         {
+            onStart: drawOnScreen ? function () { drawWhite.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
             delay: !drawOnScreen ? 0 : 0.15,
             duration: .6,
-            ease: !drawOnScreen ? 'power4.in' : 'power4.out'
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out',
+            onComplete: drawOnScreen ? function () { } : function () { drawWhite.hidden = true }
         });
 
 }
