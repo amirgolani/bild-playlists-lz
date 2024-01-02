@@ -1,3 +1,5 @@
+var playlistsIcon = document.getElementById('playlists-icon');
+
 // Handle Menu Pos
 var menuPos = true;
 function handleMenuPos(selection) {
@@ -146,8 +148,6 @@ function handleSelect(newID) {
                     ease: "power2.inOut"
                 });
 
-
-
             // TO VIDEO
 
         } else {
@@ -159,7 +159,18 @@ function handleSelect(newID) {
                     ease: "power2.inOut"
                 });
 
+
+
         }
+
+        gsap.to("#playlists-icon",
+            {
+                onStart: newID === "b_0" ? function () {playlistsIcon.hidden = false } : function () {  },
+                opacity: newID === "b_0" ? 1 : 0,
+                ease: "power2.out",
+                onComplete: newID !== "b_0" ? function () {playlistsIcon.hidden = true  } : function () { }
+
+            })
 
         gsap.fromTo("#video",
             { opacity: 0 },
@@ -235,27 +246,21 @@ function getLayout() {
 
         fetch(`/layout?playlist=${endPoint}`).then((response) => response.json()).then((json) => {
 
-            var layout = ''; // Initialize layout variabl        listLength = json.length;
+            var layout = '';
+
             for (l = 1; l < json.length; l++) {
 
-                if (json[l].mime.split('/'))
-
-                    var filenameArr = json[l].file.split('playlists')[1].substring(1);
-                console.log(filenameArr);
-
-                const { type, title, time, start, end, loop, mute, ctrl, info, name, mime } = json[l];
+                const { type, title, time, start, end, loop, mute, ctrl, info, name, mime, file, thumb } = json[l];
 
                 if (mime.split('/')[0] === 'video') {
 
-                    var thumbnameArr = json[l].thumb.split('playlists')[1].substring(1);
-
                     layout += ` 
                         <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('');
-                        playVideo('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].file)}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
+                        playVideo('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].thumb)});">
+                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(thumb)});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -264,12 +269,12 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].file)}')
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)}')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', '');" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(json[l].file)});">
+                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -323,12 +328,14 @@ function getLayout() {
     }
 
 }
+
+getLayout();
+
 function handleTitles(icon, title, time) {
     document.getElementById('video-icon').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
     document.getElementById('video-title').textContent = title;
     document.getElementById('video-timestamp').textContent = time;
 }
-getLayout();
 
 
 // handle plays

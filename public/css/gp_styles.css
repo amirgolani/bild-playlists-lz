@@ -50,6 +50,17 @@
     height: 50px;
 }
 
+.playlists-icon {
+    position: absolute;
+    left: 120px;
+    top: 670px;
+    background-image: url(/assets/gp/playlist.png);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+}
+
 .timecode {
     position: absolute;
     top: 754px;
