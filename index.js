@@ -267,16 +267,12 @@ app.get('/layouts', (req, res) => {
 
 app.get('/chart', (req, res) => {
 
-    const { data, type, categories, title, subline, size, swap } = req.query;
-
-    const outCat = categories.split(',');
+    const { type, swap, colors, animate, data, categories, title, subline, size } = req.query;
 
     var options = {
-        series: [{
-            data: JSON.parse(data)
-        }],
+        colors: colors ? colors.split(',') : '#ffffff',
         chart: {
-            type: type,
+            type: type ? type : 'bar',
             height: 560,
             width: 1280,
             fontFamily: 'Gotham',
@@ -284,7 +280,7 @@ app.get('/chart', (req, res) => {
                 show: false
             },
             animations: {
-                enabled: true,
+                enabled: animate ? animate === 'true' ? true : false : true,
                 easing: 'easeinout',
                 speed: 800,
                 animateGradually: {
@@ -297,10 +293,30 @@ app.get('/chart', (req, res) => {
                 }
             }
         },
+        xaxis: {
+            categories: categories.split(','),
+            labels: {
+                style: {
+                    colors: '#ffffff',
+                    fontSize: '16px',
+                    fontWeight: 800,
+                }
+            },
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    colors: '#ffffff',
+                    fontSize: '16px'
+                }
+            },
+        },
+        series: [{
+            data: JSON.parse(data)
+        }],
         stroke: {
             show: type === 'line' ? true : false,
             lineCap: 'round',
-            colors: ['#ffffff'],
             width: 6,
             dashArray: 0,
         },
@@ -310,7 +326,8 @@ app.get('/chart', (req, res) => {
                 horizontal: swap === 'true' ? true : false,
                 dataLabels: {
                     position: 'top'
-                }
+                },
+                distributed: true
             },
         },
         dataLabels: {
@@ -332,26 +349,10 @@ app.get('/chart', (req, res) => {
             offsetY: swap === 'true' ? 0 : 2,
             offsetX: swap === 'true' ? -16 : 0
         },
-        xaxis: {
-            categories: outCat,
-            labels: {
-                style: {
-                    colors: '#ffffff',
-                    fontSize: '16px',
-                    fontWeight: 800,
-                }
-            },
-        },
-        yaxis: {
-            labels: {
-                style: {
-                    colors: '#ffffff',
-                    fontSize: '16px'
-                }
-            },
+        legend: {
+            show: false
         },
         fill: {
-            colors: '#ffffff',
             opacity: 1
         },
         tooltip: {
@@ -391,7 +392,6 @@ async function createThumbnail(inputPath, outputPath, filename) {
             });
     });
 }
-
 function getVideoInfo(videoPath) {
     return new Promise((resolve, reject) => {
         ffmpeg.ffprobe(videoPath, (err, metadata) => {
@@ -421,7 +421,6 @@ function getVideoInfo(videoPath) {
         });
     });
 }
-
 function replaceFileExtension(fileName, ext) {
     // Find the last occurrence of a dot (.) in the file name
     const dotIndex = fileName.lastIndexOf('.');
@@ -440,7 +439,6 @@ function replaceFileExtension(fileName, ext) {
         return fileName + ext;
     }
 }
-
 function trimTo(inputString, trim) {
     // Check if the input string is not empty and has at least 6 characters
     if (inputString && inputString.length >= trim) {
@@ -451,7 +449,6 @@ function trimTo(inputString, trim) {
         return inputString;
     }
 }
-
 async function getFoldersWithLayout(directoryPath) {
     try {
         // Read the contents of the directory
@@ -505,6 +502,8 @@ function removeFirstAndLastCharacter(inputString) {
     // Remove the first and last character using substring
     return inputString.substring(1, inputString.length - 1);
 }
+
+
 
 
 

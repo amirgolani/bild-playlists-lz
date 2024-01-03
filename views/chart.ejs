@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Player</title>
+    <title>Chart</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/gp_styles.css">
@@ -68,9 +68,15 @@
         var chartObject = new ApexCharts(document.querySelector("#theChart"), options);
         chartObject.render();
 
-        gsap.fromTo('#theChart', 
-        {opacity: 0, scale: 1.1}, 
-        {opacity: 1, scale: 1, duration: 1, ease: 'power1.inOut'})
+        console.log(options.chart.animations.enabled)
+
+        if (options.chart.animations.enabled) {
+            gsap.fromTo('#theChart',
+                { opacity: 0, scale: 1.1 },
+                { opacity: 1, scale: 1, duration: 1, ease: 'power1.inOut' })
+        }
+
+
 
     </script>
 
