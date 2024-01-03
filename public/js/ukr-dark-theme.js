@@ -359,20 +359,20 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
         videoBg.setAttribute('type', '')
     }
 
-
-
-    if (PlayButtons == "withPlayButtons") {
+    if (PlayButtons === "withPlayButtons") {
         gsap.to('#seek', {
+            onStart: function () { seek.hidden = false },
             opacity: 1,
-            delay: .4
+            delay: .4,
+
+
         })
-        // document.getElementById("pause-icon").hidden = false
     } else {
         gsap.to('#seek', {
             opacity: 0,
-            duration: .4
+            duration: .4,
+            onComplete: function () { seek.hidden = true },
         })
-        // document.getElementById("pause-icon").hidden = true
     }
 
 

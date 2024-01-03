@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/assets/gp/favicon-play/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/gp/favicon-play/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/gp/favicon-play/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/gp/favicon-play/favicon-16x16.png">
     <link rel="manifest" href="/assets/gp/favicon-play/site.webmanifest">
@@ -19,22 +19,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
             margin: 0;
             background-color: rgb(17, 17, 17);
         }
 
         .playlist {
-            width: 960px;
+            width: 720px;
             padding: 20px;
             background: #1A1A1A;
             border-radius: 20px;
-            border: 1px #333333 solid;
             flex-direction: column;
+            box-shadow: 0px 50px 130px rgb(12, 12, 12) inset;
+            border: 1px solid #1f1f1f;
             justify-content: flex-start;
             align-items: flex-start;
             gap: 10px;
-            display: flex
+            display: flex;
+            opacity: 0;
         }
 
         .playlist-container {
@@ -51,7 +52,7 @@
     </style>
 </head>
 
-<body style="background: black">
+<body>
     <div class="playlist-container" id="playlist-container">
 
 
@@ -68,21 +69,35 @@
 
                 for (i = 0; i < playlists.length; i++) {
                     playlistsHTML +=
-                        `<div class="playlist" id="" onclick="goToPage('${playlists[i].layout[0].url}')">
-                                                <div style="color: white; font-size: 20px; font-family: Gotham; font-weight: 700; line-height: 20px; ">
-                                                    ${convertToLocaleDateTime(playlists[i].ctime)}</div>
-                                                <div style="color: white; font-size: 32px; font-family: Gotham; font-weight: 900; line-height: 32px; ">
-                                                    ${playlists[i].layout[0].title}</div>
-                                                <div style="color: white; font-size: 20px; font-family: Gotham; font-weight: 300; line-height: 20px; ">
-                                                    ${playlists[i].layout[0].gp}</div>
-                                                <div style="color: #424242; font-size: 20px; font-family: Gotham; font-weight: 700; line-height: 20px; ">
-                                                    ${playlists[i].name}</div>
-                                            </div>`
+                        `<div class="playlist" id="pl_${i}" onclick="goToPage('${playlists[i].layout[0].url}')">
+                            <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: 700; line-height: 14px; ">
+                                ${convertToLocaleDateTime(playlists[i].ctime)}</div>
+                            <div style="color: white; font-size: 36px; font-family: Gotham; font-weight: 800; line-height: 32px; ">
+                                ${playlists[i].layout[0].title}</div>
+                            <div style="color: white; font-size: 20px; font-family: Gotham; font-weight: 300; line-height: 20px; ">
+                                ${playlists[i].layout[0].gp}</div>
+                            <div style="color: #424242; font-size: 14px; font-family: Gotham; font-weight: 700; line-height: 14px; ">
+                                ${playlists[i].name}</div>
+                        </div>`
                 }
 
                 document.getElementById('playlist-container').innerHTML = playlistsHTML;
+
+                for (b = 0; b < playlists.length; b++) {
+                    gsap.fromTo(`#pl_${b}`,
+                        { opacity: 0, scale: .95 },
+                        {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 1,
+                            delay: b / 5,
+                            ease: 'power1.out'
+                        })
+                }
             }
         })
+
+
 
         function goToPage(url) {
             window.location.assign(url)

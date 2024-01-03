@@ -263,6 +263,110 @@ app.get('/layouts', (req, res) => {
         .catch((error) => {
             console.error('Error:', error.message);
         });
+});
+
+app.get('/chart', (req, res) => {
+
+    const { data, type, categories, title, subline, size, swap } = req.query;
+
+    const outCat = categories.split(',');
+
+    var options = {
+        series: [{
+            data: JSON.parse(data)
+        }],
+        chart: {
+            type: type,
+            height: 560,
+            width: 1280,
+            fontFamily: 'Gotham',
+            toolbar: {
+                show: false
+            },
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 200
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            }
+        },
+        stroke: {
+            show: type === 'line' ? true : false,
+            lineCap: 'round',
+            colors: ['#ffffff'],
+            width: 6,
+            dashArray: 0,
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 0,
+                horizontal: swap === 'true' ? true : false,
+                dataLabels: {
+                    position: 'top'
+                }
+            },
+        },
+        dataLabels: {
+            enabled: true,
+            style: {
+                fontSize: '20px',
+                fontWeight: 500,
+                colors: ['#000000']
+            },
+            background: {
+                enabled: true,
+                color: ['#ffffff'], // Background color (black)
+                padding: 8,
+                borderRadius: 2,
+                borderWidth: 1,
+                borderColor: '#000000',
+                opacity: 1,
+            },
+            offsetY: swap === 'true' ? 0 : 2,
+            offsetX: swap === 'true' ? -16 : 0
+        },
+        xaxis: {
+            categories: outCat,
+            labels: {
+                style: {
+                    colors: '#ffffff',
+                    fontSize: '16px',
+                    fontWeight: 800,
+                }
+            },
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    colors: '#ffffff',
+                    fontSize: '16px'
+                }
+            },
+        },
+        fill: {
+            colors: '#ffffff',
+            opacity: 1
+        },
+        tooltip: {
+            enabled: false
+        }
+    };
+    res.render('chart',
+        {
+            chart: options,
+            title: title ? title : '',
+            sub: subline ? subline : '',
+            size: size ? size / 100 : '1',
+            width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
+            height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
+        })
 })
 
 app.listen(port, () => {
@@ -391,7 +495,16 @@ async function getFoldersWithLayout(directoryPath) {
         return [];
     }
 }
+function removeFirstAndLastCharacter(inputString) {
+    if (typeof inputString !== 'string' || inputString.length < 2) {
+        // Check if the input is a valid string with at least two characters
+        console.error('Invalid input. Please provide a string with at least two characters.');
+        return null; // Or throw an error, depending on your requirements
+    }
 
+    // Remove the first and last character using substring
+    return inputString.substring(1, inputString.length - 1);
+}
 
 
 
