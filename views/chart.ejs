@@ -22,42 +22,30 @@
 
 </head>
 
-<body style="position: absolute; 
-    overflow: clip; 
-    transform-origin: top left; 
-    margin: 0%; 
-    padding: 0%; 
-    background-color: black; 
-    width: <%= width %>; 
-    height: <%= height %>; 
-    scale: <%= size %>;">
-    <div class="full-hd-container" style="background-image: url(/assets/gp/HOMEBILD.jpg); 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    ">
-        <div style="
-            font-family: Gotham;
-            font-weight: 800;
-            line-height: 36px;
-            font-size: 36px;
-            color: white;
-            width: 1280px;
-            padding-bottom: 10px;">
-            <%= title %>
+<body
+    style="position: absolute; overflow: clip; transform-origin: top left; margin: 0%; padding: 0%; background-color: black; width: <%= width %>; height: <%= height %>; scale: <%= size %>;">
+    <div class="full-hd-container">
+        <video preload="auto" style="opacity: 1; position: absolute;" width="1920" height="1080" id="video" playsinline
+            autoplay muted loop>
+            <source src="/assets/gp/BGBILDCHART.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="full-hd-container"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="padding: 50px; margin-bottom: 120px;">
+            <div
+                style=" font-family: Gotham; font-weight: 800; line-height: 36px; font-size: 36px; color: white; width: 1280px; padding-bottom: 10px;">
+                <%= title %>
+            </div>
+            <div
+                style=" font-family: Gotham; font-weight: 400; line-height: 24px; font-size: 24px; color: white; width: 1280px; padding-bottom: 40px;">
+                <%= sub %>
+            </div>
+            <div id="theChart">
+            </div>
+            
         </div>
-        <div style="
-            font-family: Gotham;
-            font-weight: 400;
-            line-height: 24px;
-            font-size: 24px;
-            color: white;
-            width: 1280px;">
-            <%= sub %>
-        </div><br><br>
-        <div id="theChart" style="padding-bottom: 120px;">
-        </div>
+        
     </div>
 
 
@@ -72,8 +60,8 @@
 
         if (options.chart.animations.enabled) {
             gsap.fromTo('#theChart',
-                { opacity: 0, scale: 1.1 },
-                { opacity: 1, scale: 1, duration: 1, ease: 'power1.inOut' })
+                { scale: .9 },
+                { scale: 1, duration: 1, delay: .6, ease: 'power2.inOut' })
         }
 
 

@@ -66,8 +66,8 @@ app.get('/present', (req, res) => {
         case 'bild': // Up arrow key
             res.render('present-vid-player',
                 {
-                    bg: '/assets/gp/BGBILD.webm',
-                    vidType: 'video/webm',
+                    bg: '/assets/gp/BGBILD.mp4',
+                    vidType: 'video/mp4',
                     headline: '',
                     thumbnail: '/assets/gp/HOMEBILD.jpg',
                     icon: 'gallery',
@@ -281,15 +281,16 @@ app.get('/chart', (req, res) => {
             animations: {
                 enabled: animate ? animate === 'true' ? true : false : true,
                 easing: 'easeinout',
-                speed: 800,
+                speed: 600,
                 animateGradually: {
-                    enabled: true,
-                    delay: 200
+                    enabled: false,
+                    delay: 100
                 },
                 dynamicAnimation: {
                     enabled: true,
                     speed: 350
-                }
+                },
+
             }
         },
         xaxis: {
@@ -311,7 +312,7 @@ app.get('/chart', (req, res) => {
             },
         },
         series: [{
-            data: JSON.parse(data)
+            data: data.split(',')
         }],
         stroke: {
             show: type === 'line' ? true : false,
@@ -332,20 +333,21 @@ app.get('/chart', (req, res) => {
         },
         dataLabels: {
             enabled: true,
+            textAnchor: 'middle',
             style: {
-                fontSize: '20px',
+                fontSize: '18px',
                 fontWeight: 500,
                 colors: ['#000000']
             },
             background: {
                 enabled: true,
-                padding: 8,
+                // padding: 8,
                 borderRadius: 2,
                 borderWidth: 1,
                 borderColor: '#000000',
                 opacity: 1,
             },
-            offsetY: swap === 'true' ? 0 : 2,
+            offsetY: swap === 'true' ? 0 : -16,
             offsetX: swap === 'true' ? -10 : 0
         },
         legend: {
