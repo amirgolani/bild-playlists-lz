@@ -39,7 +39,7 @@ function handleMenuPos(selection) {
 
     gsap.to("#left-dark-blur",
         {
-            top: menuPos ? -500 : -1800,
+            top: menuPos ? -500 : -2000,
             duration: 1,
             ease: "power2.inOut"
 
