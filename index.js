@@ -142,7 +142,7 @@ app.post('/create-playlist', (req, res) => {
             const start = fields[`start_${i}`];
             const end = fields[`end_${i}`];
             const file = files[`file_${i}`];
-            // const link = files[`link_${i}`];
+            const link = fields[`link_${i}`];
 
             if (file) {
 
@@ -194,17 +194,16 @@ app.post('/create-playlist', (req, res) => {
                 }
             }
 
-            // if (!file) {
-            //     jsonData.push({
-            //         name,
-            //         title,
-            //         time,
-            //         type,
-            //         mime: file[0].mimetype
-            //     });
-            // }
-
-
+            if (!file) {
+                jsonData.push({
+                    name,
+                    title,
+                    time,
+                    type,
+                    mime: "web/url",
+                    link
+                });
+            }
         }
 
         jsonData.unshift({
@@ -270,10 +269,10 @@ app.get('/chart', (req, res) => {
     const { type, swap, colors, animate, data, categories, title, subline, size } = req.query;
 
     var options = {
-        colors: colors ? colors.split(',') : '#ffffff',
+        colors: colors ? colors.split(',') : ['#ffffff'],
         chart: {
             type: type ? type : 'bar',
-            height: 560,
+            height: 520,
             width: 1280,
             fontFamily: 'Gotham',
             toolbar: {
@@ -327,7 +326,8 @@ app.get('/chart', (req, res) => {
                 dataLabels: {
                     position: 'top'
                 },
-                distributed: true
+                distributed: true,
+                columnWidth: '70%',
             },
         },
         dataLabels: {
@@ -339,7 +339,6 @@ app.get('/chart', (req, res) => {
             },
             background: {
                 enabled: true,
-                color: ['#ffffff'], // Background color (black)
                 padding: 8,
                 borderRadius: 2,
                 borderWidth: 1,
@@ -347,7 +346,7 @@ app.get('/chart', (req, res) => {
                 opacity: 1,
             },
             offsetY: swap === 'true' ? 0 : 2,
-            offsetX: swap === 'true' ? -16 : 0
+            offsetX: swap === 'true' ? -10 : 0
         },
         legend: {
             show: false

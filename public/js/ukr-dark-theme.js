@@ -250,12 +250,12 @@ function getLayout() {
 
             for (l = 1; l < json.length; l++) {
 
-                const { type, title, time, start, end, loop, mute, ctrl, info, name, mime, file, thumb } = json[l];
+                const { type, title, time, start, end, loop, mute, ctrl, info, name, mime, file, thumb, link } = json[l];
 
                 if (mime.split('/')[0] === 'video') {
 
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('');
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage(''); setUrl('');
                         playVideo('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
@@ -270,7 +270,7 @@ function getLayout() {
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
                         <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)}')
-                        playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', '');" 
+                        playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('')" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
@@ -281,6 +281,19 @@ function getLayout() {
                         </div>`
                 }
 
+                if (mime.split('/')[0] === 'web') {
+                    layout += ` 
+                    <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('');
+                    playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('${link}')" 
+                        class="card-in-menu"    
+                        id="b_${l}" 
+                        style="background-image: linear-gradient(180deg, rgba(0, 0, 0, .2) -50%, black 150%) 
+                        ">
+                        <div id="listTitles" class="title-in-menu">
+                            ${name}
+                        </div>
+                    </div>`
+                }
             }
 
             document.getElementById('theMenu').innerHTML += layout;
@@ -545,6 +558,30 @@ function setImage(img) {
             duration: .6,
             onComplete: img === '' ? function () { zoomIcon.hidden = true } : function () { },
         })
+}
+
+function setUrl(url) {
+    var webDisplay = document.getElementById('webDisplay');
+    var webIframe = document.getElementById('webIframe');
+
+    if (url === '') {
+        webDisplay.hidden = true;
+        webIframe.setAttribute('src', '');
+        return
+    }
+
+    webDisplay.hidden = false;
+    webIframe.setAttribute('src', url);
+    webIframe.hidden = false;
+
+    gsap.fromTo('#webDisplay',
+        { opacity: 0 },
+        {
+            opacity: 1,
+            duration: 1,
+            ease: 'power2.inOut'
+        })
+
 }
 
 var zoomed = true
