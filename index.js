@@ -370,7 +370,7 @@ app.get('/chart', (req, res) => {
                 data: data.split(',')
             }],
             stroke: {
-                show: type === 'line' ? true : false,
+                show: type === 'line' || type === 'area' ? true : false,
                 lineCap: 'round',
                 curve: 'smooth',
                 width: 6,
@@ -413,8 +413,8 @@ app.get('/chart', (req, res) => {
                 opacity: 1,
                 gradient: {
                     enabled: true,
-                    opacityFrom: 1,
-                    opacityTo: .4
+                    opacityFrom: .05,
+                    opacityTo: .6
                 }
             },
 
