@@ -271,7 +271,7 @@ function getLayout() {
                     layout += ` 
                         <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)}')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('')" 
-                            class="card-in-menu"    
+                            class="card-in-menu" 
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
                             url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)});">

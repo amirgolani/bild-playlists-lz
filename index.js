@@ -268,100 +268,163 @@ app.get('/chart', (req, res) => {
 
     const { type, swap, colors, animate, data, categories, title, subline, size, min } = req.query;
 
-    var options = {
-        colors: colors ? colors.split(',') : ['#ffffff'],
-        chart: {
-            type: type ? type : 'bar',
-            height: 520,
-            width: 1280,
-            fontFamily: 'Gotham',
-            toolbar: {
+    var options = {};
+
+    if (type === 'radialBar') {
+        options = {
+            colors: colors ? colors.split(',') : ['#ffffff'],
+            chart: {
+                type: type ? type : 'bar',
+                height: 520,
+                width: 1280,
+                fontFamily: 'Gotham',
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: animate ? animate === 'true' ? true : false : true,
+                    easing: 'easeinout',
+                    speed: 600
+                }
+            },
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        margin: 5,
+                        size: "60%",
+                    },
+                    track: {
+                        background: '#f2f2f2',
+                        opacity: .2,
+                    },
+                    dataLabels: {
+                        showOn: "always",
+                        name: {
+                            offsetY: -40,
+                            show: true,
+                            color: "#ffffff",
+                            fontSize: "22px"
+                        },
+                        value: {
+                            color: "#ffffff",
+                            fontSize: "72px",
+                            fontWeight: 800,
+                            show: true
+                        }
+                    }
+                }
+            },
+            series: [
+                data
+            ],
+            labels: [categories],
+
+
+        };
+    } else {
+        options = {
+            colors: colors ? colors.split(',') : ['#ffffff'],
+            chart: {
+                type: type ? type : 'bar',
+                height: 520,
+                width: 1280,
+                fontFamily: 'Gotham',
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: animate ? animate === 'true' ? true : false : true,
+                    easing: 'easeinout',
+                    speed: 600,
+                    animateGradually: {
+                        enabled: false,
+                        delay: 100
+                    },
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 350
+                    },
+
+                }
+            },
+            xaxis: {
+                categories: categories.split(','),
+                labels: {
+                    style: {
+                        colors: '#ffffff',
+                        fontSize: '16px',
+                        fontWeight: 800,
+                    }
+                },
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: '#ffffff',
+                        fontSize: '16px'
+                    }
+                },
+                min: min ? parseInt(min) : undefined
+            },
+            series: [{
+                data: data.split(',')
+            }],
+            stroke: {
+                show: type === 'line' ? true : false,
+                lineCap: 'round',
+                curve: 'smooth',
+                width: 6,
+                dashArray: 0,
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 0,
+                    horizontal: swap === 'true' ? true : false,
+                    dataLabels: {
+                        position: 'top'
+                    },
+                    distributed: true,
+                    columnWidth: '70%',
+                },
+            },
+            dataLabels: {
+                enabled: true,
+                textAnchor: 'middle',
+                style: {
+                    fontSize: '18px',
+                    fontWeight: 500,
+                    colors: ['#000000']
+                },
+                background: {
+                    enabled: true,
+                    // padding: 8,
+                    borderRadius: 2,
+                    borderWidth: 1,
+                    borderColor: '#000000',
+                    opacity: 1,
+                },
+                offsetY: swap === 'true' ? 0 : type === 'bar' ? -16 : 0,
+                offsetX: swap === 'true' ? type === 'bar' ? -10 : 0 : 0
+            },
+            legend: {
                 show: false
             },
-            animations: {
-                enabled: animate ? animate === 'true' ? true : false : true,
-                easing: 'easeinout',
-                speed: 600,
-                animateGradually: {
-                    enabled: false,
-                    delay: 100
-                },
-                dynamicAnimation: {
-                    enabled: true,
-                    speed: 350
-                },
-
-            }
-        },
-        xaxis: {
-            categories: categories.split(','),
-            labels: {
-                style: {
-                    colors: '#ffffff',
-                    fontSize: '16px',
-                    fontWeight: 800,
-                }
-            },
-        },
-        yaxis: {
-            labels: {
-                style: {
-                    colors: '#ffffff',
-                    fontSize: '16px'
-                }
-            },
-            min: min ? parseInt(min) : undefined
-        },
-        series: [{
-            data: data.split(',')
-        }],
-        stroke: {
-            show: type === 'line' ? true : false,
-            lineCap: 'round',
-            curve: 'smooth',
-            width: 6,
-            dashArray: 0,
-        },
-        plotOptions: {
-            bar: {
-                borderRadius: 0,
-                horizontal: swap === 'true' ? true : false,
-                dataLabels: {
-                    position: 'top'
-                },
-                distributed: true,
-                columnWidth: '70%',
-            },
-        },
-        dataLabels: {
-            enabled: true,
-            textAnchor: 'middle',
-            style: {
-                fontSize: '18px',
-                fontWeight: 500,
-                colors: ['#000000']
-            },
-            background: {
-                enabled: true,
-                // padding: 8,
-                borderRadius: 2,
-                borderWidth: 1,
-                borderColor: '#000000',
+            fill: {
                 opacity: 1,
+                gradient: {
+                    enabled: true,
+                    opacityFrom: 1,
+                    opacityTo: .4
+                }
             },
-            offsetY: swap === 'true' ? 0 : type === 'bar' ? -16 : 0,
-            offsetX: swap === 'true' ? type === 'bar' ? -10 : 0 : 0
-        },
-        legend: {
-            show: false
-        },
-        fill: {
-            opacity: 1
-        },
-        tooltip: {
-            enabled: false
-        }
-    };
+
+            tooltip: {
+                enabled: false
+            }
+        };
+    }
+
+
     res.render('chart',
         {
             chart: options,
