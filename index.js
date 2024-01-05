@@ -266,7 +266,7 @@ app.get('/layouts', (req, res) => {
 
 app.get('/chart', (req, res) => {
 
-    const { type, swap, colors, animate, data, categories, title, subline, size } = req.query;
+    const { type, swap, colors, animate, data, categories, title, subline, size, min } = req.query;
 
     var options = {
         colors: colors ? colors.split(',') : ['#ffffff'],
@@ -310,6 +310,7 @@ app.get('/chart', (req, res) => {
                     fontSize: '16px'
                 }
             },
+            min: min ? parseInt(min) : undefined
         },
         series: [{
             data: data.split(',')
@@ -317,6 +318,7 @@ app.get('/chart', (req, res) => {
         stroke: {
             show: type === 'line' ? true : false,
             lineCap: 'round',
+            curve: 'smooth',
             width: 6,
             dashArray: 0,
         },
@@ -347,8 +349,8 @@ app.get('/chart', (req, res) => {
                 borderColor: '#000000',
                 opacity: 1,
             },
-            offsetY: swap === 'true' ? 0 : -16,
-            offsetX: swap === 'true' ? -10 : 0
+            offsetY: swap === 'true' ? 0 : type === 'bar' ? -16 : 0,
+            offsetX: swap === 'true' ? type === 'bar' ? -10 : 0 : 0
         },
         legend: {
             show: false
