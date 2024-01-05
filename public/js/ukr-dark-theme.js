@@ -287,8 +287,8 @@ function getLayout() {
                     playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('${link}')" 
                         class="card-in-menu"    
                         id="b_${l}" 
-                        style="background-image: linear-gradient(180deg, rgba(0, 0, 0, .2) -50%, black 150%) 
-                        ">
+                        style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
+                        url(/assets/gp/WEBTHUMB.jpg);">
                         <div id="listTitles" class="title-in-menu">
                             ${name}
                         </div>
