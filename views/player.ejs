@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="/assets/css/style_11Themen.css"> -->
-    <link rel="stylesheet" href="/assets/css/gp_styles.css">
+    <link rel="stylesheet" href="/assets/css/player.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
     <script src="https://unpkg.com/gsap@3.9.0/dist/Draggable.min.js"></script>
@@ -22,7 +22,7 @@
     <link rel="manifest" href="/assets/gp/favicon-play/site.webmanifest">
 </head>
 
-<body id="endPoint" name="<%= endpoint %>"
+<body id="endPoint" name="<%= playlist %>"
     style="position: absolute; overflow: clip; transform-origin: top left; margin: 0%; padding: 0%; background-color: black; width: <%= width %>; height: <%= height %>; scale: <%= size %>;">
     <div class="full-hd-container">
         <div class="full-hd-container">
@@ -44,7 +44,7 @@
         </div>
         <div class="full-hd-container" id="imageDisplay" hidden>
             <div id="backImage" class="full-hd-container"
-                style="background-image: url(); background-position: center; background-size: cover; scale: 3; filter: blur(10px); opacity: 0;">
+                style="background-image: url(); background-position: center; background-size: cover; scale: 3; filter: blur(50px); opacity: 0;">
             </div>
             <div id="frontImage" class="full-hd-container"
                 style="scale: .75; opacity: 0; display: flex; justify-content: center; align-items: center;">
@@ -76,11 +76,11 @@
         </div>
         <canvas class="full-hd-container" id="paintCanvas" width="1920" height="1080" hidden></canvas>
         <div id="videoTitleToggle" style="opacity: 0; position: relative; left: 200px">
-            <div id="video-icon" class="video-icon"></div>
-            <div id="video-title" class="video-title">
+            <div id="playing-icon" class="video-icon"></div>
+            <div id="playing-title" class="video-title">
                 <%= title %>
             </div>
-            <div id="video-timestamp" class="video-timestamp">
+            <div id="playing-timestamp" class="video-timestamp">
                 <%= sub %>
             </div>
         </div>
@@ -104,7 +104,7 @@
 
     </div>
 
-    <script src="/assets/js/ukr-dark-theme.js"></script>
+    <script src="/assets/js/player.js"></script>
 
 </body>
 

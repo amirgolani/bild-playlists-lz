@@ -26,54 +26,54 @@ app.use((req, res, next) => {
 
 // UKR
 
-app.get('/present', (req, res) => {
+app.get('/play', (req, res) => {
 
     const { gp, title, subline, playlist, size } = req.query;
 
     switch (gp) {
         case 'lz-ukr': // Left arrow key
-            res.render('present-vid-player',
+            res.render('player',
                 {
                     bg: '/assets/gp/BGUKR.webm',
                     vidType: 'video/webm',
                     headline: '/assets/gp/titles-ukr.png',
                     thumbnail: '/assets/gp/HOMEUKR.jpg',
                     icon: 'gallery',
-                    title: title,
-                    sub: subline,
-                    endpoint: playlist,
+                    title: title ? title : '',
+                    sub: subline ? subline : '',
+                    playlist: playlist,
                     size: size ? size / 100 : '1',
                     width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
                     height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
                 })
             break;
         case 'lz-isr': // Up arrow key
-            res.render('present-vid-player',
+            res.render('player',
                 {
                     bg: '/assets/gp/BGISR.webm',
                     vidType: 'video/webm',
                     headline: '/assets/gp/titles-isr.png',
                     thumbnail: '/assets/gp/HOMEISR.jpg',
                     icon: 'gallery',
-                    title: title,
-                    sub: subline,
-                    endpoint: playlist,
+                    title: title ? title : '',
+                    sub: subline ? subline : '',
+                    playlist: playlist,
                     size: size ? size / 100 : '1',
                     width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
                     height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
                 })
             break;
         case 'bild': // Up arrow key
-            res.render('present-vid-player',
+            res.render('player',
                 {
                     bg: '/assets/gp/BGBILD.mp4',
                     vidType: 'video/mp4',
                     headline: '',
                     thumbnail: '/assets/gp/HOMEBILD.jpg',
                     icon: 'gallery',
-                    title: title,
-                    sub: subline,
-                    endpoint: playlist,
+                    title: title ? title : '',
+                    sub: subline ? subline : '',
+                    playlist: playlist,
                     size: size ? size / 100 : '1',
                     width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
                     height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px',
@@ -86,7 +86,7 @@ app.get('/present', (req, res) => {
 
 app.get('/playlists', (req, res) => {
 
-    res.render('present-playlists')
+    res.render('playlists')
 
 });
 
@@ -208,7 +208,7 @@ app.post('/create-playlist', (req, res) => {
 
         jsonData.unshift({
             lastUpdate: Date.now(),
-            url: `/present?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
+            url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
             gp: gp,
             title: title,
             subline: subline
@@ -220,7 +220,7 @@ app.post('/create-playlist', (req, res) => {
 
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
-        res.json({ url: `/present?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
+        res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
     });
 });
 
@@ -417,7 +417,6 @@ app.get('/chart', (req, res) => {
                     opacityTo: .6
                 }
             },
-
             tooltip: {
                 enabled: false
             }
@@ -425,6 +424,122 @@ app.get('/chart', (req, res) => {
     }
 
 
+    res.render('chart',
+        {
+            chart: options,
+            title: title ? title : '',
+            sub: subline ? subline : '',
+            size: size ? size / 100 : '1',
+            width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
+            height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
+        })
+})
+
+app.get('/insa', (req, res) => {
+
+    const { data, categories, type, swap, colors, animate, title, subline, size, min } = req.query;
+
+    var options = {};
+
+    options = {
+        colors: colors ? colors.split(',') : ['#ffffff'],
+        chart: {
+            type: type ? type : 'bar',
+            height: 520,
+            width: 1280,
+            fontFamily: 'Gotham',
+            toolbar: {
+                show: false
+            },
+            animations: {
+                enabled: animate ? animate === 'true' ? true : false : true,
+                easing: 'easeinout',
+                speed: 600,
+                animateGradually: {
+                    enabled: false,
+                    delay: 100
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                },
+
+            }
+        },
+        xaxis: {
+            categories: categories.split(','),
+            labels: {
+                style: {
+                    colors: '#ffffff',
+                    fontSize: '16px',
+                    fontWeight: 800,
+                }
+            },
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    colors: '#ffffff',
+                    fontSize: '16px'
+                }
+            },
+            min: min ? parseInt(min) : undefined
+        },
+        series: [{
+            data: data.split(',')
+        }],
+        stroke: {
+            show: type === 'line' || type === 'area' ? true : false,
+            lineCap: 'round',
+            curve: 'smooth',
+            width: 6,
+            dashArray: 0,
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 0,
+                horizontal: swap === 'true' ? true : false,
+                dataLabels: {
+                    position: 'top'
+                },
+                distributed: true,
+                columnWidth: '70%',
+            },
+        },
+        dataLabels: {
+            enabled: true,
+            textAnchor: 'middle',
+            style: {
+                fontSize: '18px',
+                fontWeight: 500,
+                colors: ['#000000']
+            },
+            background: {
+                enabled: true,
+                // padding: 8,
+                borderRadius: 2,
+                borderWidth: 1,
+                borderColor: '#000000',
+                opacity: 1,
+            },
+            offsetY: swap === 'true' ? 0 : type === 'bar' ? -16 : 0,
+            offsetX: swap === 'true' ? type === 'bar' ? -10 : 0 : 0
+        },
+        legend: {
+            show: false
+        },
+        fill: {
+            opacity: 1,
+            gradient: {
+                enabled: true,
+                opacityFrom: .05,
+                opacityTo: .6
+            }
+        },
+        tooltip: {
+            enabled: false
+        }
+    };
     res.render('chart',
         {
             chart: options,
@@ -567,6 +682,15 @@ function removeFirstAndLastCharacter(inputString) {
 
     // Remove the first and last character using substring
     return inputString.substring(1, inputString.length - 1);
+}
+function reformatInsaDateString(dateString) {
+    // Split the date string into day, month, and year parts
+    const [day, month, year] = dateString.split('.');
+
+    // Format the date string in a way that can be parsed by Date.parse()
+    const reformattedDateString = `${year}-${month}-${day}`;
+
+    return reformattedDateString;
 }
 
 

@@ -190,7 +190,7 @@ function handleSelect(newID) {
         gsap.to(`#${selectedElement}`,
             {
                 duration: .8,
-                width: 120,
+                width: 140,
                 ease: "power2.inOut"
             });
 
@@ -345,9 +345,9 @@ function getLayout() {
 getLayout();
 
 function handleTitles(icon, title, time) {
-    document.getElementById('video-icon').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
-    document.getElementById('video-title').textContent = title;
-    document.getElementById('video-timestamp').textContent = time;
+    document.getElementById('playing-icon').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
+    document.getElementById('playing-title').textContent = title;
+    document.getElementById('playing-timestamp').textContent = time;
 }
 
 

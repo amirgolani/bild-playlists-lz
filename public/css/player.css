@@ -283,13 +283,13 @@ input[type="range"]::-webkit-slider-thumb {
 
 .card-in-menu {
     align-self: stretch;
-    width: 120px;
+    width: 140px;
     padding: 10px;
     background-size: cover;
     background-position: center;
     justify-content: center;
     box-shadow: 12px 12px 100px black;
-    border-radius: 10px;
+    border-radius: 8px;
     border: 2px #cccccc solid;
     display: inline-flex;
 
