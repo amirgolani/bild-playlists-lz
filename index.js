@@ -266,7 +266,7 @@ app.get('/layouts', (req, res) => {
 
 app.get('/chart', (req, res) => {
 
-    const { type, swap, colors, animate, data, categories, title, subline, size, min } = req.query;
+    const { type, swap, colors, animate, data, categories, title, subline, size, min, labels, ticks } = req.query;
 
     var options = {};
 
@@ -349,6 +349,7 @@ app.get('/chart', (req, res) => {
             },
             xaxis: {
                 categories: categories.split(','),
+                tickAmount: ticks ? parseInt(ticks) : undefined,
                 labels: {
                     style: {
                         colors: '#ffffff',
@@ -388,7 +389,7 @@ app.get('/chart', (req, res) => {
                 },
             },
             dataLabels: {
-                enabled: true,
+                enabled: labels ? labels === 'true' ? true : false : false,
                 textAnchor: 'middle',
                 style: {
                     fontSize: '18px',
@@ -437,7 +438,7 @@ app.get('/chart', (req, res) => {
 
 app.get('/insa', (req, res) => {
 
-    const { data, categories, type, swap, colors, animate, title, subline, size, min } = req.query;
+    const { party, type, swap, colors, animate, title, subline, size, min, labels, ticks } = req.query;
 
     var options = {};
 
@@ -467,7 +468,8 @@ app.get('/insa', (req, res) => {
             }
         },
         xaxis: {
-            categories: categories.split(','),
+            categories: "datetime",
+            tickAmount: ticks ? parseInt(ticks) : undefined,
             labels: {
                 style: {
                     colors: '#ffffff',
@@ -486,12 +488,12 @@ app.get('/insa', (req, res) => {
             min: min ? parseInt(min) : undefined
         },
         series: [{
-            data: data.split(',')
+            data: reduceToDateAndCDU(party)
         }],
         stroke: {
             show: type === 'line' || type === 'area' ? true : false,
             lineCap: 'round',
-            curve: 'smooth',
+            curve: 'monotoneCubic',
             width: 6,
             dashArray: 0,
         },
@@ -507,7 +509,7 @@ app.get('/insa', (req, res) => {
             },
         },
         dataLabels: {
-            enabled: true,
+            enabled: labels ? labels === 'true' ? true : false : false,
             textAnchor: 'middle',
             style: {
                 fontSize: '18px',
@@ -620,16 +622,7 @@ function replaceFileExtension(fileName, ext) {
         return fileName + ext;
     }
 }
-function trimTo(inputString, trim) {
-    // Check if the input string is not empty and has at least 6 characters
-    if (inputString && inputString.length >= trim) {
-        // Use the slice method to extract the first 6 characters
-        return inputString.slice(0, trim);
-    } else {
-        // If the string is empty or has fewer than 6 characters, return the original string
-        return inputString;
-    }
-}
+
 async function getFoldersWithLayout(directoryPath) {
     try {
         // Read the contents of the directory
@@ -673,27 +666,34 @@ async function getFoldersWithLayout(directoryPath) {
         return [];
     }
 }
-function removeFirstAndLastCharacter(inputString) {
-    if (typeof inputString !== 'string' || inputString.length < 2) {
-        // Check if the input is a valid string with at least two characters
-        console.error('Invalid input. Please provide a string with at least two characters.');
-        return null; // Or throw an error, depending on your requirements
+
+function readInsaJson() {
+    const filePath = path.join(__dirname, '/db/insa.json');
+
+    try {
+        const fileContent = fs.readFileSync(filePath, 'utf-8');
+        const jsonData = JSON.parse(fileContent);
+        console.log(jsonData[0])
+        return jsonData;
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            console.error(`Error: File '${filePath}' not found.`);
+        } else {
+            console.error(`Error reading or parsing JSON from '${filePath}': ${error.message}`);
+        }
+        return null;
     }
-
-    // Remove the first and last character using substring
-    return inputString.substring(1, inputString.length - 1);
-}
-function reformatInsaDateString(dateString) {
-    // Split the date string into day, month, and year parts
-    const [day, month, year] = dateString.split('.');
-
-    // Format the date string in a way that can be parsed by Date.parse()
-    const reformattedDateString = `${year}-${month}-${day}`;
-
-    return reformattedDateString;
 }
 
 
+function reduceToDateAndCDU(party) {
 
+    const data = readInsaJson().reverse();
 
-
+    return data.map(entry => {
+        return {
+            x: entry["Date"],
+            y: entry[`${party}`],
+        };
+    });
+}
