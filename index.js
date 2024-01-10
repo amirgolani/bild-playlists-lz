@@ -279,7 +279,16 @@ app.get('/chart', (req, res) => {
                 width: 1280,
                 fontFamily: 'Gotham',
                 toolbar: {
-                    show: false
+                    tools: {
+                        download: false,
+                        selection: true,
+                        zoomin: true,
+                        zoomout: true,
+                        pan: true,
+                        reset: true | '<img src="/static/icons/reset.png" width="20">',
+                        customIcons: []
+                    },
+                    show: true
                 },
                 animations: {
                     enabled: animate ? animate === 'true' ? true : false : true,
@@ -330,7 +339,16 @@ app.get('/chart', (req, res) => {
                 width: 1280,
                 fontFamily: 'Gotham',
                 toolbar: {
-                    show: false
+                    tools: {
+                        download: false,
+                        selection: true,
+                        zoomin: true,
+                        zoomout: true,
+                        pan: true,
+                        reset: true | '<img src="/static/icons/reset.png" width="20">',
+                        customIcons: []
+                    },
+                    show: true
                 },
                 animations: {
                     enabled: animate ? animate === 'true' ? true : false : true,
@@ -389,7 +407,7 @@ app.get('/chart', (req, res) => {
                 },
             },
             dataLabels: {
-                enabled: labels ? labels === 'true' ? true : false : false,
+                enabled: labels ? labels === 'true' ? true : false : true,
                 textAnchor: 'middle',
                 style: {
                     fontSize: '18px',
@@ -443,19 +461,28 @@ app.get('/insa', (req, res) => {
     var options = {};
 
     options = {
-        colors: colors ? colors.split(',') : ['#ffffff'],
+        colors: partyQueryToColors(party),
         chart: {
             type: type ? type : 'bar',
             height: 520,
             width: 1280,
             fontFamily: 'Gotham',
             toolbar: {
-                show: false
+                tools: {
+                    download: false,
+                    selection: true,
+                    zoomin: true,
+                    zoomout: true,
+                    pan: true,
+                    reset: true | '<img src="/static/icons/reset.png" width="20">',
+                    customIcons: []
+                },
+                show: true
             },
             animations: {
                 enabled: animate ? animate === 'true' ? true : false : true,
                 easing: 'easeinout',
-                speed: 600,
+                speed: 800,
                 animateGradually: {
                     enabled: false,
                     delay: 100
@@ -487,13 +514,11 @@ app.get('/insa', (req, res) => {
             },
             min: min ? parseInt(min) : undefined
         },
-        series: [{
-            data: reduceToDateAndCDU(party)
-        }],
+        series: partyQueryToData(party),
         stroke: {
             show: type === 'line' || type === 'area' ? true : false,
             lineCap: 'round',
-            curve: 'monotoneCubic',
+            curve: 'smooth',
             width: 6,
             dashArray: 0,
         },
@@ -509,7 +534,7 @@ app.get('/insa', (req, res) => {
             },
         },
         dataLabels: {
-            enabled: labels ? labels === 'true' ? true : false : false,
+            enabled: labels ? labels === 'true' ? true : false : true,
             textAnchor: 'middle',
             style: {
                 fontSize: '18px',
@@ -622,7 +647,6 @@ function replaceFileExtension(fileName, ext) {
         return fileName + ext;
     }
 }
-
 async function getFoldersWithLayout(directoryPath) {
     try {
         // Read the contents of the directory
@@ -666,34 +690,64 @@ async function getFoldersWithLayout(directoryPath) {
         return [];
     }
 }
+function partyQueryToData(parties) {
 
-function readInsaJson() {
+    const partiesArray = partyQueryToArray(parties)
+
     const filePath = path.join(__dirname, '/db/insa.json');
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const jsonData = JSON.parse(fileContent);
+    const data = jsonData.reverse();
 
-    try {
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        const jsonData = JSON.parse(fileContent);
-        console.log(jsonData[0])
-        return jsonData;
-    } catch (error) {
-        if (error.code === 'ENOENT') {
-            console.error(`Error: File '${filePath}' not found.`);
-        } else {
-            console.error(`Error reading or parsing JSON from '${filePath}': ${error.message}`);
+    if (partiesArray.length > 1) {
+        const multiArray = [];
+        for (i = 0; i < partiesArray.length; i++) {
+
+            const single = data.map((entry) => {
+                return {
+                    x: entry["Date"],
+                    y: entry[`${partiesArray[i]}`],
+                };
+            });
+
+            multiArray.push({ data: single })
         }
-        return null;
+        return multiArray
+    } else {
+        const multiArray = [];
+        const singleP = data.map(entry => {
+            return {
+                x: entry["Date"],
+                y: entry[`${partiesArray[0]}`],
+            };
+        });
+        multiArray.push({ data: singleP })
+
+        return multiArray
     }
 }
+function partyQueryToColors(parties) {
+
+    const partiesArray = partyQueryToArray(parties)
+
+    const filePath = path.join(__dirname, '/db/partiesColors.json');
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const jsonData = JSON.parse(fileContent);
+    console.log(jsonData[0][`${partiesArray[0]}`])
 
 
-function reduceToDateAndCDU(party) {
-
-    const data = readInsaJson().reverse();
-
-    return data.map(entry => {
-        return {
-            x: entry["Date"],
-            y: entry[`${party}`],
-        };
-    });
+    const colorsArray = [];
+    for (i = 0; i < partiesArray.length; i++) {
+        colorsArray.push(jsonData[0][`${partiesArray[i]}`])
+    };
+    return colorsArray
+}
+function partyQueryToArray(inputString) {
+    if (inputString.includes(',')) {
+        // If the string contains a comma, split it into an array
+        return inputString.split(',');
+    } else {
+        // If there is no comma, create an array with the input string as the only element
+        return [inputString];
+    }
 }
