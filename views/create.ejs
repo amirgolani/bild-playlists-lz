@@ -37,11 +37,12 @@
                             </div>
                             <div class="column is-2">
                                 <input id="title" class="input is-small" type="text" placeholder="Home Screen Title"
-                                    value="" required>
+                                    value="" oninput="blockCharacters(event, ['\'', '/'])" required>
                             </div>
                             <div class="column is-2">
                                 <input id="sub" class="input is-small" type="text"
-                                    placeholder="Home Screen Subline / Claim" value="" required>
+                                    placeholder="Home Screen Subline / Claim" value=""
+                                    oninput="blockCharacters(event, ['\'', '/'])" required>
                             </div>
                         </div>
                     </div>
@@ -161,9 +162,8 @@
         }
     }
 
+
     function handleLinks(theID) {
-
-
         var fileIn = document.getElementsByName(`file_${theID.split('_')[1]}`);
         var linkIn = document.getElementsByName(theID);
 
@@ -224,6 +224,29 @@
 </script>
 
 <script>
+
+
+
+function blockCharacters(event, blockedChars) {
+  const inputElement = event.target;
+  let inputValue = inputElement.value;
+
+  // Check each blocked character
+  blockedChars.forEach(blockedChar => {
+    if (inputValue.includes(blockedChar)) {
+      // Block the character by removing it from the input value
+      inputValue = inputValue.replace(new RegExp(blockedChar, ''), '');
+
+      // Optionally, you can inform the user about the blocked character
+      alert(`Character "${blockedChar}" is not allowed.`);
+    }
+  });
+
+  // Update the input value
+  inputElement.value = inputValue;
+}
+
+
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
