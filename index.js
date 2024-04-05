@@ -66,7 +66,7 @@ app.get('/play', (req, res) => {
         case 'bild': // Up arrow key
             res.render('player',
                 {
-                    bg: '/assets/gp/BGBILD.mp4',
+                    bg: '/assets/gp/LOOP_TOUCH.mp4',
                     vidType: 'video/mp4',
                     headline: '',
                     thumbnail: '/assets/gp/HOMEBILD.jpg',
