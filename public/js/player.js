@@ -22,7 +22,7 @@ function handleMenuPos(selection) {
 
     gsap.to("#listTitles",
         {
-            top: menuPos ? 90 : -22,
+            top: menuPos ? 90 : -24,
             scale: menuPos ? 1 : .8,
             duration: 1,
             ease: "power2.inOut"
@@ -158,15 +158,12 @@ function handleSelect(newID) {
                     opacity: 0,
                     ease: "power2.inOut"
                 });
-
-
-
         }
 
         gsap.to("#playlists-icon",
             {
                 onStart: newID === "b_0" ? function () { playlistsIcon.hidden = false } : function () { },
-                opacity: newID === "b_0" ? 1 : 0,
+                opacity: newID === "b_0" ? .6 : 0,
                 ease: "power2.out",
                 onComplete: newID !== "b_0" ? function () { playlistsIcon.hidden = true } : function () { }
 

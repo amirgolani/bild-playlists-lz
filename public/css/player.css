@@ -1,16 +1,17 @@
-.menu-icon {
+.menuPos-icon {
     position: absolute;
-    left: 50px;
+    left: 170px;
     top: 740px;
-    background-image: url(/assets/gp/down.png);
+    background-image: url(/assets/gp/ICON_04_down.png);
     background-size: cover;
     width: 50px;
     height: 50px;
+    opacity: .6;
 }
 
 .zoom-icon {
     position: absolute;
-    left: 120px;
+    left: 230px;
     top: 748px;
     background-image: url(/assets/gp/magnifying-glass.png);
     background-size: cover;
@@ -19,7 +20,7 @@
     opacity: 0;
 }
 
-.playlists-icon {
+/* .playlists-icon {
     position: absolute;
     left: 120px;
     top: 748px;
@@ -28,11 +29,11 @@
     width: 36px;
     height: 36px;
     opacity: 0;
-}
+} */
 
 .play-icon {
     position: absolute;
-    left: 120px;
+    left: 230px;
     top: 740px;
     background-image: url(/assets/gp/play.png);
     background-size: cover;
@@ -42,7 +43,7 @@
 
 .pause-icon {
     position: absolute;
-    left: 120px;
+    left: 230px;
     top: 740px;
     background-image: url(/assets/gp/pause.png);
     background-size: cover;
@@ -52,41 +53,42 @@
 
 .playlists-icon {
     position: absolute;
-    left: 120px;
-    top: 740px;
-    background-image: url(/assets/gp/playlist.png);
+    left: 50px;
+    top: 50px;
+    background-image: url(/assets/gp/ICON_03_playlists.png);
     background-size: cover;
     width: 50px;
     height: 50px;
-    opacity: 1;
+    opacity: .6;
 }
 
 .timecode {
     position: absolute;
     top: 754px;
-    left: 620px;
+    left: 720px;
     font-family: Gotham;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 20px;
     color: white;
     font-size: 26px;
 }
 
-.move-icon {
+.home-icon {
     position: absolute;
-    left: 50px;
-    top: 670px;
-    background-image: url(/assets/gp/home.png);
+    left: 110px;
+    top: 740px;
+    background-image: url(/assets/gp/ICON_02_home.png);
     background-size: cover;
     width: 50px;
     height: 50px;
+    opacity: .6;
 }
 
 .art-icon {
     position: absolute;
     left: 50px;
-    top: 600px;
-    background-image: url(/assets/gp/art.png);
+    top: 740px;
+    background-image: url(/assets/gp/ICON_01_art.png);
     background-size: cover;
     width: 50px;
     height: 50px;
@@ -96,7 +98,7 @@
 .blue-circle {
     position: absolute;
     left: 58px;
-    top: 545px;
+    top: 690px;
     background-color: #004f98;
     width: 30px;
     height: 30px;
@@ -109,7 +111,7 @@
 .red-circle {
     position: absolute;
     left: 58px;
-    top: 495px;
+    top: 640px;
     background-color: #ee2e31;
     width: 30px;
     height: 30px;
@@ -122,7 +124,7 @@
 .black-circle {
     position: absolute;
     left: 58px;
-    top: 445px;
+    top: 590px;
     background-color: #080808;
     width: 30px;
     height: 30px;
@@ -135,7 +137,7 @@
 .white-circle {
     position: absolute;
     left: 58px;
-    top: 395px;
+    top: 540px;
     background-color: #f8f8ff;
     width: 30px;
     height: 30px;
@@ -301,7 +303,7 @@ input[type="range"]::-webkit-slider-thumb {
     color: white;
     font-size: 18px;
     font-family: Gotham;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 20px;
     text-transform: uppercase;
     word-wrap: break-word"
@@ -314,7 +316,7 @@ input[type="range"]::-webkit-slider-thumb {
     appearance: none;
     position: absolute;
     top: 740px;
-    left: 190px;
+    left: 290px;
     width: 400px;
     height: 46px;
     backdrop-filter: blur(10px);
