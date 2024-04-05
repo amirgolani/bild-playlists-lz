@@ -67,7 +67,7 @@
     top: 754px;
     left: 720px;
     font-family: Gotham;
-    font-weight: 300;
+    font-weight: 'Book';
     line-height: 20px;
     color: white;
     font-size: 26px;
@@ -306,8 +306,9 @@ input[type="range"]::-webkit-slider-thumb {
     font-weight: 400;
     line-height: 20px;
     text-transform: uppercase;
-    word-wrap: break-word"
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .seekslider {
@@ -318,10 +319,12 @@ input[type="range"]::-webkit-slider-thumb {
     top: 740px;
     left: 290px;
     width: 400px;
-    height: 46px;
+    height: 44px;
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 25px;
     padding-left: 6px;
     padding-right: 6px;
+    box-shadow: inset 0px 0px 10px rgba(255, 255, 255, .4);
+    border: 1px solid rgba(255, 255, 255, .6);
 }
