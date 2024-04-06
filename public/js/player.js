@@ -498,7 +498,7 @@ function setImage(img) {
         gsap.to('#zoom-icon',
             {
                 onStart: img === '' ? function () { } : function () { zoomIcon.hidden = false },
-                opacity: img === '' ? 0 : 1,
+                opacity: img === '' ? 0 : .6,
                 ease: 'power1.inOut',
                 duration: .6,
                 onComplete: img === '' ? function () { zoomIcon.hidden = true } : function () { },
@@ -550,7 +550,7 @@ function setImage(img) {
     gsap.to('#zoom-icon',
         {
             onStart: img === '' ? function () { } : function () { zoomIcon.hidden = false },
-            opacity: img === '' ? 0 : 1,
+            opacity: img === '' ? 0 : .6,
             ease: 'power1.inOut',
             duration: .6,
             onComplete: img === '' ? function () { zoomIcon.hidden = true } : function () { },

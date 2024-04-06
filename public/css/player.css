@@ -12,32 +12,22 @@
 .zoom-icon {
     position: absolute;
     left: 230px;
-    top: 748px;
-    background-image: url(/assets/gp/magnifying-glass.png);
+    top: 740px;
+    background-image: url(/assets/gp/ICON_05_zoom_mag.png);
     background-size: cover;
-    width: 36px;
-    height: 36px;
-    opacity: 0;
+    width: 50px;
+    height: 50px;
+    opacity: .6;
 }
-
-/* .playlists-icon {
-    position: absolute;
-    left: 120px;
-    top: 748px;
-    background-image: url(/assets/gp/magnifying-glass.png);
-    background-size: cover;
-    width: 36px;
-    height: 36px;
-    opacity: 0;
-} */
 
 .play-icon {
     position: absolute;
     left: 230px;
     top: 740px;
-    background-image: url(/assets/gp/play.png);
+    background-image: url(/assets/gp/ICON_06_play.png);
     background-size: cover;
     width: 50px;
+    opacity: .6;
     height: 50px;
 }
 
@@ -45,9 +35,10 @@
     position: absolute;
     left: 230px;
     top: 740px;
-    background-image: url(/assets/gp/pause.png);
+    background-image: url(/assets/gp/ICON_07_pause.png);
     background-size: cover;
     width: 50px;
+    opacity: .6;
     height: 50px;
 }
 
@@ -318,7 +309,7 @@ input[type="range"]::-webkit-slider-thumb {
     position: absolute;
     top: 740px;
     left: 290px;
-    width: 600px;
+    width: 960px;
     height: 44px;
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.05);
