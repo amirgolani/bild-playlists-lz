@@ -62,8 +62,8 @@
             height: 26px;
             opacity: .6"></div>
           </div>
-        </div> -->
-      </div>
+        </div>
+      </div> -->
     </div>
     <canvas class="full-hd-container" id="paintCanvas" width="1920" height="1080" hidden></canvas>
     <div id="videoTitleToggle" style="opacity: 0; position: relative; left: 200px">
@@ -87,7 +87,7 @@
       </div>
       <div hidden id="zoom-icon" class="zoom-icon" onclick="handleZoom()"></div>
       <div id="menuPosIcon" class="menuPos-icon" onclick="handleMenuPos()"></div>
-      <div id="home-icon" class="home-icon" onclick="handleScrollPos()"></div>
+      <div id="home-icon" class="home-icon" onclick="handleScrollPos(); setImage(''); setUrl(''); handleTitles('<%= icon %>', '<%= title %>', '<%= sub %>'); handleSelect('b_0'); playVideo('<%= bg %>', 'loop', 'muted', 'noPlayButtons', '1', '0.04');"></div>
       <div id="art-icon" class="art-icon" onclick="manageDraws()"></div>
       <div hidden id="blue-circle" class="blue-circle" onclick="manageColors('#004f98')"></div>
       <div hidden id="red-circle" class="red-circle" onclick="manageColors('#ee2e31')"></div>

@@ -10,7 +10,6 @@ function handleMenuPos(selection) {
         menuPos = selection
     }
 
-
     gsap.to("#theMenu",
         {
             top: menuPos ? 760 : 1000,
@@ -194,8 +193,8 @@ function handleSelect(newID) {
         gsap.to("#theMenu",
             {
                 left: newID !== 'b_0'
-                    ? -(parseInt(newID.split('_')[1]) - 1) * 160 + 8 * parseInt(newID.split('_')[1]) - 8
-                    : -(parseInt(newID.split('_')[1])) * 160 + 8 * parseInt(newID.split('_')[1]),
+                    ? -(parseInt(newID.split('_')[1]) - 1) * 160 - 14 * (parseInt(newID.split('_')[1]) - 1)
+                    : -(parseInt(newID.split('_')[1])) * 160 + 20 * parseInt(newID.split('_')[1]),
                 duration: 1,
                 ease: "power2.inOut"
             });
@@ -205,7 +204,7 @@ function handleSelect(newID) {
 
     }
 
-    if (menuPos) {
+    if (menuPos || newID === 'b_0') {
 
         setTimeout(() => {
             handleMenuPos()
