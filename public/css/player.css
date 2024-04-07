@@ -112,10 +112,36 @@
     scale: 0
 }
 
-.black-circle {
+.green-circle {
     position: absolute;
     left: 58px;
     top: 590px;
+    background-color: #2eee6e;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 2px #e5e5e5 solid;
+    opacity: 1;
+    scale: 0
+}
+
+.yellow-circle {
+    position: absolute;
+    left: 58px;
+    top: 540px;
+    background-color: #eee42e;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 2px #e5e5e5 solid;
+    opacity: 1;
+    scale: 0
+}
+
+.black-circle {
+    position: absolute;
+    left: 58px;
+    top: 490px;
     background-color: #080808;
     width: 30px;
     height: 30px;
@@ -128,7 +154,7 @@
 .white-circle {
     position: absolute;
     left: 58px;
-    top: 540px;
+    top: 440px;
     background-color: #f8f8ff;
     width: 30px;
     height: 30px;
@@ -137,6 +163,21 @@
     opacity: 1;
     scale: 0
 }
+
+.erase-square {
+    position: absolute;
+    left: 58px;
+    top: 390px;
+    background-color: #f8f8ff3b;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: 2px #e5e5e5 solid;
+    opacity: 1;
+    scale: 0
+}
+
+
 
 .video-icon {
     position: absolute;

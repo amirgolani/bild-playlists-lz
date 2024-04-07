@@ -606,8 +606,11 @@ function manageDraws() {
 
     var drawBlue = document.getElementById('blue-circle')
     var drawRed = document.getElementById('red-circle')
+    var drawGreen = document.getElementById('green-circle')
+    var drawYellow = document.getElementById('yellow-circle')
     var drawWhite = document.getElementById('black-circle')
     var drawBlack = document.getElementById('white-circle')
+    var eraseSquare = document.getElementById('erase-square')
 
     if (!drawOnScreen) {
         canvas.hidden = false;
@@ -630,7 +633,7 @@ function manageDraws() {
         {
             onStart: drawOnScreen ? function () { drawBlue.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0.15 : 0,
+            delay: !drawOnScreen ? 0.25 : 0,
             duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out',
             onComplete: drawOnScreen ? function () { } : function () { drawBlue.hidden = true }
@@ -639,16 +642,34 @@ function manageDraws() {
         {
             onStart: drawOnScreen ? function () { drawRed.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0.1 : 0.05,
+            delay: !drawOnScreen ? 0.2 : 0.05,
             duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out',
             onComplete: drawOnScreen ? function () { } : function () { drawRed.hidden = true }
+        });
+    gsap.to('#green-circle',
+        {
+            onStart: drawOnScreen ? function () { drawGreen.hidden = false } : function () { },
+            scale: drawOnScreen ? 1 : 0,
+            delay: !drawOnScreen ? 0.15 : 0.1,
+            duration: .6,
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out',
+            onComplete: drawOnScreen ? function () { } : function () { drawGreen.hidden = true }
+        });
+    gsap.to('#yellow-circle',
+        {
+            onStart: drawOnScreen ? function () { drawYellow.hidden = false } : function () { },
+            scale: drawOnScreen ? 1 : 0,
+            delay: !drawOnScreen ? 0.1 : 0.15,
+            duration: .6,
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out',
+            onComplete: drawOnScreen ? function () { } : function () { drawYellow.hidden = true }
         });
     gsap.to('#black-circle',
         {
             onStart: drawOnScreen ? function () { drawBlack.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0.05 : 0.1,
+            delay: !drawOnScreen ? 0.05 : 0.2,
             duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out',
             onComplete: drawOnScreen ? function () { } : function () { drawBlack.hidden = true }
@@ -657,10 +678,19 @@ function manageDraws() {
         {
             onStart: drawOnScreen ? function () { drawWhite.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,
-            delay: !drawOnScreen ? 0 : 0.15,
+            delay: !drawOnScreen ? 0 : 0.25,
             duration: .6,
             ease: !drawOnScreen ? 'power4.in' : 'power4.out',
             onComplete: drawOnScreen ? function () { } : function () { drawWhite.hidden = true }
+        });
+        gsap.to('#erase-square',
+        {
+            onStart: drawOnScreen ? function () { eraseSquare.hidden = false } : function () { },
+            scale: drawOnScreen ? 1 : 0,
+            delay: !drawOnScreen ? 0 : 0.25,
+            duration: .6,
+            ease: !drawOnScreen ? 'power4.in' : 'power4.out',
+            onComplete: drawOnScreen ? function () { } : function () { eraseSquare.hidden = true }
         });
 
 }
@@ -671,6 +701,7 @@ function startPainting() {
     canvas.addEventListener('touchend', endPosition);
     canvas.addEventListener('touchmove', function (e) {
         e.preventDefault();
+        erase(e); // Call the erase function alongside drawing
         draw(e.touches);
     });
     gsap.to('#paintCanvas',
@@ -706,11 +737,11 @@ function endPosition() {
     context.beginPath();
 }
 function draw(touches) {
-    if (!painting) return;
+    if (!painting || eraseMode) return; // Skip drawing if in erase mode
 
     context.lineWidth = 5;
     context.lineCap = 'round';
-    context.lineJoin = 'round'
+    context.lineJoin = 'round';
     context.strokeStyle = drawColor;
 
     for (var i = 0; i < touches.length; i++) {
@@ -720,6 +751,28 @@ function draw(touches) {
         context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
     }
 }
+
+// Add an erase functionality
+var eraseMode = false;
+
+function toggleEraseMode() {
+    eraseMode = !eraseMode;
+}
+
+function erase(event) {
+    if (eraseMode) {
+        var posX = event.touches[0].clientX - canvas.offsetLeft;
+        var posY = event.touches[0].clientY - canvas.offsetTop;
+
+        // Set the width and height of the eraser
+        var eraseWidth = 20;
+        var eraseHeight = 20;
+
+        // Clear a rectangular area on the canvas
+        context.clearRect(posX - eraseWidth / 2, posY - eraseHeight / 2, eraseWidth, eraseHeight);
+    }
+}
+
 
 // Image Dragging
 
