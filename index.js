@@ -610,7 +610,7 @@ app.listen(port, () => {
 // Additional Functions
 
 // Function to create a thumbnail using ffmpeg
-async function createThumbnail(inputPath, outputPath, filename) {
+    async function createThumbnail(inputPath, outputPath, filename) {
     return new Promise((resolve, reject) => {
         ffmpeg(inputPath)
             .on('end', () => resolve())

@@ -267,7 +267,7 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets${file}$')
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets${file}')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('')" 
                             class="card-in-menu" 
                             id="b_${l}" 
