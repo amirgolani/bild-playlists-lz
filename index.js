@@ -101,9 +101,8 @@ app.get('/create', (req, res) => {
 
 });
 
-app.post('/create-playlist', (req, res) => {
-
-    const { title, subline, gp } = req.query
+app.post('/create-playlist', async (req, res) => {
+    const { title, subline, gp } = req.query;
     const form = new formidable.IncomingForm({
         multiples: true,
         maxFileSize: 2 * 1024 * 1024 * 1024, // 2 GB limit
@@ -114,115 +113,80 @@ app.post('/create-playlist', (req, res) => {
             return res.status(500).json({ error: 'Error parsing the form' });
         }
 
-        var newFolder = short.generate().slice(0, 8);
-
-        // Create directory for JSON file if it doesn't exist
+        const newFolder = short.generate().slice(0, 8);
         const dbPath = path.join(__dirname, 'public', 'playlists', newFolder);
-        if (!fs.existsSync(dbPath)) {
-            fs.mkdirSync(dbPath);
-        }
+        const storagePath = path.join(dbPath, 'storage');
 
-        // Create directory if it doesn't exist
-        const storagePath = path.join(__dirname, 'public', 'playlists', newFolder, 'storage');
-        if (!fs.existsSync(storagePath)) {
-            fs.mkdirSync(storagePath);
-        }
+        try {
+            await fs.promises.mkdir(dbPath, { recursive: true });
+            await fs.promises.mkdir(storagePath, { recursive: true });
 
-        const jsonData = [];
+            const jsonData = [];
 
-        // Iterate over the fields and handle each set of inputs
-        for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
-            const name = fields[`name_${i}`];
-            const mute = fields[`mute_${i}`];
-            const loop = fields[`loop_${i}`];
-            const ctrl = fields[`ctrl_${i}`];
-            const title = fields[`title_${i}`];
-            const time = fields[`time_${i}`];
-            const type = fields[`type_${i}`];
-            const start = fields[`start_${i}`];
-            const end = fields[`end_${i}`];
-            const file = files[`file_${i}`];
-            const link = fields[`link_${i}`];
+            for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
+                const name = fields[`name_${i}`];
+                const thumbnail = files[`thumb_${i}`];
+                const file = files[`file_${i}`];
 
-            if (file) {
+                if (file) {
+                    const newFilePath = path.join(storagePath, file[0].originalFilename);
+                    await fs.promises.rename(file[0].filepath, newFilePath);
 
-                const newFilePath = path.join(storagePath, file[0].originalFilename);
+                    if (file[0].mimetype.startsWith('video')) {
+                        const videoInfo = await getVideoInfo(newFilePath);
 
-                // Move the file to the storage directory
-                fs.renameSync(file[0].filepath, newFilePath);
+                        let thumbPath;
+                        if (thumbnail) {
+                            thumbPath = path.join(storagePath, thumbnail[0].originalFilename);
+                            await fs.promises.rename(thumbnail[0].filepath, thumbPath);
+                        } else {
+                            thumbPath = await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename, '.jpg'));
+                        }
 
-                if (file[0].mimetype.split('/')[0] === 'video') {
-
-                    const videoInfo = await getVideoInfo(newFilePath)
-
-                    await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename, '.jpg'));
-
-                    // Add information to the JSON data
+                        jsonData.push({
+                            name,
+                            file: newFilePath.split('public')[1],
+                            thumb: thumbPath.split('public')[1],
+                            info: videoInfo,
+                            mime: file[0].mimetype
+                        });
+                    } else if (file[0].mimetype.startsWith('image')) {
+                        jsonData.push({
+                            name,
+                            file: newFilePath.split('public')[1],
+                            mime: file[0].mimetype,
+                        });
+                    }
+                } else {
                     jsonData.push({
                         name,
-                        mute,
-                        loop,
-                        ctrl,
-                        title,
-                        time,
-                        type,
-                        start,
-                        end,
-                        file: newFilePath,
-                        thumb: replaceFileExtension(newFilePath, '.jpg'),
-                        info: videoInfo,
-                        mime: file[0].mimetype
-                    });
-                }
-
-                if (file[0].mimetype.split('/')[0] === 'image') {
-
-                    // Add information to the JSON data
-                    jsonData.push({
-                        name,
-                        mute,
-                        loop,
-                        ctrl,
-                        title,
-                        time,
-                        type,
-                        start,
-                        end,
-                        file: newFilePath,
-                        mime: file[0].mimetype,
+                        mime: "web/url",
+                        link: fields[`link_${i}`]
                     });
                 }
             }
 
-            if (!file) {
-                jsonData.push({
-                    name,
-                    title,
-                    time,
-                    type,
-                    mime: "web/url",
-                    link
-                });
-            }
+            jsonData.unshift({
+                lastUpdate: Date.now(),
+                url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
+                gp,
+                title,
+                subline
+            });
+
+            const jsonFilePath = path.join(dbPath, `layout.json`);
+            await fs.promises.writeFile(jsonFilePath, JSON.stringify(jsonData, null, 2));
+
+            const d = new Date(Date.now());
+            console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
+            res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
+        } catch (error) {
+            console.error('Error creating playlist:', error);
+            res.status(500).json({ error: 'Error creating playlist' });
         }
-
-        jsonData.unshift({
-            lastUpdate: Date.now(),
-            url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
-            gp: gp,
-            title: title,
-            subline: subline
-        })
-
-        // Create JSON file
-        const jsonFilePath = path.join(dbPath, `layout.json`);
-        fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
-
-        var d = new Date(Date.now());
-        console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
-        res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
     });
 });
+
 
 app.get('/layout', (req, res) => {
     const playlist = req.query.playlist;
@@ -243,6 +207,7 @@ app.get('/layout', (req, res) => {
             const jsonData = JSON.parse(data);
             // console.log(jsonData)
             // Send the parsed JSON as the response
+            console.log(jsonData)
             res.json(jsonData);
         } catch (parseError) {
             console.error('Error parsing JSON:', parseError);

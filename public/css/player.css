@@ -166,18 +166,15 @@
 
 .erase-square {
     position: absolute;
-    left: 58px;
-    top: 390px;
-    background-color: #f8f8ff3b;
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    border: 2px #e5e5e5 solid;
+    left: 53px;
+    top: 382px;
+    background-image: url(/assets/gp/ICON_08_erase.png);
+    background-size: cover;
+    width: 44px;
+    height: 44px;
     opacity: 1;
     scale: 0
 }
-
-
 
 .video-icon {
     position: absolute;

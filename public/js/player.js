@@ -242,6 +242,8 @@ function getLayout() {
 
         fetch(`/layout?playlist=${endPoint}`).then((response) => response.json()).then((json) => {
 
+            console.log(json)
+
             var layout = '';
 
             for (l = 1; l < json.length; l++) {
@@ -252,11 +254,11 @@ function getLayout() {
 
                     layout += ` 
                         <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage(''); setUrl('');
-                        playVideo('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)}${addVidRange(start, end)}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
+                        playVideo('/assets${file}${start || end ? addVidRange(start, end) : ''}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(thumb)});">
+                            url(/assets${thumb});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -463,7 +465,7 @@ function seektimeupdate() {
 }
 function timecodeUpdate() {
     // Display the current position of the video in a <p> element with id="demo"
-    document.getElementById("timecode").innerHTML = formatSecondsAsTime(video.currentTime);
+    // document.getElementById("timecode").innerHTML = formatSecondsAsTime(video.currentTime);
 }
 function formatSecondsAsTime(secs, format) {
     var hr = Math.floor(secs / 3600);
