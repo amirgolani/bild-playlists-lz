@@ -22,7 +22,7 @@
   <form id="uploadForm" enctype="multipart/form-data">
     <div class="container my-4">
       <div class="block p-4">
-        <span class="title is-2">Create Playlist</span>
+        <span class="title is-2">Create Playlist</span><br>
         <span id="commsIconM" class="is-hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
         <span id="lastUpdateSpan" class="title is-5 m-0"></span>
         <a id="returnedLink" class="title has-text-link is-5 mb-4 is-hidden" href="/playlists">Playlists</a><br><br>
@@ -89,9 +89,13 @@
                 </p>
               </div>
               <div class="column is-fullwidth">
+                  <label for="files" class="btn">Media</label>
+
                 <input type="file" accept=".webm, .mp4, .jpg, .png" name="file_1" required>
               </div>
               <div class="column is-fullwidth">
+                  <label for="files" class="btn">Thumbnail</label>
+
                 <input type="file" accept=".jpg, .png" name="thumb_1">
               </div>
             </div>
