@@ -258,7 +258,7 @@ function getLayout() {
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets${thumb});">
+                            url(/assets${encodeURI(thumb)});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -267,12 +267,12 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)}')
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets${file}$')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('')" 
                             class="card-in-menu" 
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${endPoint}/storage/${getLastPartOfPath(file)});">
+                            url(/assets${file});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -685,7 +685,7 @@ function manageDraws() {
             ease: !drawOnScreen ? 'power4.in' : 'power4.out',
             onComplete: drawOnScreen ? function () { } : function () { drawWhite.hidden = true }
         });
-        gsap.to('#erase-square',
+    gsap.to('#erase-square',
         {
             onStart: drawOnScreen ? function () { eraseSquare.hidden = false } : function () { },
             scale: drawOnScreen ? 1 : 0,

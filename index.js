@@ -101,92 +101,151 @@ app.get('/create', (req, res) => {
 
 });
 
-app.post('/create-playlist', async (req, res) => {
-    const { title, subline, gp } = req.query;
+app.post('/create-playlist', (req, res) => {
+
+    const { title, subline, gp } = req.query
     const form = new formidable.IncomingForm({
         multiples: true,
+        allowEmptyFiles: true,
+        minFileSize: 0,
         maxFileSize: 2 * 1024 * 1024 * 1024, // 2 GB limit
     });
 
     form.parse(req, async (err, fields, files) => {
         if (err) {
+            console.log(err.message)
             return res.status(500).json({ error: 'Error parsing the form' });
         }
 
-        const newFolder = short.generate().slice(0, 8);
+        // console.log(files)
+
+
+        var newFolder = short.generate().slice(0, 8);
+
+        // Create directory for JSON file if it doesn't exist
         const dbPath = path.join(__dirname, 'public', 'playlists', newFolder);
-        const storagePath = path.join(dbPath, 'storage');
+        if (!fs.existsSync(dbPath)) {
+            fs.mkdirSync(dbPath);
+        }
 
-        try {
-            await fs.promises.mkdir(dbPath, { recursive: true });
-            await fs.promises.mkdir(storagePath, { recursive: true });
+        // Create directory if it doesn't exist
+        const storagePath = path.join(__dirname, 'public', 'playlists', newFolder, 'storage');
+        if (!fs.existsSync(storagePath)) {
+            fs.mkdirSync(storagePath);
+        }
 
-            const jsonData = [];
+        const jsonData = [];
 
-            for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
+        // Iterate over the fields and handle each set of inputs
+        for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
+
+
+            try {
                 const name = fields[`name_${i}`];
-                const thumbnail = files[`thumb_${i}`];
+                const mute = fields[`mute_${i}`];
+                const loop = fields[`loop_${i}`];
+                const ctrl = fields[`ctrl_${i}`];
+                const title = fields[`title_${i}`];
+                const time = fields[`time_${i}`];
+                const type = fields[`type_${i}`];
+                const start = fields[`start_${i}`];
+                const end = fields[`end_${i}`];
                 const file = files[`file_${i}`];
+                const thumbnail = files[`thumb_${i}`]
+                const link = fields[`link_${i}`];
 
                 if (file) {
+
                     const newFilePath = path.join(storagePath, file[0].originalFilename);
-                    await fs.promises.rename(file[0].filepath, newFilePath);
 
-                    if (file[0].mimetype.startsWith('video')) {
-                        const videoInfo = await getVideoInfo(newFilePath);
+                    // Move the file to the storage directory
+                    fs.renameSync(file[0].filepath, newFilePath);
 
-                        let thumbPath;
-                        if (thumbnail) {
-                            thumbPath = path.join(storagePath, thumbnail[0].originalFilename);
-                            await fs.promises.rename(thumbnail[0].filepath, thumbPath);
+                    if (file[0].mimetype.split('/')[0] === 'video') {
+
+                        const videoInfo = await getVideoInfo(newFilePath)
+
+                        var newThumbPath = '';
+
+                        if (thumbnail[0].size > 0) {
+                            newThumbPath = path.join(storagePath, thumbnail[0].originalFilename);
+
+                            // Move the file to the storage directory
+                            fs.renameSync(thumbnail[0].filepath, newThumbPath);
                         } else {
-                            thumbPath = await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename, '.jpg'));
+                            await createThumbnail(newFilePath, storagePath, replaceFileExtension(file[0].originalFilename, '.jpg'));
+
                         }
 
+                        // Add information to the JSON data
                         jsonData.push({
                             name,
+                            mute,
+                            loop,
+                            ctrl,
+                            title,
+                            time,
+                            type,
+                            start,
+                            end,
                             file: newFilePath.split('public')[1],
-                            thumb: thumbPath.split('public')[1],
+                            thumb: thumbnail[0].size > 0 ? newThumbPath.split('public')[1] : replaceFileExtension(newFilePath, '.jpg').split('public')[1],
                             info: videoInfo,
                             mime: file[0].mimetype
                         });
-                    } else if (file[0].mimetype.startsWith('image')) {
+                    }
+
+                    if (file[0].mimetype.split('/')[0] === 'image') {
+
+                        // Add information to the JSON data
                         jsonData.push({
                             name,
+                            mute,
+                            loop,
+                            ctrl,
+                            title,
+                            time,
+                            type,
+                            start,
+                            end,
                             file: newFilePath.split('public')[1],
                             mime: file[0].mimetype,
                         });
                     }
-                } else {
+                }
+
+                if (!file) {
                     jsonData.push({
                         name,
+                        title,
+                        time,
+                        type,
                         mime: "web/url",
-                        link: fields[`link_${i}`]
+                        link
                     });
                 }
+            } catch (err) {
+                console.log(err.message)
             }
-
-            jsonData.unshift({
-                lastUpdate: Date.now(),
-                url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
-                gp,
-                title,
-                subline
-            });
-
-            const jsonFilePath = path.join(dbPath, `layout.json`);
-            await fs.promises.writeFile(jsonFilePath, JSON.stringify(jsonData, null, 2));
-
-            const d = new Date(Date.now());
-            console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
-            res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
-        } catch (error) {
-            console.error('Error creating playlist:', error);
-            res.status(500).json({ error: 'Error creating playlist' });
         }
+
+        jsonData.unshift({
+            lastUpdate: Date.now(),
+            url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
+            gp: gp,
+            title: title,
+            subline: subline
+        })
+
+        // Create JSON file
+        const jsonFilePath = path.join(dbPath, `layout.json`);
+        fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
+
+        var d = new Date(Date.now());
+        console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
+        res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
     });
 });
-
 
 app.get('/layout', (req, res) => {
     const playlist = req.query.playlist;
@@ -207,7 +266,6 @@ app.get('/layout', (req, res) => {
             const jsonData = JSON.parse(data);
             // console.log(jsonData)
             // Send the parsed JSON as the response
-            console.log(jsonData)
             res.json(jsonData);
         } catch (parseError) {
             console.error('Error parsing JSON:', parseError);
