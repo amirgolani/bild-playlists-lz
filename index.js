@@ -119,7 +119,6 @@ app.post('/create-playlist', (req, res) => {
 
         // console.log(files)
 
-
         var newFolder = short.generate().slice(0, 8);
 
         // Create directory for JSON file if it doesn't exist
@@ -610,7 +609,7 @@ app.listen(port, () => {
 // Additional Functions
 
 // Function to create a thumbnail using ffmpeg
-    async function createThumbnail(inputPath, outputPath, filename) {
+async function createThumbnail(inputPath, outputPath, filename) {
     return new Promise((resolve, reject) => {
         ffmpeg(inputPath)
             .on('end', () => resolve())
@@ -619,7 +618,7 @@ app.listen(port, () => {
                 timestamps: ['95%'],
                 filename: filename,
                 folder: outputPath,
-                size: '960x540',
+                // size: '960x540',
             });
     });
 }
