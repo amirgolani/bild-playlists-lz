@@ -601,7 +601,9 @@ var painting = false;
 var drawOnScreen = false;
 var isBlinking = false;
 var drawColor = "#080808"
+var eraseMode = false;
 function manageColors(color) {
+    eraseMode = false;
     drawColor = color;
 }
 function manageDraws() {
@@ -754,11 +756,10 @@ function draw(touches) {
     }
 }
 
-// Add an erase functionality
-var eraseMode = false;
 
-function toggleEraseMode() {
-    eraseMode = !eraseMode;
+
+function toggleEraseMode(bool) {
+    eraseMode = bool;
 }
 
 function erase(event) {
@@ -767,8 +768,8 @@ function erase(event) {
         var posY = event.touches[0].clientY - canvas.offsetTop;
 
         // Set the width and height of the eraser
-        var eraseWidth = 20;
-        var eraseHeight = 20;
+        var eraseWidth = 40;
+        var eraseHeight = 40;
 
         // Clear a rectangular area on the canvas
         context.clearRect(posX - eraseWidth / 2, posY - eraseHeight / 2, eraseWidth, eraseHeight);
