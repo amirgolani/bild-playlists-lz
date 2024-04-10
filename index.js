@@ -600,6 +600,10 @@ app.get('/insa', (req, res) => {
         })
 })
 
+app.get('/map', (req, res) => {
+    return res.render('maps')
+})
+
 app.listen(port, () => {
     var d = new Date(Date.now());
     console.log(d.toString().split('GMT')[0].trim(), `Lagezentrum running on ${localIpAddress()}:${port}`);
