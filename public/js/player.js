@@ -147,6 +147,10 @@ function handleSelect(newID) {
                     ease: "power2.inOut"
                 });
 
+            setTimeout(() => {
+                handleMenuPos(true)
+            }, 500)
+
             // TO VIDEO
 
         } else {
@@ -157,6 +161,11 @@ function handleSelect(newID) {
                     opacity: 0,
                     ease: "power2.inOut"
                 });
+
+            setTimeout(() => {
+                handleMenuPos(false)
+            }, 500)
+
         }
 
         gsap.to("#playlists-icon",
@@ -204,12 +213,11 @@ function handleSelect(newID) {
 
     }
 
-    if (menuPos || newID === 'b_0') {
-
-        setTimeout(() => {
-            handleMenuPos()
-        }, 500)
-    }
+    // if (menuPos || newID === 'b_0') {
+    //     setTimeout(() => {
+    //         handleMenuPos()
+    //     }, 500)
+    // }
 }
 setTimeout(() => {
     gsap.fromTo("#video",
