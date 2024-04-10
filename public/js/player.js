@@ -213,11 +213,6 @@ function handleSelect(newID) {
 
     }
 
-    // if (menuPos || newID === 'b_0') {
-    //     setTimeout(() => {
-    //         handleMenuPos()
-    //     }, 500)
-    // }
 }
 setTimeout(() => {
     gsap.fromTo("#video",
