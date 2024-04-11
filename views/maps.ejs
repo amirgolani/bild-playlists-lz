@@ -15,15 +15,19 @@
 <body>
 
     <div id="mainMap" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
-    <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none;"></div>
-    <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(to top, rgb(133, 133, 133),white); z-index: 400; mix-blend-mode: multiply; pointer-events: none"></div>
+    <div
+        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none;">
+    </div>
+    <div
+        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(to top, rgba(39, 39, 39, 0.266),white); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
+    </div>
 
     <div id="things" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
 
     <script>
         // Initialize the map
-        var mainMap = L.map('mainMap').setView([48, 33], 7);
-        var things = L.map('things').setView([48, 33], 7);
+        var mainMap = L.map('mainMap').setView([48, 33], 6);
+        var things = L.map('things').setView([48, 33], 6);
 
         // Add tile layer to the map
         L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
