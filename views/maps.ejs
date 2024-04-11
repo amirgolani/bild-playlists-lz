@@ -9,26 +9,27 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <style>
-        #map {
-            height: 1080px;
-            width: 1920px;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.sync@0.2.4/L.Map.Sync.min.js"></script>
 </head>
 
 <body>
 
-    <div id="map" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
+    <div id="mainMap" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
+    <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none;"></div>
+    <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(to top, rgb(133, 133, 133),white); z-index: 400; mix-blend-mode: multiply; pointer-events: none"></div>
+
+    <div id="things" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
 
     <script>
         // Initialize the map
-        var map = L.map('map').setView([48, 33], 6);
+        var mainMap = L.map('mainMap').setView([48, 33], 7);
+        var things = L.map('things').setView([48, 33], 7);
 
         // Add tile layer to the map
         L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        }).addTo(mainMap);
+
 
         fetch('https://deepstatemap.live/api/history/last')
             .then(response => response.json())
@@ -45,7 +46,7 @@
                             color: data.map.features[i].properties.fill,
                             fillColor: data.map.features[i].properties.fill,
                             fillOpacity: 0.2,
-                        }).addTo(map);
+                        }).addTo(things);
                     }
 
                     if (data.map.features[i].geometry.type === "Point") {
@@ -65,7 +66,7 @@
                             // console.log(data.map.features[i])
                             L.marker([data.map.features[i].geometry.coordinates[1], data.map.features[i].geometry.coordinates[0]], {
                                 icon: theIcon
-                            }).addTo(map);
+                            }).addTo(things);
                         }
                         if (data.map.features[i].properties.icon === "images/icon-4.png") {
 
@@ -82,7 +83,7 @@
                             // console.log(data.map.features[i])
                             L.marker([data.map.features[i].geometry.coordinates[1], data.map.features[i].geometry.coordinates[0]], {
                                 icon: theIcon
-                            }).addTo(map);
+                            }).addTo(things);
                         }
                         if (data.map.features[i].properties.icon === "images/icon-5.png") {
 
@@ -99,31 +100,19 @@
                             // console.log(data.map.features[i])
                             L.marker([data.map.features[i].geometry.coordinates[1], data.map.features[i].geometry.coordinates[0]], {
                                 icon: theIcon
-                            }).addTo(map);
+                            }).addTo(things);
                         }
                     }
-                }
-
-                for (i = 0; i < data.map.features.length; i++) {
-
-                    var greenIcon = L.icon({
-                        iconUrl: 'leaf-green.png',
-                        // shadowUrl: 'leaf-shadow.png',
-
-                        iconSize: [38, 95], // size of the icon
-                        shadowSize: [50, 64], // size of the shadow
-                        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-                        // shadowAnchor: [4, 62],  // the same for the shadow
-                        // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-                    });
-
-
                 }
 
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+
+        things.sync(mainMap);
+
+        // things.getContainer().style.display = 'none';
     </script>
 
 </body>
