@@ -257,11 +257,11 @@ function getLayout() {
 
                     layout += ` 
                         <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage(''); setUrl('');
-                        playVideo('/assets${file}${start || end ? addVidRange(start, end) : ''}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
+                        playVideo('/assets/playlists/${endPoint}/storage/${file}${start || end ? addVidRange(start, end) : ''}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets${encodeURI(thumb)});">
+                            url(/assets/playlists/${endPoint}/storage/${thumb});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -275,7 +275,7 @@ function getLayout() {
                             class="card-in-menu" 
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets${file});">
+                            url(/assets/playlists/${file});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>

@@ -187,8 +187,8 @@ app.post('/create-playlist', (req, res) => {
                             type,
                             start,
                             end,
-                            file: newFilePath.split('public')[1],
-                            thumb: thumbnail[0].size > 0 ? newThumbPath.split('public')[1] : replaceFileExtension(newFilePath, '.jpg').split('public')[1],
+                            file: file[0].originalFilename,
+                            thumb: thumbnail[0].size > 0 ? thumbnail[0].originalFilename : replaceFileExtension(file[0].originalFilename, '.jpg'),
                             info: videoInfo,
                             mime: file[0].mimetype
                         });
@@ -207,7 +207,7 @@ app.post('/create-playlist', (req, res) => {
                             type,
                             start,
                             end,
-                            file: newFilePath.split('public')[1],
+                            file: file[0].originalFilename,
                             mime: file[0].mimetype,
                         });
                     }
