@@ -270,12 +270,12 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets${file}')
+                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${file}')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('')" 
                             class="card-in-menu" 
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${file});">
+                            url(/assets/playlists/${endPoint}/storage/${file});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
