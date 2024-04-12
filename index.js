@@ -11,7 +11,7 @@ const short = require('short-uuid');
 
 
 const app = express();
-const port = 4002;
+const port = 4000;
 
 app.use(express.json());
 
