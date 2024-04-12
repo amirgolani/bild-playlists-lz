@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>London Map</title>
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <!-- Leaflet JavaScript -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
+        integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.sync@0.2.4/L.Map.Sync.min.js"></script>
 </head>
@@ -15,11 +16,15 @@
 <body>
 
     <div id="mainMap" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
+
+    <!-- <div
+        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none; opacity: .8;">
+    </div> -->
     <div
-        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none;">
+        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(20deg, rgba(39, 39, 39, 0.683) 0%,white 30%); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
     </div>
     <div
-        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(to top, rgba(39, 39, 39, 0.266),white); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
+        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(185deg, rgba(255, 0, 0, 0.219) 0% ,rgb(255, 255, 255) 20%); z-index: 400; mix-blend-mode:multiply; pointer-events: none">
     </div>
 
     <div id="things" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
@@ -30,10 +35,23 @@
         var things = L.map('things').setView([48, 33], 6);
 
         // Add tile layer to the map
-        L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(mainMap);
+        // L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+        //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        // }).addTo(mainMap);
 
+
+        // var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}', {
+        //     minZoom: 0,
+        //     maxZoom: 20,
+        //     attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        //     ext: 'png'
+        // }).addTo(mainMap);
+
+        var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(mainMap);
 
         fetch('https://deepstatemap.live/api/history/last')
             .then(response => response.json())
