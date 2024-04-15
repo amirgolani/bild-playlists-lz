@@ -322,7 +322,7 @@ function getLayout() {
                     const touchX = event.touches[0].clientX;
                     const moveX = touchX - startX;
                     // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
-                    const newLeft = initialLeft + moveX > 0 ? 0 : initialLeft + moveX;
+                    const newLeft = initialLeft + moveX > 0 ? 0 : initialLeft + moveX * 3;
 
                     // Update the left property using GSAP for smooth animation
                     gsap.to(movableDiv, { left: newLeft });
