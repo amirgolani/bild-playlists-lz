@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const localIpAddress = require("local-ip-address")
 const ffmpeg = require('fluent-ffmpeg');
 const short = require('short-uuid');
+const { eventNames } = require('process');
 
 
 const app = express();
@@ -101,7 +102,7 @@ app.get('/create', (req, res) => {
 
 });
 
-app.post('/create-playlist', (req, res) => {
+app.post('/playlist', (req, res) => {
 
     const { title, subline, gp } = req.query
     const form = new formidable.IncomingForm({
@@ -245,6 +246,25 @@ app.post('/create-playlist', (req, res) => {
         res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
     });
 });
+
+app.delete('/playlist', async (req, res) => {
+
+    if (!req.query.playlist) {
+        return res.send('Missing Playlist Name')
+    }
+
+    const folderToDelete = path.join(__dirname, 'public', 'playlists', req.query.playlist);
+
+    try {
+        await fse.remove(folderToDelete);
+        console.log(`Folder ${folderToDelete} and its contents have been deleted successfully.`);
+        return res.status(200).send()
+    } catch (err) {
+        console.error(`Error deleting ${folderToDelete}:`, err);
+        return res.status(500).send()
+    }
+})
+
 
 app.get('/layout', (req, res) => {
     const playlist = req.query.playlist;

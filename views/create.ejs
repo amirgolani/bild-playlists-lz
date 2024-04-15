@@ -59,7 +59,7 @@
                 <input class="input is-small" type="text" placeholder="Button" name="name_1" value="" required>
               </div>
               <div class="column is-narrow px-2">
-                <input type="checkbox" name="mute_1">
+                <input type="checkbox" name="mute_1" checked>
                 <i class="fa-solid fa-volume-xmark"></i>
               </div>
               <div class="column is-narrow px-2">
@@ -67,7 +67,7 @@
                 <i class="fa-solid fa-repeat"></i>
               </div>
               <div class="column is-narrow px-2">
-                <input type="checkbox" name="ctrl_1">
+                <input type="checkbox" name="ctrl_1" checked>
                 <i class="fa-solid fa-sliders"></i>
               </div>
               <div class="column is-1" style="width: 90px;">
@@ -235,7 +235,7 @@
     document.getElementById("commsIconM").classList.remove("is-hidden")
     // document.getElementById("commsIconS").classList.add("is-hidden")
 
-    fetch(`/create-playlist?gp=${gp}&title=${title}&subline=${sub}`, {
+    fetch(`/playlist?gp=${gp}&title=${title}&subline=${sub}`, {
       method: 'POST',
       body: formData
     })
