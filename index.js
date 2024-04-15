@@ -86,9 +86,7 @@ app.get('/play', (req, res) => {
 });
 
 app.get('/playlists', (req, res) => {
-
     res.render('playlists')
-
 });
 
 app.get('/create', (req, res) => {
@@ -265,12 +263,9 @@ app.delete('/playlist', async (req, res) => {
     }
 })
 
-
 app.get('/layout', (req, res) => {
     const playlist = req.query.playlist;
     const filePath = path.join(__dirname, 'public', 'playlists', playlist, 'layout.json');
-
-    console.log(req.query.playlist)
 
     // Read the file asynchronously
     fs.readFile(filePath, 'utf8', (err, data) => {
