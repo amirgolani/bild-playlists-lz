@@ -73,13 +73,13 @@
 
                 for (i = 0; i < playlists.length; i++) {
                     playlistsHTML +=
-                        `<div class="playlist" id="pl_${i}" onclick="goToPage('${playlists[i].layout[0].url}')">
+                        `<div class="playlist" id="pl_${i}">
                             <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: 700; line-height: 14px;">
                                 <span onclick="deletePlaylist('${playlists[i].name}')" style="color: white; font-size: 14px; font-weight: 900; background-color: #ff0000; padding: 3px; padding-left: 5px; padding-right: 5px; border-radius: 4px; margin-right: 5px;">
                                     X</span>
                                 ${convertToLocaleDateTime(playlists[i].ctime)}
                                 </div>
-                            <div style="color: white; font-size: 36px; font-family: Gotham; font-weight: 400; line-height: 32px;">
+                            <div onclick="goToPage('${playlists[i].layout[0].url}')" style="color: white; font-size: 36px; font-family: Gotham; font-weight: 400; line-height: 32px;">
                                 ${playlists[i].layout[0].title}</div>
                             <div style="color: white; font-size: 20px; font-family: Gotham; font-weight: 300; line-height: 20px;">
                                 ${playlists[i].layout[0].gp}</div>
