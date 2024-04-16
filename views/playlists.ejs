@@ -88,10 +88,10 @@
                                     </div>
                                 </div>
                                 <div style="flex-direction: row; gap: 2px; display: flex;">
-                                ${playlists[i].layout.map((layout, index) => {
+                                ${playlists[i].layout.map((item, index) => {
                                     if(index !== 0) {
                                     return `<div style="width: 36px; background-color: red; height: 100px; border-radius: 6px; 
-                                    background-image: url(/assets/playlists/${playlists[0].name}/storage/${!layout.thumb ? layout.file : layout.thumb});
+                                    background-image: url(/assets/playlists/${playlists[i].name}/storage/${!item.thumb ? item.file : item.thumb});
                                     background-size: cover;
                                     background-position: center;"></div>`}
                                 }).join(',')}
