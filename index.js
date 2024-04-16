@@ -133,12 +133,11 @@ app.post('/playlist', (req, res) => {
         }
 
         const jsonData = [];
+        try {
+            // Iterate over the fields and handle each set of inputs
+            for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
 
-        // Iterate over the fields and handle each set of inputs
-        for (let i = 1; fields[`name_${i}`] !== undefined; i++) {
 
-
-            try {
                 const name = fields[`name_${i}`];
                 const mute = fields[`mute_${i}`];
                 const loop = fields[`loop_${i}`];
@@ -157,7 +156,10 @@ app.post('/playlist', (req, res) => {
                     const newFilePath = path.join(storagePath, file[0].originalFilename);
 
                     // Move the file to the storage directory
-                    fs.renameSync(file[0].filepath, newFilePath);
+                    // fs.renameSync(file[0].filepath, newFilePath);
+                    await moveFileAsync(file[0].filepath, newFilePath);
+
+
 
                     if (file[0].mimetype.split('/')[0] === 'video') {
 
@@ -167,7 +169,6 @@ app.post('/playlist', (req, res) => {
 
                         if (thumbnail[0].size > 0) {
                             newThumbPath = path.join(storagePath, thumbnail[0].originalFilename);
-
                             // Move the file to the storage directory
                             fs.renameSync(thumbnail[0].filepath, newThumbPath);
                         } else {
@@ -222,9 +223,10 @@ app.post('/playlist', (req, res) => {
                         link
                     });
                 }
-            } catch (err) {
-                console.log(err.message)
+
             }
+        } catch (err) {
+            console.log(err.message)
         }
 
         jsonData.unshift({
@@ -235,13 +237,15 @@ app.post('/playlist', (req, res) => {
             subline: subline
         })
 
+
         // Create JSON file
         const jsonFilePath = path.join(dbPath, `layout.json`);
         fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
 
+
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
-        res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
+        return res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
     });
 });
 
@@ -792,3 +796,32 @@ function partyQueryToArray(inputString) {
         return [inputString];
     }
 }
+
+function moveFileAsync(source, destination) {
+
+    return new Promise((resolve, reject) => {
+        fs.rename(source, destination, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+
+}
+
+
+function listImages(folderPath) {
+    const files = fs.readdirSync(folderPath);
+
+    const imageFiles = files.filter(file => {
+        const ext = path.extname(file).toLowerCase();
+        return ext === '.png' || ext === '.jpg' || ext === '.jpeg';
+    });
+
+    const imagePaths = imageFiles.map(file => path.join(folderPath, file));
+    return imagePaths;
+}
+
+
