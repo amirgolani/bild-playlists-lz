@@ -813,6 +813,7 @@ function moveFileAsync(source, destination) {
 
 
 function listImages(folderPath) {
+    console.log(folderPath)
     const files = fs.readdirSync(folderPath);
 
     const imageFiles = files.filter(file => {
