@@ -2,141 +2,155 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>London Map</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
-        integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.sync@0.2.4/L.Map.Sync.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <title>Map</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.sync@0.2.4/L.Map.Sync.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="/assets/css/player.css">
+
 </head>
 
 <body>
 
-    <div id="mainMap" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
-
-    <!-- <div
-        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none; opacity: .8;">
+  <div id="mainMap" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
+  <div style="color: #464646; font-family: 'Gotham';"></div>
+  <!-- <div
+        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none; opacity: 1;">
     </div> -->
-    <div
-        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(20deg, rgba(39, 39, 39, 0.683) 0%,white 30%); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
-    </div>
-    <div
-        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(185deg, rgba(255, 0, 0, 0.219) 0% ,rgb(255, 255, 255) 20%); z-index: 400; mix-blend-mode:multiply; pointer-events: none">
-    </div>
+  <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(20deg, rgba(18, 18, 18, 0.848) 0%,white 40%); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
+  </div>
+  <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(185deg, rgba(255, 0, 0, 0.371) 0% ,rgb(255, 255, 255) 20%); z-index: 400; mix-blend-mode:multiply; pointer-events: none">
+  </div>
+  <div id="playlists-icon" class="playlists-icon" style="z-index: 400; filter: drop-shadow(0 0 1rem black);;" onclick="window.location.assign('/playlists')"></div>
 
-    <div id="things" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
+  <script>
+    // Initialize the map
 
-    <script>
-        // Initialize the map
-        var mainMap = L.map('mainMap').setView([48, 33], 6);
-        var things = L.map('things').setView([48, 33], 6);
+    console.log([`<%= location.lat %>`, `<%= location.lng %>`])
+    var mainMap = L.map('mainMap').setView([`<%= location.lat %>`, `<%= location.lng %>`], `<%= location.zoom %>`);
+    // Imagery
+    // L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    //   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    // }).addTo(mainMap);
 
-        // Add tile layer to the map
-        // L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-        //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        // }).addTo(mainMap);
+    // Dark
+    // L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    //   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    //   subdomains: 'abcd',
+    //   maxZoom: 20
+    // }).addTo(mainMap)
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+      maxZoom: 16
+    }).addTo(mainMap)
 
 
-        // var Stadia_AlidadeSmooth = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}', {
-        //     minZoom: 0,
-        //     maxZoom: 20,
-        //     attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        //     ext: 'png'
-        // }).addTo(mainMap);
+    fetch('https://deepstatemap.live/api/history/last')
+      .then(response => response.json())
+      .then(data => {
 
-        var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 20
-        }).addTo(mainMap);
+        const {
+          features
+        } = data.map;
+        for (i = 0; i < features.length; i++) {
+          if (features[i].geometry.type === "Polygon") {
+            L.geoJSON(features[i], {
+              color: features[i].properties.fill,
+              fillColor: features[i].properties.fill,
+              fillOpacity: 0.4,
+              weight: .5,
+            }).addTo(mainMap);
+          }
+          // if (features[i].geometry.type === "Point") {
+          //   if (features[i].properties.icon === "images/icon-1.png") {
+          //     var theIcon = L.icon({
+          //       iconUrl: '/assets/gp/nato/fh_1.png',
+          //     });
+          //   }
+          //   if (features[i].properties.icon === "images/icon-4.png") {
+          //     var theIcon = L.icon({
+          //       iconUrl: '/assets/gp/nato/1_1.png',
+          //     });
+          //   }
+          //   if (features[i].properties.icon === "images/icon-5.png") {
+          //     var theIcon = L.icon({
+          //       iconUrl: '/assets/gp/nato/2_1.png',
+          //     });
+          //   }
+          //   L.marker([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]], {
+          //     icon: theIcon
+          //   }).addTo(mainMap);
+          // }
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
 
-        fetch('https://deepstatemap.live/api/history/last')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.map.features)
-                // Add GeoJSON layer to the map
-                // L.geoJSON(data.map.features).addTo(map)
+    fetch('/geojson?value=Ukraine')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        for (i = 0; i < data.features.length; i++) {
+          if (data.features[i].geometry.type === "Polygon") {
+            L.geoJSON(data.features[i], {
+              color: '#464646',
+              fillOpacity: 0,
+              weight: 1
+            }).addTo(mainMap);
+          }
+        }
+      })
 
-                for (i = 0; i < data.map.features.length; i++) {
+    fetch('/geojson?value=Russia')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        for (i = 0; i < data.features.length; i++) {
+          if (data.features[i].geometry.type === "Polygon") {
+            L.geoJSON(data.features[i], {
+              color: '#464646',
+              fillOpacity: 0,
+              weight: 1
+            }).addTo(mainMap);
+          }
+        }
+      })
 
-                    if (data.map.features[i].geometry.type === "Polygon") {
-                        // console.log(data.map.features[i])
-                        L.geoJSON(data.map.features[i], {
-                            color: data.map.features[i].properties.fill,
-                            fillColor: data.map.features[i].properties.fill,
-                            fillOpacity: 0.2,
-                        }).addTo(things);
-                    }
-
-                    if (data.map.features[i].geometry.type === "Point") {
-
-                        if (data.map.features[i].properties.icon === "images/icon-1.png") {
-
-                            var theIcon = L.icon({
-                                iconUrl: '/assets/gp/nato/fh_1.png',
-                                // shadowUrl: 'leaf-shadow.png',
-                                // iconSize: [40, 40], // size of the icon
-                                // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-
-                                // shadowAnchor: [4, 62],  // the same for the shadow
-                                // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-                            });
-
-                            // console.log(data.map.features[i])
-                            L.marker([data.map.features[i].geometry.coordinates[1], data.map.features[i].geometry.coordinates[0]], {
-                                icon: theIcon
-                            }).addTo(things);
-                        }
-                        if (data.map.features[i].properties.icon === "images/icon-4.png") {
-
-                            var theIcon = L.icon({
-                                iconUrl: '/assets/gp/nato/1_1.png',
-                                // shadowUrl: 'leaf-shadow.png',
-                                // iconSize: [40, 40], // size of the icon
-                                // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-
-                                // shadowAnchor: [4, 62],  // the same for the shadow
-                                // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-                            });
-
-                            // console.log(data.map.features[i])
-                            L.marker([data.map.features[i].geometry.coordinates[1], data.map.features[i].geometry.coordinates[0]], {
-                                icon: theIcon
-                            }).addTo(things);
-                        }
-                        if (data.map.features[i].properties.icon === "images/icon-5.png") {
-
-                            var theIcon = L.icon({
-                                iconUrl: '/assets/gp/nato/2_1.png',
-                                // shadowUrl: 'leaf-shadow.png',
-                                // iconSize: [40, 40], // size of the icon
-                                // iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-
-                                // shadowAnchor: [4, 62],  // the same for the shadow
-                                // popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-                            });
-
-                            // console.log(data.map.features[i])
-                            L.marker([data.map.features[i].geometry.coordinates[1], data.map.features[i].geometry.coordinates[0]], {
-                                icon: theIcon
-                            }).addTo(things);
-                        }
-                    }
-                }
-
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
+    function addCities() {
+      fetch('/ua-cities')
+        .then(response => response.json())
+        .then(data => {
+          for (i = 0; i < 15; i++) {
+            var myIcon = L.divIcon({
+              className: '',
+              html: `<tag class="tag is-small is-dark px-1 py-1" style="font-family: Gotham; z-index: -9999;">${data[i].city}</tag>`
             });
+            L.marker([data[i].lat, data[i].lng], {
+              icon: myIcon,
+            }).addTo(mainMap);
+          }
+        })
+    }
 
-        things.sync(mainMap);
-        mainMap.sync(things);
+    addCities()
 
-        // things.getContainer().style.display = 'none';
-    </script>
+    // var myIcon = L.divIcon({
+    //   html: '<div class="button is-small is-dark p-2" style="font-family: Gotham; z-index: -9999;">Kiew</div>'
+    // });
+    // L.marker([50.45, 30.52], {
+    //   icon: myIcon,
+    // }).addTo(mainMap);
+
+    // mainMap.on('zoom', addCities);
+  </script>
 
 </body>
 

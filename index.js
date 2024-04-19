@@ -9,7 +9,7 @@ const localIpAddress = require("local-ip-address")
 const ffmpeg = require('fluent-ffmpeg');
 const short = require('short-uuid');
 const { eventNames } = require('process');
-
+const geoJson = require('world-geojson') // or `import geoJson from 'world-geojson'`
 
 const app = express();
 const port = 4000;
@@ -620,7 +620,46 @@ app.get('/insa', (req, res) => {
 })
 
 app.get('/map', (req, res) => {
-    return res.render('maps')
+
+    if (!req.query.lat || !req.query.lng || !req.query.zoom) {
+        return res.status(400).send('missing query: try /map?lat=47.5&lng=35&zoom=7')
+    }
+
+    console.log(req.query)
+    return res.render('maps', {
+        location: req.query
+    })
+
+})
+
+app.get('/geojson', async (req, res) => {
+    // const filePath = path.join(__dirname, 'db', 'ukrBorders.geojson');
+    const results = await geoJson.forCountry(req.query.value);
+    return res.json(results)
+})
+
+app.get('/ua-cities', async (req, res) => {
+    const filePath = path.join(__dirname, 'db', 'uaCities.json');
+
+    // Read the file asynchronously
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        try {
+            // Parse the file content as JSON
+            const cities = JSON.parse(data);
+            // Send the parsed JSON as the response
+            return res.json(cities)
+
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            res.status(500).send('Internal Server Error');
+        }
+    });
 })
 
 app.listen(port, () => {

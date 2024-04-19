@@ -56,11 +56,14 @@
     <img src="/assets/gp/bildlogoFB.png" alt="" width="72px">
     <br><br><br>
     <div class="playlist" onclick="window.location.reload()" style="opacity: 1">
-
-      <div style="color: #aa0000; font-size: 24px; font-family: Gotham; font-weight: 400; line-height: 32px;">
+      <div style="color: #888888; font-size: 28px; font-family: Gotham; font-weight: 400; line-height: 32px;">
         Liste aktualisieren</div>
-
     </div>
+    <div class="playlist" onclick="window.location.assign('/map?lat=47.5&lng=35&zoom=7')" style="opacity: 1">
+      <div style="color: #888888; font-size: 28px; font-family: Gotham; font-weight: 400; line-height: 32px;">
+        Ukraine Kampfkarte</div>
+    </div>
+    
 
   </div>
 
@@ -75,16 +78,15 @@
 
         for (i = 0; i < playlists.length; i++) {
           playlistsHTML +=
-
             `
                         <div class="playlist" id="pl_${i}">
-                            <div onclick="goToPage('${playlists[i].layout[0].url}')" style="color: white; font-size: 36px; font-family: Gotham; font-weight: 500; line-height: 26px;">
+                            <div onclick="goToPage('${playlists[i].layout[0].url}')" style="color: white; font-size: 36px; font-family: Gotham; font-weight: normal; line-height: 26px;">
                                 ${playlists[i].layout[0].title}
-                                <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: 800; line-height: 28px;">
+                                <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: light; line-height: 28px;">
                                 ${convertToLocaleDateTime(playlists[i].ctime)}
                                 </div>
-                                <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: 200; line-height: 28px;">
-                                    <span onclick="deletePlaylist('${playlists[i].name}')" style="color: white; font-size: 14px; font-weight: 900; background-color: #aa0000; padding: 3px; padding-left: 5px; padding-right: 5px; border-radius: 4px; margin-right: 5px;">X</span>${playlists[i].name}
+                                <div style="color: #494949; font-size: 14px; font-family: Gotham; font-weight: light; line-height: 28px; margin-top: 5px;">
+                                    <span onclick="deletePlaylist('${playlists[i].name}')" style="color: white; font-size: 14px; font-weight: bold; background-color: #aa0000; padding: 3px; padding-left: 5px; padding-right: 5px; border-radius: 4px; margin-right: 5px;">X</span>${playlists[i].name}
                                     </div>
                                 </div>
                                 <div style="flex-direction: row; gap: 2px; display: flex;">
