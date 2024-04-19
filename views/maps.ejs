@@ -13,21 +13,35 @@
   <script src="https://cdn.jsdelivr.net/npm/leaflet.sync@0.2.4/L.Map.Sync.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="/assets/css/player.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
 
 </head>
 
 <body>
 
   <div id="mainMap" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px;"></div>
-  <div style="color: #464646; font-family: 'Gotham';"></div>
-  <!-- <div
-        style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; z-index: 400; mix-blend-mode: color; pointer-events: none; opacity: 1;">
-    </div> -->
-  <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(20deg, rgba(18, 18, 18, 0.848) 0%,white 40%); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
+  <!-- <div style="color: #464646; font-family: 'Gotham'; background-color: black;"></div> -->
+  <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: url('/assets/gp/vign.png'); pointer-events: none; z-index: 400;">
+  </div>
+  <div id="fadeIn" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; pointer-events: none; z-index: 400;">
+  </div>
+  <script>
+gsap.fromTo("#fadeIn",
+        {
+            opacity: 1
+        },
+        {
+            opacity: 0,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
+  </script>
+  <!-- <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(20deg, rgba(18, 18, 18, 0.848) 0%,white 40%); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
   </div>
   <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(185deg, rgba(255, 0, 0, 0.371) 0% ,rgb(255, 255, 255) 20%); z-index: 400; mix-blend-mode: darken; pointer-events: none">
-  </div>
-  <div id="playlists-icon" class="playlists-icon" style="z-index: 400; filter: drop-shadow(0 0 1rem black);;" onclick="window.location.assign('/playlists')"></div>
+  </div> -->
+  <div id="playlists-icon" class="playlists-icon" style="z-index: 400;" onclick="window.location.assign('/playlists')"></div>
 
   <script>
     // Initialize the map
@@ -128,10 +142,10 @@
       fetch('/ua-cities')
         .then(response => response.json())
         .then(data => {
-          for (i = 0; i < 15; i++) {
+          for (i = 0; i < 40; i++) {
             var myIcon = L.divIcon({
               className: '',
-              html: `<tag class="tag is-small is-dark px-1 py-1" style="font-family: Gotham; z-index: -9999;">${data[i].city}</tag>`
+              html: `<div class="has-text-dark" style="font-family: Gotham; font-weight: normal;">${data[i].city}</div>`
             });
             L.marker([data[i].lat, data[i].lng], {
               icon: myIcon,
