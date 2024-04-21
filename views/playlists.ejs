@@ -25,7 +25,7 @@
       width: 960px;
       padding: 16px;
       background: #1A1A1A;
-      border-radius: 20px;
+      border-radius: 8px;
       flex-direction: row;
       box-shadow: 0px 50px 130px rgb(12, 12, 12) inset;
       border: 1px solid #1f1f1f;
@@ -55,11 +55,11 @@
   <div class="playlist-container" id="playlist-container">
     <img src="/assets/gp/bildlogoFB.png" alt="" width="72px">
     <br><br><br>
-    <div class="playlist" onclick="window.location.reload()" style="opacity: 1">
+    <div class="playlist" onclick="window.location.reload(); this.style.background = '#aa0000'" style="opacity: 1">
       <div style="color: #888888; font-size: 28px; font-family: Gotham; font-weight: 400; line-height: 32px;">
         Liste aktualisieren</div>
     </div>
-    <div class="playlist" onclick="window.location.assign('/map?lat=47.5&lng=35&zoom=7')" style="opacity: 1">
+    <div class="playlist" onclick="window.location.assign('/map?lat=47.5&lng=35&zoom=7&cities=25'); this.style.background = '#aa0000'" style="opacity: 1">
       <div style="color: #888888; font-size: 28px; font-family: Gotham; font-weight: 400; line-height: 32px;">
         Ukraine Kampfkarte</div>
     </div>
@@ -78,7 +78,7 @@
           playlistsHTML +=
             `
                         <div class="playlist" id="pl_${i}">
-                            <div onclick="goToPage('${playlists[i].layout[0].url}')" style="color: white; font-size: 36px; font-family: Gotham; font-weight: normal; line-height: 26px;">
+                            <div onclick="goToPage('${playlists[i].layout[0].url}', 'pl_${i}')" style="color: white; font-size: 36px; font-family: Gotham; font-weight: normal; line-height: 26px;">
                                 ${playlists[i].layout[0].title}
                                 <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: light; line-height: 28px;">
                                 ${convertToLocaleDateTime(playlists[i].ctime)}
@@ -117,7 +117,8 @@
       }
     })
 
-    function goToPage(url) {
+    function goToPage(url, playlist) {
+      document.getElementById(playlist).style.background = '#aa0000';
       window.location.assign(url)
     }
 

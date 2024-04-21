@@ -26,16 +26,7 @@
   <div id="fadeIn" style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-color: black; pointer-events: none; z-index: 400;">
   </div>
   <script>
-gsap.fromTo("#fadeIn",
-        {
-            opacity: 1
-        },
-        {
-            opacity: 0,
-            duration: 1,
-            ease: "power2.inOut"
 
-        });
   </script>
   <!-- <div style="position: absolute; left: 0; top: 0; height: 1080px; width: 1920px; background-image: linear-gradient(20deg, rgba(18, 18, 18, 0.848) 0%,white 40%); z-index: 400; mix-blend-mode: multiply; pointer-events: none">
   </div>
@@ -46,8 +37,8 @@ gsap.fromTo("#fadeIn",
   <script>
     // Initialize the map
 
-    console.log([`<%= location.lat %>`, `<%= location.lng %>`])
-    var mainMap = L.map('mainMap').setView([`<%= location.lat %>`, `<%= location.lng %>`], `<%= location.zoom %>`);
+    console.log([`<%= specs.lat %>`, `<%= specs.lng %>`])
+    var mainMap = L.map('mainMap').setView([`<%= specs.lat %>`, `<%= specs.lng %>`], `<%= specs.zoom %>`);
     // Imagery
     // L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     //   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -102,6 +93,16 @@ gsap.fromTo("#fadeIn",
           //     icon: theIcon
           //   }).addTo(mainMap);
           // }
+          gsap.fromTo("#fadeIn",
+        {
+            opacity: 1
+        },
+        {
+            opacity: 0,
+            duration: 1,
+            ease: "power2.inOut"
+
+        });
         }
       })
       .catch(error => {
@@ -142,7 +143,7 @@ gsap.fromTo("#fadeIn",
       fetch('/ua-cities')
         .then(response => response.json())
         .then(data => {
-          for (i = 0; i < 40; i++) {
+          for (i = 0; i < parseInt(`<%= specs.cities %>`); i++) {
             var myIcon = L.divIcon({
               className: '',
               html: `<div class="has-text-dark" style="font-family: Gotham; font-weight: normal;">${data[i].city}</div>`
