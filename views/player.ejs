@@ -74,13 +74,11 @@
         </div>
       </div>
       <div id="playlists-icon" class="playlists-icon" onclick="window.location.assign('/playlists')"></div>
-
       <div id="menuToggle" style="position: absolute; opacity: 0; ">
         <div id="seek" style="opacity: 0;">
           <div id="play-icon" class="pause-icon" onclick="handlePlays()"></div>
           <input id="seekslider" class="seekslider" type="range" min="0" max="1500" value="0" step="1"
-            ontouchend="ctrlPlayVideo()" onmouseup="ctrlPlayVideo()" ontouchstart="pauseVideo()"
-            onmousedown="pauseVideo()">
+            ontouchstart="pauseVideo()" onmousedown="pauseVideo()">
           <!-- <div id="timecode" class="timecode"> -->
           <!-- 00:00</div> -->
         </div>

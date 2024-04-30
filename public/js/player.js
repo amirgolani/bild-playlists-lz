@@ -1,4 +1,6 @@
 var playlistsIcon = document.getElementById('playlists-icon');
+var drawOnScreen = false;
+var play = true;
 
 // Handle Menu Pos
 var menuPos = true;
@@ -146,6 +148,9 @@ function handleSelect(newID) {
                     scale: 1,
                     ease: "power2.inOut"
                 });
+
+            drawOnScreen = true;
+            manageDraws();
 
             setTimeout(() => {
                 handleMenuPos(true)
@@ -351,7 +356,6 @@ function handleTitles(icon, title, time) {
     document.getElementById('playing-timestamp').textContent = time;
 }
 
-
 // handle plays
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG, fps) {
     var video = document.getElementById("video");
@@ -429,25 +433,26 @@ seekslider.addEventListener("input", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 video.ontimeupdate = function () { timecodeUpdate() };
 
-var play = true;
 let isTimeDragging = false;
 
 function pauseVideo() {
     video.pause();
+    videoBg.pause();
+    play = false;
+
 }
 function ctrlPlayVideo() {
     video.play();
     videoBg.play();
+    play = true;
+
 }
 function handlePlays() {
     play = !play;
     if (play) {
-        video.play();
-        videoBg.play();
+        ctrlPlayVideo()
     } else {
-        video.pause();
-        videoBg.pause();
-
+        pauseVideo()
     }
 }
 function framePlus() {
@@ -457,7 +462,7 @@ function frameMinus() {
     video.currentTime = Math.max(0, video.currentTime - frameTime);
 }
 function vidSeek() {
-    // pauseVideo();
+    pauseVideo();
     var seekto = video.duration * (seekslider.value / 1500);
     video.currentTime = seekto;
     videoBg.currentTime = seekto;
@@ -601,7 +606,6 @@ function handleZoom(toggle) {
 var canvas = document.getElementById('paintCanvas');
 var context = canvas.getContext('2d');
 var painting = false;
-var drawOnScreen = false;
 var isBlinking = false;
 var drawColor = "#080808"
 var eraseMode = false;
