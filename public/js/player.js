@@ -149,6 +149,7 @@ function handleSelect(newID) {
                     ease: "power2.inOut"
                 });
 
+
             drawOnScreen = true;
             manageDraws();
 
@@ -182,6 +183,12 @@ function handleSelect(newID) {
 
             })
 
+        gsap.to('#home-icon', {
+            opacity: newID === "b_0" ? .3 : .6,
+            ease: "power2.out",
+        })
+
+
         gsap.fromTo("#video",
             { opacity: 0 },
             {
@@ -189,6 +196,8 @@ function handleSelect(newID) {
                 opacity: 1,
                 ease: "power2.inOut"
             });
+
+
 
         gsap.to(`#${newID}`,
             {
@@ -358,9 +367,16 @@ function handleTitles(icon, title, time) {
 
 // handle plays
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG, fps) {
+
+
     var video = document.getElementById("video");
     var videoBg = document.getElementById("video-bg")
     var seek = document.getElementById("seek");
+
+    if (path === video.getAttribute('src')) {
+        return
+    }
+
 
     frameTime = parseInt(fps)
 
