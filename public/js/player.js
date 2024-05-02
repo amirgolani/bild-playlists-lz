@@ -615,6 +615,10 @@ function manageColors(color) {
 }
 function manageDraws() {
 
+    if (selectedElement === 'b_0') {
+        return
+    }
+
     var drawBlue = document.getElementById('blue-circle')
     var drawRed = document.getElementById('red-circle')
     var drawGreen = document.getElementById('green-circle')
