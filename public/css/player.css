@@ -267,13 +267,15 @@
 
 .menu-container {
     opacity: 0;
+    width: 100%;
     height: 220px;
     top: 1000px;
     left: 0px;
     gap: 10px;
-    padding: 50px;
+    padding-top: 50px;
     position: absolute;
     display: inline-flex;
+
     touch-action: none;
 }
 

@@ -149,15 +149,10 @@ function handleSelect(newID) {
                     ease: "power2.inOut"
                 });
 
-
             drawOnScreen = true;
             manageDraws();
 
-            setTimeout(() => {
-                handleMenuPos(true)
-            }, 500)
-
-            // TO VIDEO
+            setTimeout(() => { handleMenuPos(true) }, 500)
 
         } else {
             gsap.fromTo("#mainTitle",
@@ -183,11 +178,11 @@ function handleSelect(newID) {
 
             })
 
-        gsap.to('#home-icon', {
-            opacity: newID === "b_0" ? .3 : .6,
-            ease: "power2.out",
-        })
-
+        gsap.to('#home-icon',
+            {
+                opacity: newID === "b_0" ? .3 : .6,
+                ease: "power2.out",
+            })
 
         gsap.fromTo("#video",
             { opacity: 0 },
@@ -196,8 +191,6 @@ function handleSelect(newID) {
                 opacity: 1,
                 ease: "power2.inOut"
             });
-
-
 
         gsap.to(`#${newID}`,
             {
@@ -221,6 +214,15 @@ function handleSelect(newID) {
                 duration: 1,
                 ease: "power2.inOut"
             });
+
+        gsap.to("#menuToggle",
+            {
+                left: newID !== 'b_0'
+                    ? 240
+                    : 826,
+                duration: 1,
+                ease: "power2.inOut"
+            })
 
 
         selectedElement = newID;
@@ -336,7 +338,7 @@ function getLayout() {
                     const touchX = event.touches[0].clientX;
                     const moveX = touchX - startX;
                     // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
-                    const newLeft = initialLeft + moveX > 0 ? 0 : initialLeft + moveX * 3;
+                    const newLeft = initialLeft + moveX * 3;
 
                     // Update the left property using GSAP for smooth animation
                     gsap.to(movableDiv, { left: newLeft });
@@ -445,6 +447,11 @@ video.addEventListener("play", (event) => {
     playButton.classList.replace('play-icon', 'pause-icon');
 });
 
+video.addEventListener("ended", (event) => {
+    console.log('END')
+    handleMenuPos(true)
+});
+
 seekslider.addEventListener("input", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 video.ontimeupdate = function () { timecodeUpdate() };
@@ -461,6 +468,7 @@ function ctrlPlayVideo() {
     video.play();
     videoBg.play();
     play = true;
+    handleMenuPos(false)
 
 }
 function handlePlays() {
@@ -478,10 +486,12 @@ function frameMinus() {
     video.currentTime = Math.max(0, video.currentTime - frameTime);
 }
 function vidSeek() {
-    pauseVideo();
     var seekto = video.duration * (seekslider.value / 1500);
     video.currentTime = seekto;
     videoBg.currentTime = seekto;
+    // ctrlPlayVideo();
+    pauseVideo();
+
 }
 function seektimeupdate() {
     var nt = video.currentTime * (1500 / video.duration);
