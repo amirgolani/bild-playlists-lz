@@ -102,7 +102,7 @@ setTimeout(() => {
         },
         {
             top: 0,
-            opacity: 1,
+            // opacity: 1,
             duration: 2,
             delay: .2,
             ease: "power2.inOut"
@@ -206,20 +206,23 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             });
 
-        gsap.to("#theMenu",
-            {
-                left: newID !== 'b_0'
-                    ? -(parseInt(newID.split('_')[1]) - 1) * 160 - 14 * (parseInt(newID.split('_')[1]) - 1)
-                    : -(parseInt(newID.split('_')[1])) * 160 + 20 * parseInt(newID.split('_')[1]),
-                duration: 1,
-                ease: "power2.inOut"
-            });
+        // gsap.to("#theMenu",
+        //     {
+        //         left: newID !== 'b_0'
+        //             ? -(parseInt(newID.split('_')[1]) - 1) * 160 - 14 * (parseInt(newID.split('_')[1]) - 1)
+        //             : 0,
+        //         duration: 1,
+        //         ease: "power2.inOut"
+        //     });
 
         gsap.to("#menuToggle",
             {
                 left: newID !== 'b_0'
-                    ? 240
+                    ? 290
                     : 826,
+                opacity: newID !== 'b_0'
+                    ? 1
+                    : 0,
                 duration: 1,
                 ease: "power2.inOut"
             })
