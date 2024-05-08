@@ -455,8 +455,9 @@ video.addEventListener("ended", (event) => {
 });
 
 seekslider.addEventListener("input", vidSeek, false);
+seekslider.addEventListener("change", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
-video.ontimeupdate = function () { timecodeUpdate() };
+// video.ontimeupdate = function () { timecodeUpdate() };
 
 let isTimeDragging = false;
 
@@ -488,6 +489,8 @@ function frameMinus() {
     video.currentTime = Math.max(0, video.currentTime - frameTime);
 }
 function vidSeek() {
+    pauseVideo();
+
     var seekto = video.duration * (seekslider.value / 1500);
 
     video.currentTime = seekto;
@@ -506,18 +509,18 @@ function vidSeek() {
     //         ease: 'power2.out'
     //     }
     // )
-    ctrlPlayVideo();
-    pauseVideo();
+    // ctrlPlayVideo();
+    // pauseVideo();
 }
 function seektimeupdate() {
-        var nt = video.currentTime * (1500 / video.duration);
-        gsap.to(seekslider,
-            {
-                value: nt,
-                duration: 0.25,
-                ease: 'linear'
-            }
-        );
+    var nt = video.currentTime * (1500 / video.duration);
+    gsap.to(seekslider,
+        {
+            value: nt,
+            duration: 0.25,
+            ease: 'linear'
+        }
+    );
 }
 function timecodeUpdate() {
     // Display the current position of the video in a <p> element with id="demo"
