@@ -404,7 +404,6 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
             opacity: 1,
             delay: .4,
 
-
         })
     } else {
         gsap.to('#seek', {
@@ -490,15 +489,35 @@ function frameMinus() {
 }
 function vidSeek() {
     var seekto = video.duration * (seekslider.value / 1500);
+
     video.currentTime = seekto;
     videoBg.currentTime = seekto;
-    // ctrlPlayVideo();
+    // gsap.to(video,
+    //     {
+    //         currentTime: seekto,
+    //         // duration: .2,
+    //         ease: 'power2.out'
+    //     }
+    // )
+    // gsap.to(videoBg,
+    //     {
+    //         currentTime: seekto,
+    //         // duration: .2,
+    //         ease: 'power2.out'
+    //     }
+    // )
+    ctrlPlayVideo();
     pauseVideo();
-
 }
 function seektimeupdate() {
-    var nt = video.currentTime * (1500 / video.duration);
-    seekslider.value = nt;
+        var nt = video.currentTime * (1500 / video.duration);
+        gsap.to(seekslider,
+            {
+                value: nt,
+                duration: 0.25,
+                ease: 'linear'
+            }
+        );
 }
 function timecodeUpdate() {
     // Display the current position of the video in a <p> element with id="demo"
