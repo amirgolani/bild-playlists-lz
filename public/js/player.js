@@ -206,20 +206,20 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             });
 
-        // gsap.to("#theMenu",
-        //     {
-        //         left: newID !== 'b_0'
-        //             ? -(parseInt(newID.split('_')[1]) - 1) * 160 - 14 * (parseInt(newID.split('_')[1]) - 1)
-        //             : 0,
-        //         duration: 1,
-        //         ease: "power2.inOut"
-        //     });
+        gsap.to("#theMenu",
+            {
+                left: newID !== 'b_0'
+                    ? -(parseInt(newID.split('_')[1]) - 1) * 160 - 14 * (parseInt(newID.split('_')[1]) - 1) + 240
+                    : -(parseInt(newID.split('_')[1])) * 160 + 20 * parseInt(newID.split('_')[1]) + 240,
+                duration: 1,
+                ease: "power2.inOut"
+            });
 
         gsap.to("#menuToggle",
             {
                 left: newID !== 'b_0'
-                    ? 290
-                    : 826,
+                    ? 240
+                    : 240,
                 opacity: newID !== 'b_0'
                     ? 1
                     : 0,

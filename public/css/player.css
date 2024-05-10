@@ -101,8 +101,8 @@
 
 .red-circle {
     position: absolute;
-    left: 58px;
-    top: 640px;
+    left: 108px;
+    top: 690px;
     background-color: #ee2e31;
     width: 30px;
     height: 30px;
@@ -114,8 +114,8 @@
 
 .green-circle {
     position: absolute;
-    left: 58px;
-    top: 590px;
+    left: 158px;
+    top: 690px;
     background-color: #2eee6e;
     width: 30px;
     height: 30px;
@@ -127,8 +127,8 @@
 
 .yellow-circle {
     position: absolute;
-    left: 58px;
-    top: 540px;
+    left: 208px;
+    top: 690px;
     background-color: #eee42e;
     width: 30px;
     height: 30px;
@@ -140,8 +140,8 @@
 
 .black-circle {
     position: absolute;
-    left: 58px;
-    top: 490px;
+    left: 258px;
+    top: 690px;
     background-color: #080808;
     width: 30px;
     height: 30px;
@@ -153,8 +153,8 @@
 
 .white-circle {
     position: absolute;
-    left: 58px;
-    top: 440px;
+    left: 308px;
+    top: 690px;
     background-color: #f8f8ff;
     width: 30px;
     height: 30px;
@@ -166,8 +166,8 @@
 
 .erase-square {
     position: absolute;
-    left: 53px;
-    top: 382px;
+    left: 354px;
+    top: 686px;
     background-image: url(/assets/gp/ICON_08_erase.png);
     background-size: cover;
     width: 44px;
@@ -270,9 +270,9 @@
     width: 100%;
     height: 220px;
     top: 1000px;
-    left: 0px;
+    left: 240px;
     gap: 10px;
-    padding-top: 50px;
+    padding: 50px;
     position: absolute;
     display: inline-flex;
 
