@@ -20,7 +20,7 @@
 
 <body id="endPoint" name="<%= playlist %>" style="position: absolute; overflow: clip; transform-origin: top left; margin: 0%; padding: 0%; background-color: black; width: <%= width %>; height: <%= height %>; scale: <%= size %>;">
   <div class="full-hd-container">
-    <div class="full-hd-container" id="videoPlayer">
+    <div class="full-hd-container" id="videoPlayer" onclick="handlePlays()">
       <div class="full-hd-container">
         <video preload="auto" style="opacity: .4 ; position: absolute; scale: 4; filter: blur(10px);" width="1920" height="1080" id="video-bg" playsinline autoplay muted loop webkit-playsinline="true">
           <source src="" type="video/webm">

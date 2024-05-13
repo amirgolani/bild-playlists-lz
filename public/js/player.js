@@ -2,6 +2,7 @@ var playlistsIcon = document.getElementById('playlists-icon');
 var drawOnScreen = false;
 var play = true;
 
+
 // Handle Menu Pos
 var menuPos = true;
 function handleMenuPos(selection) {
@@ -343,7 +344,8 @@ function getLayout() {
                     const touchX = event.touches[0].clientX;
                     const moveX = touchX - startX;
                     // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
-                    const newLeft = initialLeft + moveX * 3;
+
+                    const newLeft = Math.min(Math.max(initialLeft + moveX * 3, (240 - (json.length - 3) * 160)), 240);;
 
                     // Update the left property using GSAP for smooth animation
                     gsap.to(movableDiv, { left: newLeft });
@@ -450,6 +452,7 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
         videoBg.muted = true;
         videoBg.volume = 0;
     }
+
 }
 
 var playButton = document.getElementById('play-icon');
@@ -1006,3 +1009,8 @@ function previewAllCards() {
         })
     }
 }
+
+document.addEventListener('contextmenu', function (event) {
+    // Prevent default context menu behavior
+    event.preventDefault();
+});
