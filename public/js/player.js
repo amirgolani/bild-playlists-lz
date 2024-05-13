@@ -514,11 +514,12 @@ function vidSeek() {
 }
 function seektimeupdate() {
     var nt = video.currentTime * (1500 / video.duration);
-    gsap.to(seekslider,
+    
+    gsap.set(seekslider,
         {
             value: nt,
-            duration: 0.25,
-            ease: 'linear'
+            // duration: 0.25,
+            // ease: 'linear'
         }
     );
 }

@@ -267,7 +267,7 @@
 
 .menu-container {
     opacity: 0;
-    width: 100%;
+    /* width: 100%; */
     height: 220px;
     top: 1000px;
     left: 240px;
