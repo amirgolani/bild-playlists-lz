@@ -227,7 +227,7 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             })
 
-
+        play = true;
         selectedElement = newID;
 
     }
@@ -449,10 +449,10 @@ video.addEventListener("play", (event) => {
     playButton.classList.replace('play-icon', 'pause-icon');
 });
 
-video.addEventListener("ended", (event) => {
-    console.log('END')
-    handleMenuPos(true)
-});
+// video.addEventListener("ended", (event) => {
+//     console.log('END')
+//     handleMenuPos(true)
+// });
 
 seekslider.addEventListener("input", vidSeek, false);
 seekslider.addEventListener("change", vidSeek, false);
@@ -514,7 +514,7 @@ function vidSeek() {
 }
 function seektimeupdate() {
     var nt = video.currentTime * (1500 / video.duration);
-    
+
     gsap.set(seekslider,
         {
             value: nt,
