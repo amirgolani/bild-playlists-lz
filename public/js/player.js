@@ -227,6 +227,8 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             })
 
+        previewAllCards()
+
         play = true;
         selectedElement = newID;
 
@@ -345,6 +347,21 @@ function getLayout() {
 
                     // Update the left property using GSAP for smooth animation
                     gsap.to(movableDiv, { left: newLeft });
+
+                    var children = movableDiv.children;
+
+                    // Now you can iterate over the children array or access individual elements
+                    if (menuPos) {
+                        for (var i = 0; i < children.length; i++) {
+                            var child = children[i];
+                            var childPos = child.getBoundingClientRect();
+                            gsap.to(child, {
+                                opacity: childPos.left < 240 ? .2 : 1,
+                                duration: .2,
+                                ease: 'power2.out'
+                            })
+                        }
+                    }
                 }
             });
 
@@ -355,7 +372,6 @@ function getLayout() {
             movableDiv.addEventListener('touchcancel', () => {
                 isDragging = false;
             });
-
         });
 
     }
@@ -974,4 +990,19 @@ function getLastPartOfPath(filePath) {
     const lastPart = pathParts[pathParts.length - 1];
 
     return lastPart;
+}
+
+function previewAllCards() {
+    const movableDiv = document.getElementById('theMenu');
+    var children = movableDiv.children;
+
+    // Now you can iterate over the children array or access individual elements
+    for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+        gsap.to(child, {
+            opacity: 1,
+            duration: .2,
+            ease: 'power2.out'
+        })
+    }
 }
