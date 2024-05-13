@@ -622,7 +622,8 @@ app.get('/insa', (req, res) => {
 app.get('/map', (req, res) => {
 
     if (!req.query.lat || !req.query.lng || !req.query.zoom || !req.query.cities) {
-        return res.status(400).send('missing query: try /map?lat=47.5&lng=35&zoom=7&cities=30')
+        return res.redirect('/map?lat=47.5&lng=35&zoom=7&cities=30')
+        // return res.status(400).send('missing query: try /map?lat=47.5&lng=35&zoom=7&cities=30')
     }
 
     console.log(req.query)
