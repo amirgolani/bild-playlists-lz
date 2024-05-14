@@ -7,6 +7,10 @@ var play = true;
 var menuPos = true;
 function handleMenuPos(selection) {
 
+    if (drawOnScreen) {
+        manageDraws()
+    }
+
     if (selection === undefined) {
         menuPos = !menuPos
     } else {
