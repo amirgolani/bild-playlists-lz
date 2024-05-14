@@ -359,7 +359,7 @@ function getLayout() {
                             var childPos = child.getBoundingClientRect();
                             gsap.to(child, {
                                 opacity: childPos.left < 240 ? .2 : 1,
-                                duration: .2,
+                                duration: 1,
                                 ease: 'power2.out'
                             })
                         }
@@ -1004,7 +1004,7 @@ function previewAllCards() {
         var child = children[i];
         gsap.to(child, {
             opacity: 1,
-            duration: .2,
+            duration: 1,
             ease: 'power2.out'
         })
     }
