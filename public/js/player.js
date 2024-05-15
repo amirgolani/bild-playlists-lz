@@ -362,7 +362,7 @@ function getLayout() {
                             var child = children[i];
                             var childPos = child.getBoundingClientRect();
                             gsap.to(child, {
-                                opacity: childPos.left < 240 ? .2 : 1,
+                                opacity: childPos.left < 230 ? .2 : 1,
                                 duration: 1,
                                 ease: 'power2.out'
                             })
