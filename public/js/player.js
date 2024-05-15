@@ -240,7 +240,7 @@ function handleSelect(newID) {
     }
 
 }
-setTimeout(() => { 
+setTimeout(() => {
     gsap.fromTo("#video",
         { scale: 1.25, opacity: 0 },
         {
@@ -419,12 +419,23 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
     }
 
     if (PlayButtons === "withPlayButtons") {
-        gsap.to('#seek', {
-            onStart: function () { seek.hidden = false },
-            opacity: 1,
-            delay: .4,
+        gsap.to(seekslider,
+            {
+                value: 0,
+                duration: 0.25,
+                ease: 'linear'
+            }
+        );
+        gsap.fromTo('#seek',
+            {
+                opacity: 0
+            },
+            {
+                onStart: function () { seek.hidden = false },
+                opacity: 1,
+                delay: .4,
 
-        })
+            })
     } else {
         gsap.to('#seek', {
             opacity: 0,
