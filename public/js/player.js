@@ -240,7 +240,7 @@ function handleSelect(newID) {
     }
 
 }
-setTimeout(() => {
+setTimeout(() => { 
     gsap.fromTo("#video",
         { scale: 1.25, opacity: 0 },
         {
@@ -349,7 +349,7 @@ function getLayout() {
                     const moveX = touchX - startX;
                     // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
 
-                    const newLeft = Math.min(Math.max(initialLeft + moveX * 3, (240 - (json.length - 3) * 160)), 240);;
+                    const newLeft = Math.min(Math.max(initialLeft + moveX * 3, (240 - (json.length - 3) * 170)), 240);;
 
                     // Update the left property using GSAP for smooth animation
                     gsap.to(movableDiv, { left: newLeft });
@@ -379,9 +379,7 @@ function getLayout() {
                 isDragging = false;
             });
         });
-
     }
-
 }
 
 getLayout();
