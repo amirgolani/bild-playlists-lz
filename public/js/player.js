@@ -40,9 +40,12 @@ const eraseSquare = document.getElementById("erase-square");
 
 var drawOnScreen = false;
 var play = true;
+var menuPos = true;
+var scrollPos = true;
+var selectedElement = "b_0"
+var menuLeft = 0;
 
 // Handle Menu Pos
-var menuPos = true;
 function handleMenuPos(selection, gesture) {
 
     if (drawOnScreen) {
@@ -124,35 +127,39 @@ setTimeout(() => {
 
     gsap.fromTo(menuToggle,
         {
-            opacity: 0,
             top: 240
         },
         {
             top: 0,
-            // opacity: 1,
             duration: 2,
             delay: .2,
             ease: "power2.inOut"
         });
+    gsap.fromTo(video,
+        { scale: 1.25, opacity: 0 },
+        {
+            scale: 1,
+            opacity: 1,
+            duration: 2,
+            ease: "power2.inOut"
+        });
 }, 100)
 
-
 // Handle Scroll
-var scrollPos = true;
 function handleScrollPos() {
+
+    previewAllCards()
 
     gsap.to(theMenu,
         {
-            left: 0,
+            left: 240,
             duration: .6,
             ease: "power2.inOut"
         });
 }
 
-
 // Handle Select
-var selectedElement = "b_0"
-var menuLeft = 0;
+
 function handleSelect(newID) {
 
     if (newID !== selectedElement) {
@@ -263,17 +270,6 @@ function handleSelect(newID) {
     }
 
 }
-setTimeout(() => {
-    gsap.fromTo(video,
-        { scale: 1.25, opacity: 0 },
-        {
-            duration: 2,
-            scale: 1,
-            opacity: 1,
-            ease: "power2.inOut"
-        });
-}, 100);
-
 
 // Create Layout
 function getLayout() {
@@ -334,11 +330,10 @@ function getLayout() {
                 }
             }
 
-            document.getElementById('theMenu').innerHTML += layout;
+            theMenu.innerHTML += layout;
 
             // drag the menu
             // Select the movable div
-            const movableDiv = document.getElementById('theMenu');
 
             // Initialize touch-related variables
             let isDragging = false;
@@ -347,14 +342,14 @@ function getLayout() {
             let initialLeft = 0;
 
             // Add touch event listeners
-            movableDiv.addEventListener('touchstart', (event) => {
+            theMenu.addEventListener('touchstart', (event) => {
                 isDragging = true;
                 startX = event.touches[0].clientX;
                 startY = event.touches[0].clientY;
-                initialLeft = parseFloat(window.getComputedStyle(movableDiv).left);
+                initialLeft = parseFloat(window.getComputedStyle(theMenu).left);
             });
 
-            movableDiv.addEventListener('touchmove', (event) => {
+            theMenu.addEventListener('touchmove', (event) => {
                 if (isDragging) {
                     const touchX = event.touches[0].clientX;
                     const touchY = event.touches[0].clientY;
@@ -364,10 +359,10 @@ function getLayout() {
                     if (Math.abs(moveX) > Math.abs(moveY)) {
                         // Horizontal movement
                         const newLeft = Math.min(Math.max(initialLeft + moveX * 3, (240 - (json.length - 3) * 170)), 240);
-                        gsap.to(movableDiv, { left: newLeft });
+                        gsap.to(theMenu, { left: newLeft });
 
                         // Update the menu items opacity based on their position
-                        var children = movableDiv.children;
+                        var children = theMenu.children;
                         for (var i = 0; i < children.length; i++) {
                             var child = children[i];
                             var childPos = child.getBoundingClientRect();
@@ -390,11 +385,11 @@ function getLayout() {
                 }
             });
 
-            movableDiv.addEventListener('touchend', () => {
+            theMenu.addEventListener('touchend', () => {
                 isDragging = false;
             });
 
-            movableDiv.addEventListener('touchcancel', () => {
+            theMenu.addEventListener('touchcancel', () => {
                 isDragging = false;
             });
 
@@ -475,19 +470,16 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
 
 }
 
-var playButton = document.getElementById('play-icon');
-var seekslider = document.getElementById("seekslider");
-
 video.addEventListener("pause", (event) => {
-    playButton.classList.replace('pause-icon', 'play-icon');
+    playIcon.classList.replace('pause-icon', 'play-icon');
 });
 
 video.addEventListener("play", (event) => {
-    playButton.classList.replace('play-icon', 'pause-icon');
+    playIcon.classList.replace('play-icon', 'pause-icon');
 });
 
-seekslider.addEventListener("input", vidSeek, false);
-seekslider.addEventListener("change", vidSeek, false);
+seekSlider.addEventListener("input", vidSeek, false);
+seekSlider.addEventListener("change", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 // video.ontimeupdate = function () { timecodeUpdate() };
 
@@ -526,7 +518,7 @@ function frameMinus() {
 function vidSeek() {
     pauseVideo();
 
-    var seekto = video.duration * (seekslider.value / 1500);
+    var seekto = video.duration * (seekSlider.value / 1500);
 
     video.currentTime = seekto;
     videoBg.currentTime = seekto;
@@ -583,12 +575,6 @@ function formatSecondsAsTime(secs, format) {
 
 function setImage(img) {
 
-    var imageDisplay = document.getElementById('imageDisplay');
-    var frontImage = document.getElementById('frontImage');
-    var backImage = document.getElementById('backImage');
-    var mainImage = document.getElementById('mainImage');
-    var zoomIcon = document.getElementById('zoom-icon');
-
     if (img === '') {
 
         gsap.to('#zoom-icon',
@@ -609,7 +595,7 @@ function setImage(img) {
     mainImage.setAttribute('src', img)
     backImage.style.backgroundImage = `url(${img})`;
 
-    gsap.fromTo('#backImage',
+    gsap.fromTo(backImage,
         {
             x: 0,
             y: 0,
@@ -627,7 +613,7 @@ function setImage(img) {
 
     zoomed = false
 
-    gsap.fromTo('#frontImage',
+    gsap.fromTo(frontImage,
         {
             x: 0,
             y: 0,
@@ -643,7 +629,7 @@ function setImage(img) {
             duration: 1
         })
 
-    gsap.to('#zoom-icon',
+    gsap.to(zoomIcon,
         {
             onStart: img === '' ? function () { } : function () { zoomIcon.hidden = false },
             opacity: img === '' ? 0 : .6,
@@ -654,8 +640,6 @@ function setImage(img) {
 }
 
 function setUrl(url) {
-    var webDisplay = document.getElementById('webDisplay');
-    var webIframe = document.getElementById('webIframe');
 
     if (url === '') {
         webDisplay.hidden = true;
@@ -693,10 +677,9 @@ function handleZoom(toggle) {
 // Image Dragging
 
 // Get the element you want to make movable
-const movableElement = document.getElementById('frontImage');
 
 // Use Draggable to make the element movable
-const draggable = new Draggable(movableElement, {
+const draggable = new Draggable(frontImage, {
     type: 'x,y', // Allow movement along the x and y axes
     edgeResistance: .8, // Resistance when dragging towards the edges
     bounds: 'body', // Restrict movement within the body of the document
@@ -709,8 +692,7 @@ draggable.addEventListener('dragstart', () => {
 
 
 // Handle draw
-var canvas = document.getElementById('paintCanvas');
-var context = canvas.getContext('2d');
+var context = paintCanvas.getContext('2d');
 var painting = false;
 var isBlinking = false;
 var drawColor = "#080808"
@@ -728,7 +710,7 @@ function manageDraws() {
 
 
     if (!drawOnScreen) {
-        canvas.hidden = false;
+        paintCanvas.hidden = false;
         startPainting()
     } else {
         stopPainting();
@@ -736,7 +718,7 @@ function manageDraws() {
     }
 
     drawOnScreen = !drawOnScreen;
-    // canvas.hidden = !drawOnScreen
+    // paintCanvas.hidden = !drawOnScreen
 
 
     gsap.to('#art-icon',
@@ -810,11 +792,11 @@ function manageDraws() {
 
 }
 function startPainting() {
-    canvas.addEventListener('touchstart', function (e) {
+    paintCanvas.addEventListener('touchstart', function (e) {
         startPosition(e.touches);
     });
-    canvas.addEventListener('touchend', endPosition);
-    canvas.addEventListener('touchmove', function (e) {
+    paintCanvas.addEventListener('touchend', endPosition);
+    paintCanvas.addEventListener('touchmove', function (e) {
         e.preventDefault();
         erase(e); // Call the erase function alongside drawing
         draw(e.touches);
@@ -826,11 +808,11 @@ function startPainting() {
         })
 }
 function stopPainting() {
-    canvas.removeEventListener('touchstart', function (e) {
+    paintCanvas.removeEventListener('touchstart', function (e) {
         startPosition(e.touches);
     });
-    canvas.removeEventListener('touchend', endPosition);
-    canvas.removeEventListener('touchmove', function (e) {
+    paintCanvas.removeEventListener('touchend', endPosition);
+    paintCanvas.removeEventListener('touchmove', function (e) {
         e.preventDefault();
         draw(e.touches);
     });
@@ -840,7 +822,7 @@ function clearCanvas() {
         {
             opacity: drawOnScreen ? 0 : 1,
             duration: .6,
-            onComplete: function () { canvas.hidden = true; context.clearRect(0, 0, canvas.width, canvas.height) }
+            onComplete: function () { paintCanvas.hidden = true; context.clearRect(0, 0, paintCanvas.width, paintCanvas.height) }
         })
 }
 function startPosition(touches) {
@@ -860,10 +842,10 @@ function draw(touches) {
     context.strokeStyle = drawColor;
 
     for (var i = 0; i < touches.length; i++) {
-        context.lineTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+        context.lineTo(touches[i].clientX - paintCanvas.offsetLeft, touches[i].clientY - paintCanvas.offsetTop);
         context.stroke();
         context.beginPath();
-        context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
+        context.moveTo(touches[i].clientX - paintCanvas.offsetLeft, touches[i].clientY - paintCanvas.offsetTop);
     }
 }
 function toggleEraseMode(bool) {
@@ -871,8 +853,8 @@ function toggleEraseMode(bool) {
 }
 function erase(event) {
     if (eraseMode) {
-        var posX = event.touches[0].clientX - canvas.offsetLeft;
-        var posY = event.touches[0].clientY - canvas.offsetTop;
+        var posX = event.touches[0].clientX - paintCanvas.offsetLeft;
+        var posY = event.touches[0].clientY - paintCanvas.offsetTop;
 
         // Set the width and height of the eraser
         var eraseWidth = 40;
@@ -1001,8 +983,7 @@ function getLastPartOfPath(filePath) {
 }
 
 function previewAllCards() {
-    const movableDiv = document.getElementById('theMenu');
-    var children = movableDiv.children;
+    var children = theMenu.children;
 
     // Now you can iterate over the children array or access individual elements
     for (var i = 0; i < children.length; i++) {
