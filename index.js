@@ -231,7 +231,7 @@ app.post('/playlist', (req, res) => {
 
         jsonData.unshift({
             lastUpdate: Date.now(),
-            url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}`,
+            url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}`,
             gp: gp,
             title: title,
             subline: subline
@@ -245,7 +245,7 @@ app.post('/playlist', (req, res) => {
 
         var d = new Date(Date.now());
         console.log(chalk.yellowBright(d.toString().split('GMT')[0], `playlist`, newFolder, 'created'));
-        return res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}&subline=${subline}` });
+        return res.json({ url: `/play?gp=${gp}&playlist=${newFolder}&title=${title}` });
     });
 });
 

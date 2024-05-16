@@ -43,14 +43,6 @@ function handleMenuPos(selection) {
 
         });
 
-    gsap.to("#left-dark-blur",
-        {
-            top: menuPos ? -500 : -2000,
-            duration: 1,
-            ease: "power2.inOut"
-
-        });
-
     gsap.to("#menuPosIcon",
         {
             rotation: menuPos ? 0 : -540,
@@ -137,13 +129,24 @@ function handleSelect(newID) {
 
         // TO HOME
         if (newID === "b_0") {
-            gsap.fromTo("#mainTitle",
-                { scale: 1.5, opacity: 0 },
+            // gsap.fromTo("#mainTitle",
+            //     { scale: 1.5, opacity: 0 },
+            //     {
+            //         duration: 2,
+            //         scale: 1,
+            //         opacity: 1,
+            //         ease: "power2.out"
+            //     });
+
+            gsap.fromTo("#videoTitleToggle",
                 {
-                    duration: 2,
-                    scale: 1,
+                    opacity: 0
+                },
+                {
                     opacity: 1,
-                    ease: "power2.out"
+                    duration: 2,
+                    delay: .2,
+                    ease: "power2.inOut"
                 });
 
             gsap.fromTo("#video",
@@ -160,13 +163,13 @@ function handleSelect(newID) {
             setTimeout(() => { handleMenuPos(true) }, 500)
 
         } else {
-            gsap.fromTo("#mainTitle",
-                { opacity: 1 },
-                {
-                    duration: 0,
-                    opacity: 0,
-                    ease: "power2.inOut"
-                });
+            gsap.set("#videoTitleToggle",
+            {
+                opacity: 0,
+                // duration: .5,
+                // delay: .2,
+                // ease: "power2.inOut"
+            });
 
             setTimeout(() => {
                 handleMenuPos(false)
@@ -282,7 +285,7 @@ function getLayout() {
                 if (mime.split('/')[0] === 'video') {
 
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage(''); setUrl('');
+                        <div onclick="handleSelect(this.id); setImage(''); setUrl('');
                         playVideo('/assets/playlists/${endPoint}/storage/${file}${start || end ? addVidRange(start, end) : ''}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
@@ -296,7 +299,7 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
-                        <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${file}')
+                        <div onclick="handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${file}')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('')" 
                             class="card-in-menu" 
                             id="b_${l}" 
@@ -310,7 +313,7 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'web') {
                     layout += ` 
-                    <div onclick="handleTitles('${type}', '${title}', '${time}'); handleSelect(this.id); setImage('');
+                    <div onclick="handleSelect(this.id); setImage('');
                     playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('${link}')" 
                         class="card-in-menu"    
                         id="b_${l}" 
@@ -383,12 +386,6 @@ function getLayout() {
 }
 
 getLayout();
-
-function handleTitles(icon, title, time) {
-    document.getElementById('playing-icon').style.backgroundImage = `url(/assets/gp/${icon}.png)`;
-    document.getElementById('playing-title').textContent = title;
-    document.getElementById('playing-timestamp').textContent = time;
-}
 
 // handle plays
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG, fps) {
@@ -503,7 +500,10 @@ function ctrlPlayVideo() {
     video.play();
     videoBg.play();
     play = true;
-    handleMenuPos(false)
+    if (selectedElement !== "b_0") {
+        handleMenuPos(false)
+
+    }
 
 }
 function handlePlays() {

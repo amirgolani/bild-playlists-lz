@@ -78,8 +78,8 @@
           playlistsHTML +=
             `
                         <div class="playlist" id="pl_${i}">
-                            <div onclick="goToPage('${playlists[i].layout[0].url}', 'pl_${i}')" style="color: white; font-size: 36px; font-family: Gotham; font-weight: normal; line-height: 26px;">
-                                ${playlists[i].layout[0].title}
+                            <div style="color: white; font-size: 36px; font-family: Gotham; font-weight: normal; line-height: 26px;">
+                                <div onclick="goToPage('${playlists[i].layout[0].url}', 'pl_${i}')">${playlists[i].layout[0].title}</div> 
                                 <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: light; line-height: 28px;">
                                 ${convertToLocaleDateTime(playlists[i].ctime)}
                                 </div>
@@ -136,25 +136,25 @@
     }
 
     function deletePlaylist(playlist) {
-      console.log(playlist)
-      fetch(`/playlist?playlist=${playlist}`, {
-          method: 'DELETE'
-        })
-        .then(response => {
-          if (response.ok) {
-
-            // If the response is successful, refresh the page
-            location.reload();
-          } else {
-            // If there's an error, do nothing
-          }
-        })
-        .catch(error => {
+  // Show confirmation dialog
+  if (confirm("Are you sure you want to delete this playlist?")) {
+    fetch(`/playlist?playlist=${playlist}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok) {
+          // If the response is successful, refresh the page
+          location.reload();
+        } else {
           // If there's an error, do nothing
-          console.log(error)
-        });
-
-    }
+        }
+      })
+      .catch(error => {
+        // If there's an error, log it
+        console.log(error);
+      });
+  }
+}
   </script>
 
 </body>
