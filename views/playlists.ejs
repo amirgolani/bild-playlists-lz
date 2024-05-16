@@ -5,156 +5,33 @@
   <title>TOUCH LAGEZENTRUM</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="/assets/css/style_11Themen.css"> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/gp/favicon-play/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/gp/favicon-play/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/gp/favicon-play/favicon-16x16.png">
   <link rel="manifest" href="/assets/gp/favicon-play/site.webmanifest">
-  <style>
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      background-color: rgb(0, 0, 0);
-    }
-
-    .playlist {
-      width: 960px;
-      padding: 16px;
-      background: #1A1A1A;
-      border-radius: 8px;
-      flex-direction: row;
-      box-shadow: 0px 50px 130px rgb(12, 12, 12) inset;
-      border: 1px solid #1f1f1f;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      display: flex;
-      opacity: 0;
-    }
-
-    .playlist-container {
-      width: 100%;
-      height: 100%;
-      padding-top: 5%;
-      padding-bottom: 50px;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 12px;
-      display: inline-flex
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/css/playlists.css">
 </head>
 
 <body>
   <br>
   <div class="playlist-container" id="playlist-container">
+    <!-- LOGO -->
     <img src="/assets/gp/bildlogoFB.png" alt="" width="72px">
     <br><br><br>
+    <!-- Playlists -->
     <div class="playlist" onclick="window.location.reload(); this.style.background = '#aa0000'" style="opacity: 1">
-      <div style="color: #888888; font-size: 28px; font-family: Gotham; font-weight: 400; line-height: 32px;">
-        Liste aktualisieren</div>
+      <div style="color: #888888; font-size: 28px; font-family: Gotham; font-weight: 400; line-height: 32px;">Liste aktualisieren</div>
     </div>
+    <!-- MAP -->
     <!-- <div class="playlist" onclick="window.location.assign('/map?lat=47.5&lng=35&zoom=7&cities=25'); this.style.background = '#aa0000'" style="opacity: 1">
       <div style="color: #888888; font-size: 28px; font-family: Gotham; font-weight: 400; line-height: 32px;">
         Ukraine Kampfkarte</div>
     </div> -->
   </div>
 
-  <script>
-    fetch('/layouts').then(async response => {
-      if (response.ok) {
-        // Success: Show an alert or perform any other success action
-        var playlists = await response.json()
-        console.log(playlists)
+  <script src="/assets/js/playlists.js">
 
-        var playlistsHTML = '';
-
-        for (i = 0; i < playlists.length; i++) {
-          playlistsHTML +=
-            `
-                        <div class="playlist" id="pl_${i}">
-                            <div style="color: white; font-size: 36px; font-family: Gotham; font-weight: normal; line-height: 26px;">
-                                <div onclick="goToPage('${playlists[i].layout[0].url}', 'pl_${i}')">${playlists[i].layout[0].title}</div> 
-                                <div style="color: white; font-size: 14px; font-family: Gotham; font-weight: light; line-height: 28px;">
-                                ${convertToLocaleDateTime(playlists[i].ctime)}
-                                </div>
-                                <div style="color: #494949; font-size: 14px; font-family: Gotham; font-weight: light; line-height: 28px; margin-top: 5px;">
-                                    <span onclick="deletePlaylist('${playlists[i].name}')" style="color: white; font-size: 14px; font-weight: bold; background-color: #aa0000; padding: 3px; padding-left: 5px; padding-right: 5px; border-radius: 4px; margin-right: 5px;">X</span>${playlists[i].name}
-                                    </div>
-                                </div>
-                                <div style="flex-direction: row; gap: 2px; display: flex;">
-                                ${playlists[i].layout.map((item, index) => {
-                                    if(item.thumb || item.file) {
-                                    return `<div style="width: 36px; background-color: red; height: 100px; border-radius: 6px; 
-                                    background-image: url(/assets/playlists/${playlists[i].name}/storage/${!item.thumb ? item.file : item.thumb});
-                                    background-size: cover;
-                                    background-position: center;"></div>`}
-                                }).join(',')}
-                                </div>
-                            </div>
-                            `
-        }
-
-        document.getElementById('playlist-container').innerHTML += playlistsHTML;
-
-        for (b = 0; b < playlists.length; b++) {
-          gsap.fromTo(`#pl_${b}`, {
-            opacity: 0,
-            scale: .95
-          }, {
-            opacity: 1,
-            scale: 1,
-            duration: 1,
-            delay: b / 5,
-            ease: 'power1.out'
-          })
-        }
-      }
-    })
-
-    function goToPage(url, playlist) {
-      document.getElementById(playlist).style.background = '#aa0000';
-      window.location.assign(url)
-    }
-
-    function convertToLocaleDateTime(timeString) {
-      // Create a new Date object from the provided time string
-      const utcDate = new Date(timeString);
-
-      // Get the local date and time
-      const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
-
-      // Format the local date and time as a string
-      const formattedDate = localDate.toLocaleString();
-
-      return formattedDate;
-    }
-
-    function deletePlaylist(playlist) {
-  // Show confirmation dialog
-  if (confirm("Are you sure you want to delete this playlist?")) {
-    fetch(`/playlist?playlist=${playlist}`, {
-        method: 'DELETE'
-      })
-      .then(response => {
-        if (response.ok) {
-          // If the response is successful, refresh the page
-          location.reload();
-        } else {
-          // If there's an error, do nothing
-        }
-      })
-      .catch(error => {
-        // If there's an error, log it
-        console.log(error);
-      });
-  }
-}
   </script>
 
 </body>

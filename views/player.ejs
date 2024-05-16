@@ -12,16 +12,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/gp/favicon-play/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/gp/favicon-play/favicon-16x16.png">
   <!-- <link rel="manifest" href="/assets/gp/favicon-play/site.webmanifest"> -->
-  <style>
-    #endPoint {
-      position: absolute;
-      overflow: clip;
-      transform-origin: top left;
-      margin: 0%;
-      padding: 0%;
-      background-color: black;
-    }
-  </style>
 </head>
 
 <body id="endPoint" name="<%= playlist %>" style=<%= size %>>
@@ -30,22 +20,22 @@
     <div class="full-hd-container" id="videoPlayer" onclick="handlePlays()">
       <!-- BACK VIDEO -->
       <div class="full-hd-container">
-        <video preload="auto" style="opacity: .4 ; position: absolute; scale: 4; filter: blur(10px);" width="1920" height="1080" id="video-bg" playsinline autoplay muted loop webkit-playsinline="true">
+        <video preload="auto" class="back-video" width="1920" height="1080" id="video-bg" playsinline autoplay muted loop webkit-playsinline="true">
           <source src="" type="video/webm">
         </video>
       </div>
       <!-- FRONT VIDEO -->
-      <video preload="auto" style="opacity: 0; position: absolute; box-shadow: 0px 0px 50px 50px #000000;" width="1920" height="1080" id="video" playsinline autoplay muted loop webkit-playsinline="true">
+      <video preload="auto" class="front-video" width="1920" height="1080" id="video" playsinline autoplay muted loop webkit-playsinline="true">
         <source src="<%= bg %>" type="<%= vidType %>">
       </video>
     </div>
     <!-- IMAGE LAYER -->
     <div class="full-hd-container" id="imageDisplay" hidden>
       <!-- BACK IMAGE -->
-      <div id="backImage" class="full-hd-container" style="background-image: url(); background-position: center; background-size: cover; scale: 3; filter: blur(50px); opacity: 0;">
+      <div id="backImage" class="full-hd-container back-image">
       </div>
       <!-- FRONT IMAGE -->
-      <div id="frontImage" class="full-hd-container" style="scale: .75; opacity: 0; display: flex; justify-content: center; align-items: center;">
+      <div id="frontImage" class="full-hd-container front-image">
         <img id="mainImage" src="" alt="" style="height: 100%;">
       </div>
     </div>
@@ -69,16 +59,16 @@
       <!-- PLAYLISTS PAGE -->
       <div id="playlists-icon" class="playlists-icon" onclick="window.location.assign('/playlists')"></div>
       <!-- BUTTONS -->
-      <div id="menuToggle" style="position: absolute; opacity: 0; left: 290px;">
+      <div id="menuToggle" style="position: absolute; opacity: 0; left: 240px;">
         <!-- VIDEO CONTROLS -->
         <div id="seek" style="position: relative; opacity: 0;">
           <div id="play-icon" class="pause-icon" onclick="handlePlays()"></div>
           <input id="seekslider" class="seekslider" type="range" min="0" max="1500" value="0">
           <!-- <div id="timecode" class="timecode">00:00</div> -->
         </div>
-        <div id="zoom-icon" hidden class="zoom-icon" onclick="handleZoom()"></div>
-        <div id="menuPosIcon" class="menuPos-icon" onclick="handleMenuPos()"></div>
-        <div id="home-icon" class="home-icon" onclick="handleScrollPos(); setImage(''); setUrl(''); handleSelect('b_0'); playVideo('<%= bg %>', 'loop', 'muted', 'noPlayButtons', '1', '0.04');"></div>
+        <div id="zoom-icon" hidden class="zoom-icon" onclick="toggleZoom()"></div>
+        <div id="menuPosIcon" class="menuPos-icon" onclick="handleMenuPreview()"></div>
+        <div id="home-icon" class="home-icon" onclick="resetScrollPos(); setImage(''); setUrl(''); handleSelect('b_0'); playVideo('<%= bg %>', 'loop', 'muted', 'noPlayButtons', '1', '0.04');"></div>
         <!-- DRAWING UI -->
         <div id="art-icon" class="art-icon" onclick="manageDraws()"></div>
         <div id="blue-circle" hidden class="blue-circle" onclick="manageColors('#004f98')"></div>

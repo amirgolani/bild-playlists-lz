@@ -22,7 +22,7 @@ const paintCanvas = document.getElementById("paintCanvas");
 const videoTitleToggle = document.getElementById("videoTitleToggle");
 const playingTitle = document.getElementById("playing-title");
 const playlistsIcon = document.getElementById("playlists-icon");
-const menuToggle = document.getElementById("menuToggle");
+const menuToggleIcon = document.getElementById("menuToggle");
 const seek = document.getElementById("seek");
 const playIcon = document.getElementById("play-icon");
 const seekSlider = document.getElementById("seekslider");
@@ -44,61 +44,10 @@ var menuPos = true;
 var scrollPos = true;
 var selectedElement = "b_0"
 var menuLeft = 0;
+var zoomed = false
 
-// Handle Menu Pos
-function handleMenuPos(selection, gesture) {
 
-    if (drawOnScreen) {
-        manageDraws()
-    }
-
-    if (selection === undefined) {
-        menuPos = !menuPos
-    } else {
-        menuPos = selection
-    }
-
-    gsap.to(theMenu,
-        {
-            top: menuPos ? 760 : 996,
-            opacity: menuPos ? 1 : 1,
-            duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.to("#listTitles",
-        {
-            top: menuPos ? 90 : -12,
-            scale: menuPos ? 1 : .9,
-            duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.to(bottomDarkBlur,
-        {
-            opacity: menuPos ? 1 : .5,
-            duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
-
-        });
-
-    gsap.to(menuPosIcon,
-        {
-            rotation: menuPos ? 0 : -540,
-            duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
-        });
-
-    gsap.to(menuToggle,
-        {
-            top: menuPos ? 0 : 236,
-            duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
-        });
-
-}
+// Start
 setTimeout(() => {
     gsap.fromTo(theMenu,
         {
@@ -125,7 +74,7 @@ setTimeout(() => {
             ease: "power2.inOut"
         });
 
-    gsap.fromTo(menuToggle,
+    gsap.fromTo(menuToggleIcon,
         {
             top: 240
         },
@@ -145,37 +94,81 @@ setTimeout(() => {
         });
 }, 100)
 
-// Handle Scroll
-function handleScrollPos() {
+getLayout();
 
-    previewAllCards()
+// Handle Menu Pos
+function handleMenuPreview(selection, gesture) {
+
+    if (drawOnScreen) {
+        manageDraws()
+    }
+
+    if (selection === undefined) {
+        menuPos = !menuPos
+    } else {
+        menuPos = selection
+    }
 
     gsap.to(theMenu,
         {
-            left: 240,
-            duration: .6,
+            top: menuPos ? 760 : 996,
+            duration: !gesture ? 1 : gesture,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.to("#listTitles",
+        {
+            top: menuPos ? 90 : -5,
+            duration: !gesture ? 1 : gesture,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.to(bottomDarkBlur,
+        {
+            opacity: menuPos ? 1 : .5,
+            duration: !gesture ? 1 : gesture,
+            ease: "power2.inOut"
+
+        });
+
+    gsap.to(menuPosIcon,
+        {
+            rotation: menuPos ? 0 : -540,
+            duration: !gesture ? 1 : gesture,
             ease: "power2.inOut"
         });
+
+    gsap.to(menuToggleIcon,
+        {
+            top: menuPos ? 0 : 236,
+            duration: !gesture ? 1 : gesture,
+            ease: "power2.inOut"
+        });
+
 }
 
 // Handle Select
+function handleSelect(newSelection) {
 
-function handleSelect(newID) {
-
-    if (newID !== selectedElement) {
+    if (newSelection !== selectedElement) {
 
         // TO HOME
-        if (newID === "b_0") {
+        if (newSelection === "b_0") {
 
             gsap.fromTo(videoTitleToggle,
                 {
-                    opacity: 0
+                    opacity: 0,
+                    onStart: function () { videoTitleToggle.hidden = false }
+
                 },
                 {
                     opacity: 1,
                     duration: 2,
                     delay: .2,
-                    ease: "power2.inOut"
+                    ease: "power2.inOut",
+
                 });
 
             gsap.fromTo(video,
@@ -189,34 +182,25 @@ function handleSelect(newID) {
             drawOnScreen = true;
             manageDraws();
 
-            setTimeout(() => { handleMenuPos(true) }, 500)
+            setTimeout(() => { handleMenuPreview(true) }, 500)
 
         } else {
             gsap.set(videoTitleToggle,
                 {
+                    onStart: function () { videoTitleToggle.hidden = true },
                     opacity: 0,
-                    // duration: .5,
-                    // delay: .2,
-                    // ease: "power2.inOut"
                 });
 
-            handleMenuPos(false)
-
+            handleMenuPreview(false)
         }
 
         gsap.to(playlistsIcon,
             {
-                onStart: newID === "b_0" ? function () { playlistsIcon.hidden = false } : function () { },
-                opacity: newID === "b_0" ? .6 : 0,
+                onStart: newSelection === "b_0" ? function () { playlistsIcon.hidden = false } : function () { },
+                opacity: newSelection === "b_0" ? .6 : 0,
                 ease: "power2.out",
-                onComplete: newID !== "b_0" ? function () { playlistsIcon.hidden = true } : function () { }
+                onComplete: newSelection !== "b_0" ? function () { playlistsIcon.hidden = true } : function () { }
 
-            })
-
-        gsap.to(homeIcon,
-            {
-                opacity: newID === "b_0" ? .3 : .6,
-                ease: "power2.out",
             })
 
         gsap.fromTo(video,
@@ -227,7 +211,7 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             });
 
-        gsap.to(`#${newID}`,
+        gsap.to(`#${newSelection}`,
             {
                 duration: .8,
                 width: 360,
@@ -241,21 +225,20 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             });
 
+        const index = parseInt(newSelection.split('_')[1]);
+
         gsap.to(theMenu,
             {
-                left: newID !== 'b_0'
-                    ? -(parseInt(newID.split('_')[1]) - 1) * 160 - 14 * (parseInt(newID.split('_')[1]) - 1) + 240
-                    : -(parseInt(newID.split('_')[1])) * 160 + 20 * parseInt(newID.split('_')[1]) + 240,
+                left: newSelection !== 'b_0'
+                    ? -(index - 1) * 160 - 14 * (index - 1) + 240
+                    : 240,
                 duration: 1,
                 ease: "power2.inOut"
             });
 
-        gsap.to(menuToggle,
+        gsap.to(menuToggleIcon,
             {
-                left: newID !== 'b_0'
-                    ? 240
-                    : 240,
-                opacity: newID !== 'b_0'
+                opacity: newSelection !== 'b_0'
                     ? 1
                     : 0,
                 duration: 1,
@@ -265,7 +248,7 @@ function handleSelect(newID) {
         previewAllCards()
 
         play = true;
-        selectedElement = newID;
+        selectedElement = newSelection;
 
     }
 
@@ -274,12 +257,9 @@ function handleSelect(newID) {
 // Create Layout
 function getLayout() {
 
-    if (playlist.length !== 0) {
-
-        fetch(`/layout?playlist=${playlist}`).then((response) => response.json()).then((json) => {
-
-            console.log(json)
-
+    fetch(`/layout?playlist=${playlist}`)
+        .then((response) => response.json())
+        .then((json) => {
             var layout = '';
 
             for (l = 1; l < json.length; l++) {
@@ -329,75 +309,84 @@ function getLayout() {
                     </div>`
                 }
             }
-
             theMenu.innerHTML += layout;
+        });
+}
 
-            // drag the menu
-            // Select the movable div
+// Initialize touch-related variables
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+let initialLeft = 0;
 
-            // Initialize touch-related variables
-            let isDragging = false;
-            let startX = 0;
-            let startY = 0;
-            let initialLeft = 0;
+// Add touch event listeners
+theMenu.addEventListener('touchstart', (event) => {
+    isDragging = true;
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+    initialLeft = parseFloat(window.getComputedStyle(theMenu).left);
+});
 
-            // Add touch event listeners
-            theMenu.addEventListener('touchstart', (event) => {
-                isDragging = true;
-                startX = event.touches[0].clientX;
-                startY = event.touches[0].clientY;
-                initialLeft = parseFloat(window.getComputedStyle(theMenu).left);
-            });
+theMenu.addEventListener('touchmove', (event) => {
+    if (isDragging) {
+        const touchX = event.touches[0].clientX;
+        const touchY = event.touches[0].clientY;
+        const moveX = 2 * (touchX - startX);
+        const moveY = touchY - startY;
 
-            theMenu.addEventListener('touchmove', (event) => {
-                if (isDragging) {
-                    const touchX = event.touches[0].clientX;
-                    const touchY = event.touches[0].clientY;
-                    const moveX = touchX - startX;
-                    const moveY = touchY - startY;
-
-                    if (Math.abs(moveX) > Math.abs(moveY)) {
-                        // Horizontal movement
-                        const newLeft = Math.min(Math.max(initialLeft + moveX * 3, (240 - (json.length - 3) * 170)), 240);
-                        gsap.to(theMenu, { left: newLeft });
-
+        if (Math.abs(moveX) > Math.abs(moveY)) {
+            // Horizontal movement
+            const newLeft = Math.min(Math.max(initialLeft + moveX, (240 - (theMenu.children.length) * 170) + 160), 240);
+            gsap.set(theMenu,
+                {
+                    left: newLeft,
+                    onComplete: function () {
                         // Update the menu items opacity based on their position
                         var children = theMenu.children;
                         for (var i = 0; i < children.length; i++) {
                             var child = children[i];
                             var childPos = child.getBoundingClientRect();
                             gsap.to(child, {
-                                opacity: childPos.left < 230 ? .2 : 1,
-                                duration: .4,
-                                ease: 'power2.out'
+                                opacity: childPos.left < 230 && menuPos ? .2 : 1,
+                                // duration: .4,
+                                ease: 'linear'
                             });
                         }
-                    } else {
-                        // Vertical movement
-                        if (moveY < 0) {
-                            // Moving up
-                            handleMenuPos(true, .6);
-                        } else {
-                            // Moving down
-                            handleMenuPos(false, .6);
-                        }
                     }
-                }
-            });
-
-            theMenu.addEventListener('touchend', () => {
-                isDragging = false;
-            });
-
-            theMenu.addEventListener('touchcancel', () => {
-                isDragging = false;
-            });
-
-        });
+                });
+        } else {
+            // Vertical movement
+            if (moveY < 0) {
+                // Moving up
+                handleMenuPreview(true, .6);
+            } else {
+                // Moving down
+                // handleMenuPreview(false, .6);
+            }
+        }
     }
+});
+
+theMenu.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+theMenu.addEventListener('touchcancel', () => {
+    isDragging = false;
+});
+
+// Reset Scroll
+function resetScrollPos() {
+    previewAllCards()
+    gsap.to(theMenu,
+        {
+            left: 240,
+            duration: .6,
+            ease: "power2.inOut"
+        });
 }
 
-getLayout();
+
 
 // handle plays
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG, fps) {
@@ -407,7 +396,7 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
     }
 
 
-    frameTime = parseInt(fps)
+    var frameTime = parseInt(fps)
 
     video.setAttribute('src', path)
     video.setAttribute('type', `video/${getFileExtension(path)}`)
@@ -496,7 +485,7 @@ function ctrlPlayVideo() {
     videoBg.play();
     play = true;
     if (selectedElement !== "b_0") {
-        handleMenuPos(false)
+        handleMenuPreview(false)
 
     }
 
@@ -577,7 +566,7 @@ function setImage(img) {
 
     if (img === '') {
 
-        gsap.to('#zoom-icon',
+        gsap.to(zoomIcon,
             {
                 onStart: img === '' ? function () { } : function () { zoomIcon.hidden = false },
                 opacity: img === '' ? 0 : .6,
@@ -611,8 +600,6 @@ function setImage(img) {
             duration: 1
         })
 
-    zoomed = false
-
     gsap.fromTo(frontImage,
         {
             x: 0,
@@ -628,6 +615,8 @@ function setImage(img) {
             ease: 'power1.inOut',
             duration: 1
         })
+
+    zoomed = false
 
     gsap.to(zoomIcon,
         {
@@ -661,11 +650,10 @@ function setUrl(url) {
 
 }
 
-var zoomed = true
-function handleZoom(toggle) {
-    gsap.to('#frontImage',
+function toggleZoom() {
+    zoomed = !zoomed
+    gsap.to(frontImage,
         {
-            onStart: toggle === undefined ? function () { zoomed = !zoomed } : function () { zoomed = toggle },
             scale: zoomed ? 1.5 : .78,
             x: 0,
             y: 0,
@@ -676,18 +664,20 @@ function handleZoom(toggle) {
 
 // Image Dragging
 
-// Get the element you want to make movable
-
 // Use Draggable to make the element movable
-const draggable = new Draggable(frontImage, {
+const draggableImage = new Draggable(frontImage, {
     type: 'x,y', // Allow movement along the x and y axes
     edgeResistance: .8, // Resistance when dragging towards the edges
     bounds: 'body', // Restrict movement within the body of the document
 });
 
 // Example GSAP animation on drag start
-draggable.addEventListener('dragstart', () => {
-    gsap.set('#frontImage', { zIndex: 0 });
+draggableImage.addEventListener('dragstart', () => {
+    gsap.set(frontImage, { zIndex: 0 });
+});
+
+draggableImage.addEventListener('dragend', () => {
+    gsap.set(frontImage, { zIndex: 0 });
 });
 
 
@@ -697,6 +687,7 @@ var painting = false;
 var isBlinking = false;
 var drawColor = "#080808"
 var eraseMode = false;
+
 function manageColors(color) {
     eraseMode = false;
     drawColor = color;
@@ -871,19 +862,19 @@ function handleArrowKeyPress(event) {
     switch (event.keyCode) {
         case 37: // Left arrow key
             console.log("Left arrow key pressed!");
-            handleScrollPos(true)
+            resetScrollPos(true)
             break;
         case 38: // Up arrow key
             console.log("Up arrow key pressed!");
-            handleMenuPos(true)
+            handleMenuPreview(true)
             break;
         case 39: // Right arrow key
             console.log("Right arrow key pressed!");
-            handleScrollPos(false)
+            resetScrollPos(false)
             break;
         case 40: // Down arrow key
             console.log("Down arrow key pressed!");
-            handleMenuPos(false)
+            handleMenuPreview(false)
             break;
         case 32: // Down arrow key
             console.log("Space arrow key pressed!");
