@@ -5,7 +5,7 @@ var play = true;
 
 // Handle Menu Pos
 var menuPos = true;
-function handleMenuPos(selection) {
+function handleMenuPos(selection, gesture) {
 
     if (drawOnScreen) {
         manageDraws()
@@ -21,7 +21,7 @@ function handleMenuPos(selection) {
         {
             top: menuPos ? 760 : 1000,
             opacity: menuPos ? 1 : 1,
-            duration: 1,
+            duration: !gesture ? 1: gesture,
             ease: "power2.inOut"
 
         });
@@ -30,7 +30,7 @@ function handleMenuPos(selection) {
         {
             top: menuPos ? 90 : -24,
             scale: menuPos ? 1 : .8,
-            duration: 1,
+            duration: !gesture ? 1: gesture,
             ease: "power2.inOut"
 
         });
@@ -38,7 +38,7 @@ function handleMenuPos(selection) {
     gsap.to("#bottom-dark-blur",
         {
             opacity: menuPos ? 1 : .5,
-            duration: 1,
+            duration: !gesture ? 1: gesture,
             ease: "power2.inOut"
 
         });
@@ -46,23 +46,16 @@ function handleMenuPos(selection) {
     gsap.to("#menuPosIcon",
         {
             rotation: menuPos ? 0 : -540,
-            duration: 1,
+            duration: !gesture ? 1: gesture,
             ease: "power2.inOut"
         });
 
     gsap.to('#menuToggle',
         {
             top: menuPos ? 0 : 240,
-            duration: 1,
+            duration: !gesture ? 1: gesture,
             ease: "power2.inOut"
         });
-
-    // gsap.to('#video',
-    //     {
-    //         opacity: menuPos ? .8 : 1,
-    //         duration: 1,
-    //         ease: "power2.inOut"
-    //     })
 
 }
 setTimeout(() => {
@@ -164,12 +157,12 @@ function handleSelect(newID) {
 
         } else {
             gsap.set("#videoTitleToggle",
-            {
-                opacity: 0,
-                // duration: .5,
-                // delay: .2,
-                // ease: "power2.inOut"
-            });
+                {
+                    opacity: 0,
+                    // duration: .5,
+                    // delay: .2,
+                    // ease: "power2.inOut"
+                });
 
             handleMenuPos(false)
 
@@ -327,46 +320,54 @@ function getLayout() {
             document.getElementById('theMenu').innerHTML += layout;
 
             // drag the menu
-
-
             // Select the movable div
             const movableDiv = document.getElementById('theMenu');
 
             // Initialize touch-related variables
             let isDragging = false;
             let startX = 0;
+            let startY = 0;
             let initialLeft = 0;
 
             // Add touch event listeners
             movableDiv.addEventListener('touchstart', (event) => {
                 isDragging = true;
                 startX = event.touches[0].clientX;
+                startY = event.touches[0].clientY;
                 initialLeft = parseFloat(window.getComputedStyle(movableDiv).left);
             });
 
             movableDiv.addEventListener('touchmove', (event) => {
                 if (isDragging) {
                     const touchX = event.touches[0].clientX;
+                    const touchY = event.touches[0].clientY;
                     const moveX = touchX - startX;
-                    // const newLeft = clamp(initialLeft + moveX, -listLength * 168 + 360, 0);
+                    const moveY = touchY - startY;
 
-                    const newLeft = Math.min(Math.max(initialLeft + moveX * 3, (240 - (json.length - 3) * 170)), 240);;
+                    if (Math.abs(moveX) > Math.abs(moveY)) {
+                        // Horizontal movement
+                        const newLeft = Math.min(Math.max(initialLeft + moveX * 3, (240 - (json.length - 3) * 170)), 240);
+                        gsap.to(movableDiv, { left: newLeft });
 
-                    // Update the left property using GSAP for smooth animation
-                    gsap.to(movableDiv, { left: newLeft });
-
-                    var children = movableDiv.children;
-
-                    // Now you can iterate over the children array or access individual elements
-                    if (menuPos) {
+                        // Update the menu items opacity based on their position
+                        var children = movableDiv.children;
                         for (var i = 0; i < children.length; i++) {
                             var child = children[i];
                             var childPos = child.getBoundingClientRect();
                             gsap.to(child, {
                                 opacity: childPos.left < 230 ? .2 : 1,
-                                duration: 1,
+                                duration: .4,
                                 ease: 'power2.out'
-                            })
+                            });
+                        }
+                    } else {
+                        // Vertical movement
+                        if (moveY < 0) {
+                            // Moving up
+                            handleMenuPos(true, .6);
+                        } else {
+                            // Moving down
+                            handleMenuPos(false, .6);
                         }
                     }
                 }
@@ -379,6 +380,7 @@ function getLayout() {
             movableDiv.addEventListener('touchcancel', () => {
                 isDragging = false;
             });
+
         });
     }
 }
@@ -475,11 +477,6 @@ video.addEventListener("pause", (event) => {
 video.addEventListener("play", (event) => {
     playButton.classList.replace('play-icon', 'pause-icon');
 });
-
-// video.addEventListener("ended", (event) => {
-//     console.log('END')
-//     handleMenuPos(true)
-// });
 
 seekslider.addEventListener("input", vidSeek, false);
 seekslider.addEventListener("change", vidSeek, false);
@@ -1015,7 +1012,7 @@ function previewAllCards() {
         var child = children[i];
         gsap.to(child, {
             opacity: 1,
-            duration: 1,
+            duration: .4,
             ease: 'power2.out'
         })
     }
