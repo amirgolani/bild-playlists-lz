@@ -171,9 +171,7 @@ function handleSelect(newID) {
                 // ease: "power2.inOut"
             });
 
-            setTimeout(() => {
-                handleMenuPos(false)
-            }, 500)
+            handleMenuPos(false)
 
         }
 

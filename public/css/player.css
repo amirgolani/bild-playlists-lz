@@ -189,7 +189,7 @@
 
 .video-title {
     color: rgb(22, 22, 22);
-    /* mix-blend-mode: screen; */
+    /* mix-blend-mode: lighten; */
     position: absolute;
     right: 70px;
     margin: 0;
