@@ -1,7 +1,45 @@
-var playlistsIcon = document.getElementById('playlists-icon');
+const endPoint = document.getElementById("endPoint");
+const playlist = endPoint.getAttribute("name");
+
+const videoPlayer = document.getElementById("videoPlayer");
+const videoBg = document.getElementById("video-bg");
+const video = document.getElementById("video");
+const bg = video.getAttribute("src");
+const vidType = video.getAttribute("type");
+
+const imageDisplay = document.getElementById("imageDisplay");
+const backImage = document.getElementById("backImage");
+const frontImage = document.getElementById("frontImage");
+const mainImage = document.getElementById("mainImage");
+
+const webDisplay = document.getElementById("webDisplay");
+const webIframe = document.getElementById("webIframe");
+
+const bottomDarkBlur = document.getElementById("bottom-dark-blur");
+const layoutBuildUp = document.getElementById("layoutBuildUp");
+const theMenu = document.getElementById("theMenu");
+const paintCanvas = document.getElementById("paintCanvas");
+const videoTitleToggle = document.getElementById("videoTitleToggle");
+const playingTitle = document.getElementById("playing-title");
+const playlistsIcon = document.getElementById("playlists-icon");
+const menuToggle = document.getElementById("menuToggle");
+const seek = document.getElementById("seek");
+const playIcon = document.getElementById("play-icon");
+const seekSlider = document.getElementById("seekslider");
+const zoomIcon = document.getElementById("zoom-icon");
+const menuPosIcon = document.getElementById("menuPosIcon");
+const homeIcon = document.getElementById("home-icon");
+const artIcon = document.getElementById("art-icon");
+const drawBlue = document.getElementById('blue-circle')
+const drawRed = document.getElementById('red-circle')
+const drawGreen = document.getElementById('green-circle')
+const drawYellow = document.getElementById('yellow-circle')
+const drawWhite = document.getElementById('black-circle')
+const drawBlack = document.getElementById('white-circle')
+const eraseSquare = document.getElementById("erase-square");
+
 var drawOnScreen = false;
 var play = true;
-
 
 // Handle Menu Pos
 var menuPos = true;
@@ -17,7 +55,7 @@ function handleMenuPos(selection, gesture) {
         menuPos = selection
     }
 
-    gsap.to("#theMenu",
+    gsap.to(theMenu,
         {
             top: menuPos ? 760 : 996,
             opacity: menuPos ? 1 : 1,
@@ -35,7 +73,7 @@ function handleMenuPos(selection, gesture) {
 
         });
 
-    gsap.to("#bottom-dark-blur",
+    gsap.to(bottomDarkBlur,
         {
             opacity: menuPos ? 1 : .5,
             duration: !gesture ? 1 : gesture,
@@ -43,14 +81,14 @@ function handleMenuPos(selection, gesture) {
 
         });
 
-    gsap.to("#menuPosIcon",
+    gsap.to(menuPosIcon,
         {
             rotation: menuPos ? 0 : -540,
             duration: !gesture ? 1 : gesture,
             ease: "power2.inOut"
         });
 
-    gsap.to('#menuToggle',
+    gsap.to(menuToggle,
         {
             top: menuPos ? 0 : 236,
             duration: !gesture ? 1 : gesture,
@@ -59,7 +97,7 @@ function handleMenuPos(selection, gesture) {
 
 }
 setTimeout(() => {
-    gsap.fromTo("#theMenu",
+    gsap.fromTo(theMenu,
         {
             top: 1000,
             opacity: 0
@@ -73,19 +111,18 @@ setTimeout(() => {
 
         });
 
-    gsap.fromTo("#videoTitleToggle",
+    gsap.fromTo(videoTitleToggle,
         {
             opacity: 0
         },
         {
             opacity: 1,
-            duration: 2,
-            delay: .2,
+            duration: 1,
+            delay: 1,
             ease: "power2.inOut"
         });
 
-
-    gsap.fromTo("#menuToggle",
+    gsap.fromTo(menuToggle,
         {
             opacity: 0,
             top: 240
@@ -104,7 +141,7 @@ setTimeout(() => {
 var scrollPos = true;
 function handleScrollPos() {
 
-    gsap.to("#theMenu",
+    gsap.to(theMenu,
         {
             left: 0,
             duration: .6,
@@ -122,16 +159,8 @@ function handleSelect(newID) {
 
         // TO HOME
         if (newID === "b_0") {
-            // gsap.fromTo("#mainTitle",
-            //     { scale: 1.5, opacity: 0 },
-            //     {
-            //         duration: 2,
-            //         scale: 1,
-            //         opacity: 1,
-            //         ease: "power2.out"
-            //     });
 
-            gsap.fromTo("#videoTitleToggle",
+            gsap.fromTo(videoTitleToggle,
                 {
                     opacity: 0
                 },
@@ -142,7 +171,7 @@ function handleSelect(newID) {
                     ease: "power2.inOut"
                 });
 
-            gsap.fromTo("#video",
+            gsap.fromTo(video,
                 { scale: 1.25 },
                 {
                     duration: 2,
@@ -156,7 +185,7 @@ function handleSelect(newID) {
             setTimeout(() => { handleMenuPos(true) }, 500)
 
         } else {
-            gsap.set("#videoTitleToggle",
+            gsap.set(videoTitleToggle,
                 {
                     opacity: 0,
                     // duration: .5,
@@ -168,7 +197,7 @@ function handleSelect(newID) {
 
         }
 
-        gsap.to("#playlists-icon",
+        gsap.to(playlistsIcon,
             {
                 onStart: newID === "b_0" ? function () { playlistsIcon.hidden = false } : function () { },
                 opacity: newID === "b_0" ? .6 : 0,
@@ -177,13 +206,13 @@ function handleSelect(newID) {
 
             })
 
-        gsap.to('#home-icon',
+        gsap.to(homeIcon,
             {
                 opacity: newID === "b_0" ? .3 : .6,
                 ease: "power2.out",
             })
 
-        gsap.fromTo("#video",
+        gsap.fromTo(video,
             { opacity: 0 },
             {
                 duration: 1,
@@ -205,7 +234,7 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             });
 
-        gsap.to("#theMenu",
+        gsap.to(theMenu,
             {
                 left: newID !== 'b_0'
                     ? -(parseInt(newID.split('_')[1]) - 1) * 160 - 14 * (parseInt(newID.split('_')[1]) - 1) + 240
@@ -214,7 +243,7 @@ function handleSelect(newID) {
                 ease: "power2.inOut"
             });
 
-        gsap.to("#menuToggle",
+        gsap.to(menuToggle,
             {
                 left: newID !== 'b_0'
                     ? 240
@@ -235,7 +264,7 @@ function handleSelect(newID) {
 
 }
 setTimeout(() => {
-    gsap.fromTo("#video",
+    gsap.fromTo(video,
         { scale: 1.25, opacity: 0 },
         {
             duration: 2,
@@ -243,27 +272,15 @@ setTimeout(() => {
             opacity: 1,
             ease: "power2.inOut"
         });
-
-    gsap.fromTo("#mainTitle",
-        { scale: 1.5, opacity: 0 },
-        {
-            duration: 2,
-            scale: 1,
-            opacity: 1,
-            ease: "power2.out"
-        });
 }, 100);
 
 
 // Create Layout
-var listLength = 0;
 function getLayout() {
 
-    var endPoint = document.getElementById('endPoint').getAttribute('name');
+    if (playlist.length !== 0) {
 
-    if (endPoint.length !== 0) {
-
-        fetch(`/layout?playlist=${endPoint}`).then((response) => response.json()).then((json) => {
+        fetch(`/layout?playlist=${playlist}`).then((response) => response.json()).then((json) => {
 
             console.log(json)
 
@@ -277,11 +294,11 @@ function getLayout() {
 
                     layout += ` 
                         <div onclick="handleSelect(this.id); setImage(''); setUrl('');
-                        playVideo('/assets/playlists/${endPoint}/storage/${file}${start || end ? addVidRange(start, end) : ''}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
+                        playVideo('/assets/playlists/${playlist}/storage/${file}${start || end ? addVidRange(start, end) : ''}', '${loop ? 'loop' : 'notloop'}', '${mute ? 'muted' : 'unmuted'}', '${ctrl ? 'withPlayButtons' : 'noPlayButtons'}', '${info.resolution ? '1' : '0'}', '${info.fps}');" 
                             class="card-in-menu"    
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${endPoint}/storage/${thumb});">
+                            url(/assets/playlists/${playlist}/storage/${thumb});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -290,12 +307,12 @@ function getLayout() {
 
                 if (mime.split('/')[0] === 'image') {
                     layout += ` 
-                        <div onclick="handleSelect(this.id); setImage('/assets/playlists/${endPoint}/storage/${file}')
+                        <div onclick="handleSelect(this.id); setImage('/assets/playlists/${playlist}/storage/${file}')
                         playVideo('', 'notloop', 'muted', 'noPlayButtons', '0', ''); setUrl('')" 
                             class="card-in-menu" 
                             id="b_${l}" 
                             style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                            url(/assets/playlists/${endPoint}/storage/${file});">
+                            url(/assets/playlists/${playlist}/storage/${file});">
                             <div id="listTitles" class="title-in-menu">
                                 ${name}
                             </div>
@@ -390,11 +407,6 @@ getLayout();
 // handle plays
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG, fps) {
 
-
-    var video = document.getElementById("video");
-    var videoBg = document.getElementById("video-bg")
-    var seek = document.getElementById("seek");
-
     if (path === video.getAttribute('src')) {
         return
     }
@@ -423,7 +435,7 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
                 ease: 'linear'
             }
         );
-        gsap.fromTo('#seek',
+        gsap.fromTo(seek,
             {
                 opacity: 0
             },
@@ -440,8 +452,6 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
             onComplete: function () { seek.hidden = true },
         })
     }
-
-
 
     if (loop == "loop" || loop == "true") {
         video.loop = true;
@@ -466,8 +476,6 @@ function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons"
 }
 
 var playButton = document.getElementById('play-icon');
-var video = document.getElementById('video'), frameTime = 1 / 25;
-var videoBg = document.getElementById('video-bg'), frameTime = 1 / 25;
 var seekslider = document.getElementById("seekslider");
 
 video.addEventListener("pause", (event) => {
@@ -681,6 +689,25 @@ function handleZoom(toggle) {
             duration: .6
         })
 }
+
+// Image Dragging
+
+// Get the element you want to make movable
+const movableElement = document.getElementById('frontImage');
+
+// Use Draggable to make the element movable
+const draggable = new Draggable(movableElement, {
+    type: 'x,y', // Allow movement along the x and y axes
+    edgeResistance: .8, // Resistance when dragging towards the edges
+    bounds: 'body', // Restrict movement within the body of the document
+});
+
+// Example GSAP animation on drag start
+draggable.addEventListener('dragstart', () => {
+    gsap.set('#frontImage', { zIndex: 0 });
+});
+
+
 // Handle draw
 var canvas = document.getElementById('paintCanvas');
 var context = canvas.getContext('2d');
@@ -698,13 +725,7 @@ function manageDraws() {
         return
     }
 
-    var drawBlue = document.getElementById('blue-circle')
-    var drawRed = document.getElementById('red-circle')
-    var drawGreen = document.getElementById('green-circle')
-    var drawYellow = document.getElementById('yellow-circle')
-    var drawWhite = document.getElementById('black-circle')
-    var drawBlack = document.getElementById('white-circle')
-    var eraseSquare = document.getElementById('erase-square')
+
 
     if (!drawOnScreen) {
         canvas.hidden = false;
@@ -845,13 +866,9 @@ function draw(touches) {
         context.moveTo(touches[i].clientX - canvas.offsetLeft, touches[i].clientY - canvas.offsetTop);
     }
 }
-
-
-
 function toggleEraseMode(bool) {
     eraseMode = bool;
 }
-
 function erase(event) {
     if (eraseMode) {
         var posX = event.touches[0].clientX - canvas.offsetLeft;
@@ -865,26 +882,6 @@ function erase(event) {
         context.clearRect(posX - eraseWidth / 2, posY - eraseHeight / 2, eraseWidth, eraseHeight);
     }
 }
-
-
-// Image Dragging
-
-// Get the element you want to make movable
-const movableElement = document.getElementById('frontImage');
-
-// Use Draggable to make the element movable
-const draggable = new Draggable(movableElement, {
-    type: 'x,y', // Allow movement along the x and y axes
-    edgeResistance: .8, // Resistance when dragging towards the edges
-    bounds: 'body', // Restrict movement within the body of the document
-});
-
-// Example GSAP animation on drag start
-draggable.addEventListener('dragstart', () => {
-    gsap.set('#frontImage', { zIndex: 0 });
-});
-
-
 
 // Function to handle arrow key press
 function handleArrowKeyPress(event) {

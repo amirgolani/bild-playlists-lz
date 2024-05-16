@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Player</title>
+  <title><%= title %></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/assets/css/player.css">
@@ -11,10 +11,23 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/gp/favicon-play/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/gp/favicon-play/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/gp/favicon-play/favicon-16x16.png">
-  <link rel="manifest" href="/assets/gp/favicon-play/site.webmanifest">
+  <!-- <link rel="manifest" href="/assets/gp/favicon-play/site.webmanifest"> -->
+  <style>
+    #endPoint {
+      position: absolute;
+      overflow: clip;
+      transform-origin: top left;
+      margin: 0%;
+      padding: 0%;
+      background-color: black;
+      width: <%=width %>;
+      height: <%=height %>;
+      scale: <%=size %>;
+    }
+  </style>
 </head>
 
-<body id="endPoint" name="<%= playlist %>" style="position: absolute; overflow: clip; transform-origin: top left; margin: 0%; padding: 0%; background-color: black; width: <%= width %>; height: <%= height %>; scale: <%= size %>;">
+<body id="endPoint" name="<%= playlist %>">
   <div class="full-hd-container">
     <!-- VIDEO LAYER -->
     <div class="full-hd-container" id="videoPlayer" onclick="handlePlays()">
@@ -53,7 +66,7 @@
       <!-- DRAWING CANVAS -->
       <canvas class="full-hd-container" id="paintCanvas" width="1920" height="1080" hidden></canvas>
       <!-- HEADLINE -->
-      <div id="videoTitleToggle">
+      <div id="videoTitleToggle" style="opacity: 0;">
         <div id="playing-title" class="video-title"><%= title %></div>
       </div>
       <!-- PLAYLISTS PAGE -->
@@ -64,8 +77,7 @@
         <div id="seek" style="position: relative; opacity: 0;">
           <div id="play-icon" class="pause-icon" onclick="handlePlays()"></div>
           <input id="seekslider" class="seekslider" type="range" min="0" max="1500" value="0">
-          <!-- <div id="timecode" class="timecode"> -->
-          <!-- 00:00</div> -->
+          <!-- <div id="timecode" class="timecode">00:00</div> -->
         </div>
         <div id="zoom-icon" hidden class="zoom-icon" onclick="handleZoom()"></div>
         <div id="menuPosIcon" class="menuPos-icon" onclick="handleMenuPos()"></div>
