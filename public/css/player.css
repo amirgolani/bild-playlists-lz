@@ -326,7 +326,7 @@ input[type="range"]::-webkit-slider-thumb {
     background-position: center;
     justify-content: center;
     box-shadow: 12px 12px 100px black;
-    border-radius: 8px;
+    border-radius: 14px;
     border: 2px #cccccc solid;
     display: inline-flex;
 

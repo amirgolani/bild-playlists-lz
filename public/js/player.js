@@ -19,18 +19,18 @@ function handleMenuPos(selection, gesture) {
 
     gsap.to("#theMenu",
         {
-            top: menuPos ? 760 : 1000,
+            top: menuPos ? 760 : 996,
             opacity: menuPos ? 1 : 1,
-            duration: !gesture ? 1: gesture,
+            duration: !gesture ? 1 : gesture,
             ease: "power2.inOut"
 
         });
 
     gsap.to("#listTitles",
         {
-            top: menuPos ? 90 : -24,
-            scale: menuPos ? 1 : .8,
-            duration: !gesture ? 1: gesture,
+            top: menuPos ? 90 : -12,
+            scale: menuPos ? 1 : .9,
+            duration: !gesture ? 1 : gesture,
             ease: "power2.inOut"
 
         });
@@ -38,7 +38,7 @@ function handleMenuPos(selection, gesture) {
     gsap.to("#bottom-dark-blur",
         {
             opacity: menuPos ? 1 : .5,
-            duration: !gesture ? 1: gesture,
+            duration: !gesture ? 1 : gesture,
             ease: "power2.inOut"
 
         });
@@ -46,14 +46,14 @@ function handleMenuPos(selection, gesture) {
     gsap.to("#menuPosIcon",
         {
             rotation: menuPos ? 0 : -540,
-            duration: !gesture ? 1: gesture,
+            duration: !gesture ? 1 : gesture,
             ease: "power2.inOut"
         });
 
     gsap.to('#menuToggle',
         {
-            top: menuPos ? 0 : 240,
-            duration: !gesture ? 1: gesture,
+            top: menuPos ? 0 : 236,
+            duration: !gesture ? 1 : gesture,
             ease: "power2.inOut"
         });
 
