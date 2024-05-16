@@ -479,7 +479,7 @@ video.addEventListener("play", (event) => {
 });
 
 seekSlider.addEventListener("input", vidSeek, false);
-seekSlider.addEventListener("change", vidSeek, false);
+// seekSlider.addEventListener("change", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 // video.ontimeupdate = function () { timecodeUpdate() };
 

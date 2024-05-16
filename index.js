@@ -28,62 +28,42 @@ app.use((req, res, next) => {
 // UKR
 
 app.get('/play', (req, res) => {
-
     const { gp, title, subline, playlist, size } = req.query;
 
+    const commonData = {
+        vidType: 'video/mp4',
+        title: title || '',
+        sub: subline || '',
+        playlist,
+        size: generateInlineCSS(size),
+    };
+
     switch (gp) {
-        case 'lz-ukr': // Left arrow key
-            res.render('player',
-                {
-                    bg: '/assets/gp/BGUKR.webm',
-                    vidType: 'video/webm',
-                    headline: '/assets/gp/titles-ukr.png',
-                    thumbnail: '/assets/gp/HOMEUKR.jpg',
-                    icon: 'gallery',
-                    title: title ? title : '',
-                    sub: subline ? subline : '',
-                    playlist: playlist,
-                    size: size ? size / 100 : '1',
-                    width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
-                    height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
-                })
+        case 'lz-ukr':
+            res.render('player', {
+                ...commonData,
+                bg: '/assets/gp/BGUKR.webm'
+            });
             break;
-        case 'lz-isr': // Up arrow key
-            res.render('player',
-                {
-                    bg: '/assets/gp/BGISR.webm',
-                    vidType: 'video/webm',
-                    headline: '/assets/gp/titles-isr.png',
-                    thumbnail: '/assets/gp/HOMEISR.jpg',
-                    icon: 'gallery',
-                    title: title ? title : '',
-                    sub: subline ? subline : '',
-                    playlist: playlist,
-                    size: size ? size / 100 : '1',
-                    width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
-                    height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
-                })
+        case 'lz-isr':
+            res.render('player', {
+                ...commonData,
+                bg: '/assets/gp/BGISR.webm'
+            });
             break;
-        case 'bild': // Up arrow key
-            res.render('player',
-                {
-                    bg: '/assets/gp/LOOP_TOUCH.mp4',
-                    vidType: 'video/mp4',
-                    headline: '',
-                    thumbnail: '/assets/gp/HOMEBILD.jpg',
-                    icon: 'gallery',
-                    title: title ? title : '',
-                    sub: subline ? subline : '',
-                    playlist: playlist,
-                    size: size ? size / 100 : '1',
-                    width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
-                    height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px',
-                })
+        case 'bild':
+            res.render('player', {
+                ...commonData,
+                bg: '/assets/gp/LOOP_TOUCH.mp4',
+                vidType: 'video/mp4'
+            });
             break;
-        default: res.redirect('/playlists')
-        // Do nothing for other keys
+        default:
+            res.redirect('/playlists');
+            break;
     }
 });
+
 
 app.get('/playlists', (req, res) => {
     res.render('playlists')
@@ -863,6 +843,14 @@ function listImages(folderPath) {
 
     const imagePaths = imageFiles.map(file => path.join(folderPath, file));
     return imagePaths;
+}
+function generateInlineCSS(size) {
+    const parsedSize = size ? parseInt(size) : 100;
+
+    const width = size ? `${parsedSize / 100 * 1920}px` : `1920px`;
+    const height = size ? `${parsedSize / 100 * 1080}px` : `1080px`;
+
+    return `scale:${size ? size / 100 : 1};width:${width};height:${height};`;
 }
 
 
