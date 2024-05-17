@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/gp/favicon-create/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/gp/favicon-create/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/gp/favicon-create/favicon-16x16.png">
   <link rel="manifest" href="/assets/gp/favicon-create/site.webmanifest">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
   <title>Create</title>
 </head>
 
@@ -34,43 +34,38 @@
             <div class="columns is-vcentered  is-1 is-variable">
               <div class="column is-2">
                 <select id="gp" class="select is-small is-fullwidth" required>
-                  <!-- <option value="lz-ukr">Lagezentrum Ukraine</option> -->
-                  <!-- <option value="lz-isr">Lagezentrum Israel</option> -->
                   <option value="bild" selected>BILD General</option>
                 </select>
               </div>
               <div class="column is-2">
-                <input id="title" class="input is-small" type="text" placeholder="Playlist Name" value=""
-                  oninput="blockCharacters(event, ['\'', '/'])" required>
+                <input id="title" class="input is-small" type="text" placeholder="Headline" value="" oninput="blockCharacters(event, ['\'', '/'])" required>
               </div>
               <div class="column is-2">
-                <input id="sub" class="input is-small" type="text" placeholder="Playlist Creator" value=""
-                  oninput="blockCharacters(event, ['\'', '/'])" required>
+                <input id="sub" class="input is-small" type="text" placeholder="Playlist Creator" value="" oninput="blockCharacters(event, ['\'', '/'])" required>
               </div>
             </div>
           </div>
         </div>
-
         <div id="boxes-container" class="">
           <!-- Existing box -->
-          <div class="box p-2 my-2" id="box_1">
-            <div class="columns is-vcentered is-1 is-variable">
-              <div class="column is-1">
-                <input class="input is-small" type="text" placeholder="Button" name="name_1" value="" required>
+          <div class="box p-2 my-0" id="box_1">
+            <div class="columns is-vcentered is-1 is-variable m-0 p-0">
+              <div class="column is-1 m-0 p-0">
+                <input class="input is-small mx-0" type="text" placeholder="Button" name="name_1" value="" required>
               </div>
-              <div class="column is-narrow px-2">
+              <div class="column is-narrow px-2 m-0 py-0">
                 <input type="checkbox" name="mute_1" checked>
                 <i class="fa-solid fa-volume-xmark"></i>
               </div>
-              <div class="column is-narrow px-2">
+              <div class="column is-narrow px-2 m-0 py-0">
                 <input type="checkbox" name="loop_1">
                 <i class="fa-solid fa-repeat"></i>
               </div>
-              <div class="column is-narrow px-2">
+              <div class="column is-narrow px-2 m-0 py-0">
                 <input type="checkbox" name="ctrl_1" checked>
                 <i class="fa-solid fa-sliders"></i>
               </div>
-              <div class="column is-1" style="width: 90px;">
+              <div class="column is-1 m-0 py-0 py-0" style="width: 90px;">
                 <p class="control has-icons-left">
                   <input class="input is-small" type="number" placeholder="0" name="start_1">
                   <span class="icon is-small is-left">
@@ -78,7 +73,7 @@
                   </span>
                 </p>
               </div>
-              <div class="column is-1" style="width: 90px;">
+              <div class="column is-1 my-0 py-0" style="width: 90px;">
                 <p class="control has-icons-right">
                   <input class="input is-small" type="number" placeholder="0" name="end_1">
                   <span class="icon is-small is-right">
@@ -86,182 +81,185 @@
                   </span>
                 </p>
               </div>
-              <div class="column is-fullwidth">
+              <div class="column is-fullwidth my-0 py-0">
                 <input type="file" accept=".webm, .mp4, .jpg, .png" name="file_1" required>
               </div>
-              <div class="column is-fullwidth">
+              <div class="column is-fullwidth my-0 py-0">
                 <input type="file" accept=".jpg, .png" name="thumb_1">
               </div>
             </div>
-            <!-- <div class="columns is-vcentered is-1 is-variable">
-                            <div class="column is-2">
-                                <input class="input is-small" type="text" placeholder="Title / User" name="title_1"
-                                    value="" required>
-                            </div>
-                            <div class="column is-2">
-                                <input class="input is-small" type="text" placeholder="Note / Time" name="time_1"
-                                    value="">
-                            </div>
-                            <div class="column is-1">
-                                <select class="select is-small is-fullwidth" name="type_1" required>
-                                    <option value="map" selected>Map</option>
-                                    <option value="x">X</option>
-                                    <option value="ig">Instagram</option>
-                                    <option value="fb">Facebook</option>
-                                    <option value="tk">TikTok</option>
-                                    <option value="yt">YouTube</option>
-                                    <option value="media">Media</option>
-                                    <option value="chart">Diagramme</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="columns is-vcentered is-1 is-variable">
-                            <div class="column is-4">
-                                <input class="input is-small" type="text" placeholder="Link" name="link_1" value=""
-                                    onchange="handleLinks(this.name)">
-                            </div>
-                            
-                        </div> -->
+            <input class="input is-small mt-2" type="text" placeholder="Link" name="link_1" value="" oninput="handleLinks(this.name)">
           </div>
-
         </div>
         <div class="mt-6">
           <button type="submit" class="button is-dark has-background-danger-dark is-vcentered">
             <span class="title is-5 has-text-white">Submit</span></button>
-          <button type="button" class="button is-danger is-vcentered" style="width: 40px;"
-            onclick="handleList(false)"><i class="fa-solid fa-plus"></i></button>
-          <button type="button" class="button is-danger is-vcentered" style="width: 40px;" onclick="handleList(true)"><i
-              class="fa-solid fa-minus"></i></button>
+          <button type="button" class="button is-danger is-vcentered" style="width: 40px;" onclick="handleList(false)"><i class="fa-solid fa-plus"></i></button>
+          <button type="button" class="button is-danger is-vcentered" style="width: 40px;" onclick="handleList(true)"><i class="fa-solid fa-minus"></i></button>
         </div>
       </div>
     </div>
   </form>
+
+  <script>
+    function handleLinks(theID) {
+      var fileIn = document.getElementsByName(`file_${theID.split('_')[1]}`);
+      var linkIn = document.getElementsByName(theID);
+
+      if (linkIn[0].value.length === 0) {
+        fileIn[0].disabled = false;
+      }
+
+      if (linkIn[0].value.length !== 0) {
+        fileIn[0].disabled = true
+      }
+    }
+
+    var boxCounter = 1;
+
+    function handleList(remove) {
+      var boxesContainer = document.getElementById('boxes-container');
+
+      if (remove) {
+        // Remove the last box
+        var lastBox = boxesContainer.lastElementChild;
+        if (lastBox && boxCounter > 1) {
+          boxesContainer.removeChild(lastBox);
+          boxCounter--;
+        }
+      } else {
+        if (boxCounter < 13) {
+          // Add a new box
+          var newBox = document.createElement('div');
+          newBox.className = 'box p-2 my-2';
+          newBox.id = 'box_' + (boxCounter + 1);
+          newBox.innerHTML = boxesContainer.firstElementChild.innerHTML; // Clone the first box
+          updateBoxAttributes(newBox, boxCounter + 1);
+          boxesContainer.appendChild(newBox);
+          boxCounter++;
+          // Set focus on the first input or select element in the new box
+          var firstInputOrSelect = newBox.querySelector('input, select');
+          if (firstInputOrSelect) {
+            firstInputOrSelect.focus();
+          }
+        }
+      }
+    }
+
+    function updateBoxAttributes(box, counter) {
+      var inputsAndSelects = box.querySelectorAll('input, select, label.checkbox');
+      inputsAndSelects.forEach(function(inputOrSelect) {
+        if (inputOrSelect.tagName === 'INPUT' || inputOrSelect.tagName === 'SELECT') {
+          var currentName = inputOrSelect.name;
+          var newName = currentName.replace(/\d+/, counter);
+          inputOrSelect.name = newName;
+          inputOrSelect.value = "";
+        }
+      });
+    }
+
+    function blockCharacters(event, blockedChars) {
+      const inputElement = event.target;
+      let inputValue = inputElement.value;
+
+      // Check each blocked character
+      blockedChars.forEach(blockedChar => {
+        if (inputValue.includes(blockedChar)) {
+          // Block the character by removing it from the input value
+          inputValue = inputValue.replace(new RegExp(blockedChar, ''), '');
+
+          // Optionally, you can inform the user about the blocked character
+          alert(`Character "${blockedChar}" is disabled.`);
+        }
+      });
+
+      // Update the input value
+      inputElement.value = inputValue;
+    }
+
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var gp = document.getElementById('gp').value;
+      var title = document.getElementById('title').value;
+      var sub = document.getElementById('sub').value;
+
+      console.log(gp, title, sub)
+
+      var formData = new FormData(this);
+
+      document.getElementById("commsIconM").classList.remove("is-hidden")
+      // document.getElementById("commsIconS").classList.add("is-hidden")
+
+      fetch(`/playlist?gp=${gp}&title=${title}&subline=${sub}`, {
+          method: 'POST',
+          body: formData
+        })
+        .then(async response => {
+          if (response.ok) {
+            // Success: Show an alert or perform any other success action
+            var lastUpdate = await response.json()
+            console.log(lastUpdate.url)
+            // var d = new Date(lastUpdate[0].lastUpdate)
+            // alert(d.toString().split('GMT')[0]);
+            // document.getElementById('lastUpdateSpan').textContent = lastUpdate;
+
+            document.getElementById("commsIconM").classList.add("is-hidden")
+            document.getElementById("returnedLink").classList.remove("is-hidden")
+            console.log()
+
+          } else {
+            // Error: Log the error to the console
+            console.error('Form submission failed:', response.statusText);
+          }
+        })
+        .catch(error => {
+          // Error: Log the error to the console
+          console.error('Error during form submission:', error);
+        });
+    });
+
+    const boxesContainer = document.getElementById('boxes-container');
+    new Sortable(boxesContainer, {
+      animation: 150, // Animation speed in milliseconds
+      handle: '.box', // Use the entire box as the handle
+      draggable: '.box', // Make the boxes draggable
+      onEnd: function(evt) {
+        // Callback function when sorting ends
+        // You can perform any necessary actions here, like updating input names or values
+        fixNameAttributes();
+      }
+    });
+
+    function fixNameAttributes() {
+      // Get all the boxes inside the container
+      const boxes = document.querySelectorAll('#boxes-container > .box');
+
+      // Loop through each box
+      boxes.forEach((box, index) => {
+        // Get all input elements inside the box
+        const inputs = box.querySelectorAll('input');
+
+        // Loop through each input element
+        inputs.forEach(input => {
+          // Get the original name attribute
+          const originalName = input.getAttribute('name');
+          // Split the original name attribute to get the prefix and the number
+          const [prefix, number] = originalName.split('_');
+          // Create the new name attribute based on the index
+          const newName = `${prefix}_${index + 1}`;
+          // Set the new name attribute
+          input.setAttribute('name', newName);
+        });
+      });
+    }
+
+    // Example usage
+    fixNameAttributes();
+  </script>
 </body>
 
-<script name="hanldeFilesNames">
-
-  function handleLinks(theID) {
-    var fileIn = document.getElementsByName(`file_${theID.split('_')[1]}`);
-    var linkIn = document.getElementsByName(theID);
-
-
-    if (linkIn[0].value.length === 0) {
-      fileIn[0].disabled = false;
-    }
-
-    if (linkIn[0].value.length !== 0) {
-      fileIn[0].disabled = true
-    }
-  }
-</script>
-
-<script>
-  var boxCounter = 1;
-
-  function handleList(remove) {
-    var boxesContainer = document.getElementById('boxes-container');
-
-    if (remove) {
-      // Remove the last box
-      var lastBox = boxesContainer.lastElementChild;
-      if (lastBox && boxCounter > 1) {
-        boxesContainer.removeChild(lastBox);
-        boxCounter--;
-      }
-    } else {
-      if (boxCounter < 13) {
-        // Add a new box
-        var newBox = document.createElement('div');
-        newBox.className = 'box p-2 my-2';
-        newBox.id = 'box_' + (boxCounter + 1);
-        newBox.innerHTML = boxesContainer.firstElementChild.innerHTML; // Clone the first box
-        updateBoxAttributes(newBox, boxCounter + 1);
-        boxesContainer.appendChild(newBox);
-        boxCounter++;
-        // Set focus on the first input or select element in the new box
-        var firstInputOrSelect = newBox.querySelector('input, select');
-        if (firstInputOrSelect) {
-          firstInputOrSelect.focus();
-        }
-      }
-    }
-  }
-
-  function updateBoxAttributes(box, counter) {
-    var inputsAndSelects = box.querySelectorAll('input, select, label.checkbox');
-    inputsAndSelects.forEach(function (inputOrSelect) {
-      if (inputOrSelect.tagName === 'INPUT' || inputOrSelect.tagName === 'SELECT') {
-        var currentName = inputOrSelect.name;
-        var newName = currentName.replace(/\d+/, counter);
-        inputOrSelect.name = newName;
-        inputOrSelect.value = "";
-      }
-    });
-  }
-</script>
-
-<script>
-  function blockCharacters(event, blockedChars) {
-    const inputElement = event.target;
-    let inputValue = inputElement.value;
-
-    // Check each blocked character
-    blockedChars.forEach(blockedChar => {
-      if (inputValue.includes(blockedChar)) {
-        // Block the character by removing it from the input value
-        inputValue = inputValue.replace(new RegExp(blockedChar, ''), '');
-
-        // Optionally, you can inform the user about the blocked character
-        alert(`Character "${blockedChar}" is disabled.`);
-      }
-    });
-
-    // Update the input value
-    inputElement.value = inputValue;
-  }
-
-
-  document.getElementById('uploadForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    var gp = document.getElementById('gp').value;
-    var title = document.getElementById('title').value;
-    var sub = document.getElementById('sub').value;
-
-    console.log(gp, title, sub)
-
-    var formData = new FormData(this);
-
-    document.getElementById("commsIconM").classList.remove("is-hidden")
-    // document.getElementById("commsIconS").classList.add("is-hidden")
-
-    fetch(`/playlist?gp=${gp}&title=${title}&subline=${sub}`, {
-      method: 'POST',
-      body: formData
-    })
-      .then(async response => {
-        if (response.ok) {
-          // Success: Show an alert or perform any other success action
-          var lastUpdate = await response.json()
-          console.log(lastUpdate.url)
-          // var d = new Date(lastUpdate[0].lastUpdate)
-          // alert(d.toString().split('GMT')[0]);
-          // document.getElementById('lastUpdateSpan').textContent = lastUpdate;
-
-          document.getElementById("commsIconM").classList.add("is-hidden")
-          document.getElementById("returnedLink").classList.remove("is-hidden")
-          console.log()
-
-        } else {
-          // Error: Log the error to the console
-          console.error('Form submission failed:', response.statusText);
-        }
-      })
-      .catch(error => {
-        // Error: Log the error to the console
-        console.error('Error during form submission:', error);
-      });
-  });
-</script>
-
 </html>
+
+
+<!-- <script src="/assets/js/create.js"></script> -->

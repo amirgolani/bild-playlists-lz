@@ -46,6 +46,14 @@ var selectedElement = "b_0"
 var menuLeft = 0;
 var zoomed = false
 
+// Initialize touch-related variables
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+let initialLeft = 0;
+
+let isTimeDragging = false;
+
 
 // Start
 setTimeout(() => {
@@ -302,7 +310,7 @@ function getLayout() {
                         class="card-in-menu"    
                         id="b_${l}" 
                         style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -50%, black 150%), 
-                        url(/assets/gp/WEBTHUMB.jpg);">
+                        url(/assets/gp/CHART_BG.jpg);">
                         <div id="listTitles" class="title-in-menu">
                             ${name}
                         </div>
@@ -313,11 +321,7 @@ function getLayout() {
         });
 }
 
-// Initialize touch-related variables
-let isDragging = false;
-let startX = 0;
-let startY = 0;
-let initialLeft = 0;
+
 
 // Add touch event listeners
 theMenu.addEventListener('touchstart', (event) => {
@@ -385,8 +389,6 @@ function resetScrollPos() {
             ease: "power2.inOut"
         });
 }
-
-
 
 // handle plays
 function playVideo(path, loop, volume = "muted", PlayButtons = "withPlayButtons", reqBG, fps) {
@@ -472,7 +474,6 @@ seekSlider.addEventListener("input", vidSeek, false);
 video.addEventListener("timeupdate", seektimeupdate, false);
 // video.ontimeupdate = function () { timecodeUpdate() };
 
-let isTimeDragging = false;
 
 function pauseVideo() {
     video.pause();

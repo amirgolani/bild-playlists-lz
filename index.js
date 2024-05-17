@@ -137,8 +137,6 @@ app.post('/playlist', (req, res) => {
                     // fs.renameSync(file[0].filepath, newFilePath);
                     await moveFileAsync(file[0].filepath, newFilePath);
 
-
-
                     if (file[0].mimetype.split('/')[0] === 'video') {
 
                         const videoInfo = await getVideoInfo(newFilePath)
