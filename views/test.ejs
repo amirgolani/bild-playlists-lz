@@ -6,7 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/chart.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/gp/favicon-play/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/gp/favicon-play/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/gp/favicon-play/favicon-16x16.png">
@@ -15,30 +17,33 @@
 
 </head>
 
-<body class="main">
+<body>
+    <!-- VIDEO BACKGROUND -->
     <div class="full-hd-container">
         <video preload="auto" width="1920" height="1080" id="video" playsinline autoplay muted loop>
             <source src="/assets/gp/LOOP_TOUCH_1.mp4" type="video/mp4">
         </video>
     </div>
     <div class="chart-stage"></div>
-    <div class="full-hd-container chart-container">
+    <div class="full-hd-container"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <div style="padding: 50px; margin-bottom: 120px;">
-            <div class="title">
+            <div
+                style="font-family: Gotham; font-weight: 800; line-height: 36px; font-size: 36px; color: white; width: 1280px; padding-bottom: 10px;">
                 <%= title %>
             </div>
-            <div class="subline">
+            <div
+                style="font-family: Gotham; font-weight: 400; line-height: 24px; font-size: 24px; color: white; width: 1280px; padding-bottom: 40px;">
                 <%= sub %>
             </div>
-            <div id="theChart" name="<%= chart %>"></div>
+            <div id="theChart">
+            </div>
         </div>
     </div>
 
-    <script>
-        const chartDiv = document.getElementById('theChart');
-        const chartDivName = chartDiv.getAttribute('name');
-        const options = JSON.parse(chartDivName);
 
+    <script>
+        const options = <%- JSON.stringify(chart) %>;
         console.log(options);
 
         var chartObject = new ApexCharts(document.querySelector("#theChart"), options);
@@ -51,6 +56,9 @@
                 { scale: options.chart.type === 'radialBar' ? 1.8 : .9 },
                 { scale: options.chart.type === 'radialBar' ? 2 : 1, duration: 1, delay: .6, ease: 'power2.inOut' })
         }
+
+
+
     </script>
 
 </body>

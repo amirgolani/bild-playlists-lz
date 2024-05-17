@@ -25,8 +25,7 @@ app.use((req, res, next) => {
     next()
 });
 
-// UKR
-
+// Routes
 app.get('/play', (req, res) => {
     const { gp, title, subline, playlist, size } = req.query;
 
@@ -63,7 +62,6 @@ app.get('/play', (req, res) => {
             break;
     }
 });
-
 
 app.get('/playlists', (req, res) => {
     res.render('playlists')
@@ -466,12 +464,10 @@ app.get('/chart', (req, res) => {
 
     res.render('chart',
         {
-            chart: options,
+            chart: JSON.stringify(options),
             title: title ? title : '',
             sub: subline ? subline : '',
-            size: size ? size / 100 : '1',
-            width: size ? `${parseInt(size) / 100 * 1920}px` : '1920px',
-            height: size ? `${parseInt(size) / 100 * 1080}px` : '1080px'
+
         })
 })
 
