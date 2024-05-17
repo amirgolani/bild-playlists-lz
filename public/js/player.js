@@ -113,7 +113,7 @@ function handleMenuPreview(selection, gesture) {
         {
             top: menuPos ? 760 : 996,
             duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
+            ease: "power3.inOut"
 
         });
 
@@ -121,7 +121,7 @@ function handleMenuPreview(selection, gesture) {
         {
             top: menuPos ? 90 : -5,
             duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
+            ease: "power3.inOut"
 
         });
 
@@ -129,7 +129,7 @@ function handleMenuPreview(selection, gesture) {
         {
             opacity: menuPos ? 1 : .5,
             duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
+            ease: "power3.inOut"
 
         });
 
@@ -137,14 +137,14 @@ function handleMenuPreview(selection, gesture) {
         {
             rotation: menuPos ? 0 : -540,
             duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
+            ease: "power3.inOut"
         });
 
     gsap.to(menuToggleIcon,
         {
             top: menuPos ? 0 : 236,
             duration: !gesture ? 1 : gesture,
-            ease: "power2.inOut"
+            ease: "power3.inOut"
         });
 
 }
@@ -167,7 +167,7 @@ function handleSelect(newSelection) {
                     opacity: 1,
                     duration: 2,
                     delay: .2,
-                    ease: "power2.inOut",
+                    ease: "power2.out",
 
                 });
 
@@ -176,7 +176,7 @@ function handleSelect(newSelection) {
                 {
                     duration: 2,
                     scale: 1,
-                    ease: "power2.inOut"
+                    ease: "power2.out"
                 });
 
             drawOnScreen = true;
@@ -208,21 +208,21 @@ function handleSelect(newSelection) {
             {
                 duration: 1,
                 opacity: 1,
-                ease: "power2.inOut"
+                ease: "power2.out"
             });
 
         gsap.to(`#${newSelection}`,
             {
-                duration: .8,
+                duration: 1,
                 width: 360,
-                ease: "power2.inOut"
+                ease: "power2.out"
             });
 
         gsap.to(`#${selectedElement}`,
             {
-                duration: .8,
+                duration: 1,
                 width: 140,
-                ease: "power2.inOut"
+                ease: "power2.out"
             });
 
         const index = parseInt(newSelection.split('_')[1]);
@@ -233,7 +233,7 @@ function handleSelect(newSelection) {
                     ? -(index - 1) * 160 - 14 * (index - 1) + 240
                     : 240,
                 duration: 1,
-                ease: "power2.inOut"
+                ease: "power2.out"
             });
 
         gsap.to(menuToggleIcon,
@@ -242,7 +242,7 @@ function handleSelect(newSelection) {
                     ? 1
                     : 0,
                 duration: 1,
-                ease: "power2.inOut"
+                ease: "power2.out"
             })
 
         previewAllCards()
