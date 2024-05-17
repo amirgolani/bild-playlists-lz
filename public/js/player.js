@@ -168,13 +168,11 @@ function handleSelect(newSelection) {
             gsap.fromTo(videoTitleToggle,
                 {
                     opacity: 0,
-                    onStart: function () { videoTitleToggle.hidden = false }
-
                 },
                 {
                     opacity: 1,
-                    duration: 2,
-                    delay: .2,
+                    duration: 1,
+                    delay: 1,
                     ease: "power2.out",
 
                 });
@@ -195,7 +193,6 @@ function handleSelect(newSelection) {
         } else {
             gsap.set(videoTitleToggle,
                 {
-                    onStart: function () { videoTitleToggle.hidden = true },
                     opacity: 0,
                 });
 
