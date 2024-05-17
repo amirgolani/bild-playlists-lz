@@ -174,7 +174,6 @@ function handleSelect(newSelection) {
                     duration: 1,
                     delay: 1,
                     ease: "power2.out",
-
                 });
 
             gsap.fromTo(video,
